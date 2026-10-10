@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <nav class="navbar">
+  <div class="logo"><a href="#">keYs</a></div>
+  <ul class="nav-links">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Usuários</a></li>
+    <li><a href="#">Fale conosco</a></li>
+    <li><a href="#" class="logout" style="color: white;">sair <img src="icons/Log out.png" alt="Botão de deslogar"></a></li>
+  </ul>
+  <div class="menu-toggle" id="mobile-menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </div>
+</nav>
+
+<main>
+  <section class="side-a">
+    <div class="cal06">
+        <div class="cal06__main">
+    
+          <div class="cal06__top">
+            <div class="cal06__month-block">
+              <div class="cal06__month-label">1 de Junho</div>
+              <div class="cal06__year-label">2026</div>
+            </div>
+            <div class="cal06__top-right">
+              <div class="cal06__nav-row">
+                <div class="cal06__nav-btn">‹</div>
+                <div class="cal06__nav-btn">›</div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="cal06__dow">
+            <div class="cal06__dow-lbl">S</div>
+            <div class="cal06__dow-lbl">M</div>
+            <div class="cal06__dow-lbl">T</div>
+            <div class="cal06__dow-lbl">W</div>
+            <div class="cal06__dow-lbl">T</div>
+            <div class="cal06__dow-lbl">F</div>
+            <div class="cal06__dow-lbl">S</div>
+          </div>
+    
+          <div class="cal06__grid" id="cal06Grid">
+            <!-- May overflow -->
+            <div class="cal06__cell other weekend"><div class="cal06__cell-n">25</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">26</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">27</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">28</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">29</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">30</div></div>
+            <div class="cal06__cell other weekend"><div class="cal06__cell-n">31</div></div>
+            <!-- June 1-7 -->
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">1</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">2</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">3</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">4</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--y"></span></div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">5</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">6</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--p"></span></div></div>
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">7</div></div>
+            <!-- June 8-14: today=8 -->
+            <div class="cal06__cell today weekend"><div class="cal06__cell-n">8</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--g"></span></div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">9</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--g"></span><span class="cal06__pip cal06__pip--l"></span></div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">10</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">11</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--p"></span></div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">12</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">13</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--y"></span></div></div>
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">14</div></div>
+            <!-- June 15-21 -->
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">15</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">16</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">17</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--g"></span><span class="cal06__pip cal06__pip--g"></span></div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">18</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">19</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">20</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--l"></span></div></div>
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">21</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--y"></span></div></div>
+            <!-- June 22-28 -->
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">22</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">23</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">24</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--p"></span></div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">25</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">26</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">27</div><div class="cal06__pips"><span class="cal06__pip cal06__pip--g"></span></div></div>
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">28</div></div>
+            <!-- June 29-30 + July -->
+            <div class="cal06__cell weekend"><div class="cal06__cell-n">29</div></div>
+            <div class="cal06__cell"><div class="cal06__cell-n">30</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">1</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">2</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">3</div></div>
+            <div class="cal06__cell other"><div class="cal06__cell-n">4</div></div>
+            <div class="cal06__cell other weekend"><div class="cal06__cell-n">5</div></div>
+    
+        </div>
+      </div>
+    </div>
+    
+    <div class="">
+      <div>
+        <h1>Salas</h1>
+        <img src="icons/Filter.png" alt="Filtro de seleção de salas">
+      </div>
+
+
+
+
+      <div>
+        <div>
+        <h1>Sala 01</h1>
+        <h2>disponivel</h2>
+        <img src="icons/Calendar.png" alt="Botão de reservar sala disponivel">
+        <img src="icons/Edit.png" alt="Botão de editar reserva">
+        </div>
+        
+      <div class="">
+        <h1>Laboratório 01</h1>
+        <img src="icons/Edit.png" alt="Botão de editar reserva">
+      </div>
+
+    </div>
+    </div>
+
+  </section>
+  <section class="side-b">
+
+  </section>
+</main>
+
+</body>
+</html>
