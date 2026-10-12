@@ -1,0 +1,246 @@
+
+.user-dashboard-main {
+  padding: 2vw;
+  display: flex;
+  justify-content: center;
+  gap: 5vw;
+  margin-top: 10vw;
+}
+
+.user-dashboard-main .users-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+
+.user-dashboard-main .users-list-section h1 {
+  font-size: 4rem;
+}
+
+.user-dashboard-main .users-list-section .add-find-users {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+
+.user-dashboard-main .users-list-section .add-find-users button {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 10vw;
+  height: 2vw;
+}
+
+.user-dashboard-main .users-list-section .add-find-users input {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 20vw;
+  height: 2vw;
+  padding: 0.25vw;
+  padding-left: 2vw;
+  background-image: url(./assets/lupa.png);
+  background-repeat: no-repeat;
+  background-position: 0.25vw center;
+  background-size: 1.25vw;
+}
+
+.user-dashboard-main .users-list-section .add-find-users input::placeholder {
+  color: #b8b8b8;
+}
+.user-dashboard-main .users-list-section table th {
+  text-align: start;
+  padding-left: 0.25vw;
+  color: #434343;
+  padding-block: 0.25vw;
+  font-weight: bold;
+}
+
+.user-dashboard-main .users-list-section table td {
+  padding-block: 0.25vw;
+  font-weight: bold;
+}
+
+.user-dashboard-main .user-card-section {
+  width: 50vw;
+}
+
+.user-dashboard-main .user-card-section .user-card {
+  position: relative;
+}
+
+.user-dashboard-main .user-card-section .user-card .card-user-header {
+  background: linear-gradient(to right, #0c3553, #051d2d);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 15vw;
+  padding: 1vw;
+}
+
+.user-dashboard-main .user-card-section .user-card .card-user-header .user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-block: 1vw;
+  padding-inline: 2vw;
+  position: absolute;
+  width: 100%;
+  top: 10vw;
+}
+
+.user-dashboard-main .user-card-section .user-card .card-user-header .user-info button {
+  background-color: #b3261e;
+  border: none;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-dashboard-main .user-card-section .user-card .card-user-header .user-info button img {
+  width: 1.5vw;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile {
+  display: flex;
+  align-items: end;
+  gap: 2vw;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile
+  > img {
+  width: 7vw;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile
+  .user-info-details
+  p,
+span {
+  font-size: 1.5rem;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile
+  .user-info-details
+  span {
+  font-weight: bolder;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile
+  .user-info-details
+  .edit-name {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile
+  .user-info-details
+  .edit-name
+  button {
+  background-color: transparent;
+  width: 2vw;
+  border: none;
+  transition: none;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .card-user-header
+  .user-info
+  .user-info-profile
+  .user-info-details
+  .edit-name
+  button:hover {
+  transform: none;
+}
+
+.user-dashboard-main .user-card-section .user-card .user-card-body {
+  margin-top: 8vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+  padding-inline: 2vw;
+}
+
+.user-dashboard-main .user-card-section .user-card .user-card-body table {
+  border-collapse: separate;
+  border-spacing: 0 1vw;
+}
+
+.user-dashboard-main .user-card-section .user-card .user-card-body table th {
+  text-align: center;
+  padding-left: 0.25vw;
+  font-weight: 400;
+  padding-block: 0.5vw;
+}
+
+.user-dashboard-main .user-card-section .user-card .user-card-body table td {
+  text-align: center;
+}
+
+.user-dashboard-main .user-card-section .user-card .user-card-body table td button {
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  border-radius: 5px;
+  margin-inline: 0.25vw;
+}
+
+.user-dashboard-main .user-card-section .user-card .user-card-body table td button img {
+  width: 1vw;
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .user-card-body
+  table
+  td
+  .edit-reservation-button {
+  background-color: rgba(0, 0, 107, 0.77);
+}
+
+.user-dashboard-main
+  .user-card-section
+  .user-card
+  .user-card-body
+  table
+  td
+  .delete-reservation-button {
+  background-color: rgba(195, 10, 0, 0.77);
+}
