@@ -1,19 +1,24 @@
-package br.com.keys.keys_api.model;
+package br.com.keys.keys_api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.springframework.data.domain.Persistable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario {
+public class Usuario implements Persistable<String> {
     @Id
     private String cd_usuario;
+    @Transient
+    private boolean isNew = true;
+
     @Column(nullable = false, length = 100)
     private String nm_usuario;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String nm_email_usuario;
     @Column(length = 255)
     private String nm_link_imagem_usuario;
@@ -29,6 +34,9 @@ public class Usuario {
     @JsonBackReference //não serializa esse lado, evitando serializar infinitamente
     private Usuario chefe;
 
+    @Column(name = "cd_admin", insertable = false, updatable = false)
+    private String cd_Admin;  //pra eu conseguir visualizar no getter
+
     @JsonManagedReference //lado serializado
     @OneToMany(mappedBy = "chefe")
     private List<Usuario> subordinados;
@@ -36,6 +44,8 @@ public class Usuario {
     //Suas reservas:
     @OneToMany(mappedBy = "proprietario")
     private List<Reserva> reservas;
+
+    public Usuario(Optional<Usuario> byEmail) {}
 
     public Usuario() {}
 
@@ -98,4 +108,32 @@ public class Usuario {
     public void setSubordinados(List<Usuario> subordinados) {
         this.subordinados = subordinados;
     }
+
+    public String getCd_Admin() {
+        return cd_Admin;
+    }
+
+    public void setCd_usuario(String cd_usuario) {
+        this.cd_usuario = cd_usuario;
+    }
+
+    public void setCd_Admin(String cd_Admin) {
+        this.cd_Admin = cd_Admin;
+    }
+
+    //pro Persistable:
+    @Override
+    public String getId() {
+        return this.cd_usuario;
+    }
+
+    //com a implementação da interface, o data jpa se baseia o valor dessa props para decidir se insere ou atualiza
+    @Override public boolean isNew() {
+        return this.isNew;
+    }
+
+    //chamada depois de inserir e depois de buscar do banco.
+    @PostPersist @PostLoad
+    void markNotNew() { this.isNew = false; }
+
 }

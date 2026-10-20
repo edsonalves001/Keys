@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.model;
+package br.com.keys.keys_api.model.entity;
 
 import br.com.keys.keys_api.enums.StatusSala;
 import jakarta.persistence.*;
