@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import br.com.keys.keys_api.enums.StatusSala;
+
 @Entity
 @Table(name = "tb_sala")
 @Getter
@@ -26,7 +28,7 @@ public class Sala {
     @Column(name = "ds_sala",length = 255)
     private String descricao;
     @Column(name = "ic_disponibilidade_sala",nullable = false)
-    private boolean disponivel;
+    private StatusSala statusSala;
 
     //reservas dessa sala:
     @OneToMany(mappedBy = "sala")
@@ -36,6 +38,6 @@ public class Sala {
     public Sala(String nm_sala, String ds_sala) {
         this.nome = nm_sala;
         this.descricao = ds_sala;
-        this.disponivel = true;
+        this.statusSala = StatusSala.DISPONIVEL;
     }
 }

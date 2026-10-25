@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.keys.keys_api.enums.StatusSala;
 import br.com.keys.keys_api.model.entity.Sala;
 import br.com.keys.keys_api.repository.SalaRepository;
 
@@ -84,5 +85,15 @@ public class SalaController {
     salaRepository.delete(sala);
 
     return sala.getNome();
+  }
+
+  @PatchMapping("/sala/estado")
+  public String atualizarEstado(@RequestParam StatusSala statusSala, @RequestParam Integer salaId) {
+    Sala sala = salaRepository.findByCd(salaId);
+
+    sala.setStatusSala(statusSala);
+    salaRepository.save(sala);
+
+    return "Estado da sala alterado para "+sala.getStatusSala();
   }
 }
