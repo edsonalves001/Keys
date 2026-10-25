@@ -3,6 +3,9 @@ package br.com.keys.keys_api.model.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.data.domain.Persistable;
 
 import java.util.List;
@@ -10,20 +13,23 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "tb_usuario")
+@Getter 
+@Setter 
 public class Usuario implements Persistable<String> {
     @Id
-    private String cd_usuario;
+    @Column(name = "cdusuario")
+    private String cdUsuario;
     @Transient
     private boolean isNew = true;
 
-    @Column(nullable = false, length = 100)
-    private String nm_usuario;
-    @Column(nullable = false, length = 100, unique = true)
-    private String nm_email_usuario;
-    @Column(length = 255)
-    private String nm_link_imagem_usuario;
-    @Column(length = 255, nullable = false)
-    private String nm_senha_usuario;
+    @Column(name = "nm_usuario", nullable = false, length = 100)
+    private String nome;
+    @Column(name = "nm_email_usuario", nullable = false, length = 100, unique = true)
+    private String email;
+    @Column(name = "nm_link_imagem_usuario", length = 255)
+    private String imagem;
+    @Column(name = "nm_senha_usuario", length = 255, nullable = false)
+    private String senha;
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
@@ -34,8 +40,10 @@ public class Usuario implements Persistable<String> {
     @JsonBackReference //não serializa esse lado, evitando serializar infinitamente
     private Usuario chefe;
 
-    @Column(name = "cd_admin", insertable = false, updatable = false)
-    private String cd_Admin;  //pra eu conseguir visualizar no getter
+    //Codigo que faz com que o admin seja necessário vai ficar comentado por enquanto
+
+    //@Column(name = "cd_admin", insertable = false, updatable = false)
+    //private String cdAdmin;  //pra eu conseguir visualizar no getter
 
     @JsonManagedReference //lado serializado
     @OneToMany(mappedBy = "chefe")
@@ -48,46 +56,6 @@ public class Usuario implements Persistable<String> {
     public Usuario(Optional<Usuario> byEmail) {}
 
     public Usuario() {}
-
-    public String getCd_usuario() {
-        return cd_usuario;
-    }
-
-    public String getNm_usuario() {
-        return nm_usuario;
-    }
-
-    public String getNm_email_usuario() {
-        return nm_email_usuario;
-    }
-
-    public String getNm_link_imagem_usuario() {
-        return nm_link_imagem_usuario;
-    }
-
-    public String getNm_senha_usuario() {
-        return nm_senha_usuario;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setNm_usuario(String nm_usuario) {
-        this.nm_usuario = nm_usuario;
-    }
-
-    public void setNm_email_usuario(String nm_email_usuario) {
-        this.nm_email_usuario = nm_email_usuario;
-    }
-
-    public void setNm_link_imagem_usuario(String nm_link_imagem_usuario) {
-        this.nm_link_imagem_usuario = nm_link_imagem_usuario;
-    }
-
-    public void setNm_senha_usuario(String nm_senha_usuario) {
-        this.nm_senha_usuario = nm_senha_usuario;
-    }
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
@@ -109,22 +77,10 @@ public class Usuario implements Persistable<String> {
         this.subordinados = subordinados;
     }
 
-    public String getCd_Admin() {
-        return cd_Admin;
-    }
-
-    public void setCd_usuario(String cd_usuario) {
-        this.cd_usuario = cd_usuario;
-    }
-
-    public void setCd_Admin(String cd_Admin) {
-        this.cd_Admin = cd_Admin;
-    }
-
     //pro Persistable:
     @Override
     public String getId() {
-        return this.cd_usuario;
+        return this.cdUsuario;
     }
 
     //com a implementação da interface, o data jpa se baseia o valor dessa props para decidir se insere ou atualiza
