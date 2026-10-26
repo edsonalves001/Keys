@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.security;
+/*package br.com.keys.keys_api.security;
 
 import br.com.keys.keys_api.model.entity.Usuario;
 import br.com.keys.keys_api.repository.UsuarioRepository;
@@ -21,3 +21,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetailsImpl(usuario);
     }
 }
+
+ */

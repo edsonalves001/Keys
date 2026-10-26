@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record RegisterRequest(
+public record RegisterRequestDTO(
         @NotBlank(message = "Necessário adicionar o identificador")
         String cd_usuario,
         @NotBlank(message = "Digite um nome válido!")

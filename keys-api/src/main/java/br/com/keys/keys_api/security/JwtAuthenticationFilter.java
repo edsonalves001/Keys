@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.security;
+/*package br.com.keys.keys_api.security;
 
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
@@ -68,3 +68,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { //apenas uma
         filterChain.doFilter(request, response);
     }
 }
+*/

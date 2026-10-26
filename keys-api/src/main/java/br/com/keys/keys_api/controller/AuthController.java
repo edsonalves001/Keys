@@ -1,9 +1,9 @@
-package br.com.keys.keys_api.controller;
+/*package br.com.keys.keys_api.controller;
 
-import br.com.keys.keys_api.model.dto.LoginRequest;
-import br.com.keys.keys_api.model.dto.LoginResponse;
-import br.com.keys.keys_api.model.dto.RegisterRequest;
-import br.com.keys.keys_api.model.dto.RegisterResponse;
+import br.com.keys.keys_api.model.dto.LoginRequestDTO;
+import br.com.keys.keys_api.model.dto.LoginResponseDTO;
+import br.com.keys.keys_api.model.dto.RegisterRequestDTO;
+import br.com.keys.keys_api.model.dto.RegisterResponseDTO;
 import br.com.keys.keys_api.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
-       LoginResponse loginResponse =  this.authService.logarUser(loginRequest);
-       return  ResponseEntity.status(201).body(loginResponse);
+    public ResponseEntity<LoginResponseDTO> loginUser(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
+       LoginResponseDTO loginResponseDTO =  this.authService.logarUser(loginRequestDTO);
+       return  ResponseEntity.status(201).body(loginResponseDTO);
     }
 
     @PostMapping("/criarUser")
-    public ResponseEntity<RegisterResponse> createUser(@Valid @RequestBody RegisterRequest registerRequest, @RequestHeader String Authorization) {
-        RegisterResponse registerResponse = this.authService.criarUser(registerRequest, Authorization);
-        return ResponseEntity.status(201).body(registerResponse);
+    public ResponseEntity<RegisterResponseDTO> createUser(@Valid @RequestBody RegisterRequestDTO registerRequestDTO, @RequestHeader String Authorization) {
+        RegisterResponseDTO registerResponseDTO = this.authService.criarUser(registerRequestDTO, Authorization);
+        return ResponseEntity.status(201).body(registerResponseDTO);
     }
 
 }
+
+ */

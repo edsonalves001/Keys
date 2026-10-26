@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.config;
+/*package br.com.keys.keys_api.config;
 
 import br.com.keys.keys_api.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -51,3 +51,5 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
+
+ */

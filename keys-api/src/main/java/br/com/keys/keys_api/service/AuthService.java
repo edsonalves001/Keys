@@ -1,11 +1,10 @@
-package br.com.keys.keys_api.service;
+/*package br.com.keys.keys_api.service;
 
 import br.com.keys.keys_api.exception.EmailCadastradoException;
-import br.com.keys.keys_api.exception.UsuarioInexistenteException;
-import br.com.keys.keys_api.model.dto.LoginRequest;
-import br.com.keys.keys_api.model.dto.LoginResponse;
-import br.com.keys.keys_api.model.dto.RegisterRequest;
-import br.com.keys.keys_api.model.dto.RegisterResponse;
+import br.com.keys.keys_api.model.dto.LoginRequestDTO;
+import br.com.keys.keys_api.model.dto.LoginResponseDTO;
+import br.com.keys.keys_api.model.dto.RegisterRequestDTO;
+import br.com.keys.keys_api.model.dto.RegisterResponseDTO;
 import br.com.keys.keys_api.model.entity.Usuario;
 import br.com.keys.keys_api.repository.UsuarioRepository;
 import br.com.keys.keys_api.security.JwtService;
@@ -25,9 +24,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder; // para fazer hash da senha né, Edson?? 🖕🖕🖕
     private final UsuarioRepository usuarioRepository; //buscar no banco, criar etc
 
-    public RegisterResponse criarUser(RegisterRequest registerRequest, String token) {
+    public RegisterResponseDTO criarUser(RegisterRequestDTO registerRequestDTO, String token) {
         //verificar se email é valido:isso
-        if (usuarioRepository.findByEmail(registerRequest.nm_email_usuario()).isPresent()) {
+        if (usuarioRepository.findByEmail(registerRequestDTO.nm_email_usuario()).isPresent()) {
             throw new EmailCadastradoException("Email já cadastrado! Tente outro!");
         }
 
@@ -36,27 +35,26 @@ public class AuthService {
         /* //Pegando cd_admin:
         String email_admin = this.jwtService.extractUsername(token); //admin precisa de token pra criar user
         Usuario admin = usuarioRepository.findByEmailAndChefeIsNull(email_admin).orElseThrow(()-> new UsuarioInexistenteException("Administrador inexistente!"));
-*/
         //Criando hash (essa classe veio do método do SecurityConfig):
-        String hash = passwordEncoder.encode(registerRequest.nm_senha_usuario());
+        String hash = passwordEncoder.encode(registerRequestDTO.nm_senha_usuario());
 
         Usuario usuario_novo = new Usuario();
-        usuario_novo.setCdUsuario(registerRequest.cd_usuario());
-        usuario_novo.setNome(registerRequest.nm_usuario());
-        usuario_novo.setEmail(registerRequest.nm_email_usuario());
+        usuario_novo.setCdUsuario(registerRequestDTO.cd_usuario());
+        usuario_novo.setNome(registerRequestDTO.nm_usuario());
+        usuario_novo.setEmail(registerRequestDTO.nm_email_usuario());
         //usuario_novo.setCdAdmin(admin.getCdAdmin());
         usuario_novo.setImagem("/uploads/usuarios/foto-padrao.png");
         usuario_novo.setSenha(hash);
         //usuario_novo.setEmpresa(admin.getEmpresa());
         usuarioRepository.save(usuario_novo);
 
-        return new RegisterResponse(usuario_novo.getCdUsuario(), usuario_novo.getEmail());
+        return new RegisterResponseDTO(usuario_novo.getCdUsuario(), usuario_novo.getEmail());
     }
 
-    public LoginResponse logarUser(LoginRequest loginRequest) {
+    public LoginResponseDTO logarUser(LoginRequestDTO loginRequestDTO) {
         // 1. AuthenticationManager busca por email E compara senha (via PasswordEncoder)
         Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.nm_email_usuario(), loginRequest.nm_senha_usuario())
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.nm_email_usuario(), loginRequestDTO.nm_senha_usuario())
         );
 
         // 2. Gera o token
@@ -64,7 +62,9 @@ public class AuthService {
         String token = jwtService.generateToken(userDetails);
 
         // 3. Devolve
-        return new LoginResponse(token);
+        return new LoginResponseDTO(token);
     }
 
 }
+
+ */

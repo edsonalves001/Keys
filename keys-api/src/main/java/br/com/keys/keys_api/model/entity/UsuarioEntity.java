@@ -15,7 +15,7 @@ import java.util.Optional;
 @Table(name = "tb_usuario")
 @Getter 
 @Setter 
-public class Usuario implements Persistable<String> {
+public class UsuarioEntity implements Persistable<String> {
     @Id
     @Column(name = "cdusuario")
     private String cdUsuario;
@@ -32,13 +32,13 @@ public class Usuario implements Persistable<String> {
     private String senha;
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
-    private Empresa empresa;
+    private EmpresaEntity empresaEntity;
 
     //relacionamento recursivo:
     @ManyToOne
     @JoinColumn(name = "cd_admin")
     @JsonBackReference //não serializa esse lado, evitando serializar infinitamente
-    private Usuario chefe;
+    private UsuarioEntity chefe;
 
     //Codigo que faz com que o admin seja necessário vai ficar comentado por enquanto
 
@@ -47,33 +47,34 @@ public class Usuario implements Persistable<String> {
 
     @JsonManagedReference //lado serializado
     @OneToMany(mappedBy = "chefe")
-    private List<Usuario> subordinados;
+    private List<UsuarioEntity> subordinados;
 
     //Suas reservas:
     @OneToMany(mappedBy = "proprietario")
-    private List<Reserva> reservas;
+    @JsonManagedReference("usuario-reserva")
+    private List<ReservaEntity> reservaEntities;
 
-    public Usuario(Optional<Usuario> byEmail) {}
+    public UsuarioEntity(Optional<UsuarioEntity> byEmail) {}
 
-    public Usuario() {}
+    public UsuarioEntity() {}
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setEmpresaEntity(EmpresaEntity empresaEntity) {
+        this.empresaEntity = empresaEntity;
     }
 
-    public Usuario getChefe() {
+    public UsuarioEntity getChefe() {
         return chefe;
     }
 
-    public void setChefe(Usuario chefe) {
+    public void setChefe(UsuarioEntity chefe) {
         this.chefe = chefe;
     }
 
-    public List<Usuario> getSubordinados() {
+    public List<UsuarioEntity> getSubordinados() {
         return subordinados;
     }
 
-    public void setSubordinados(List<Usuario> subordinados) {
+    public void setSubordinados(List<UsuarioEntity> subordinados) {
         this.subordinados = subordinados;
     }
 

@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.security;
+/*package br.com.keys.keys_api.security;
 
 import br.com.keys.keys_api.model.entity.Usuario;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else { //quem tem cd_admin foi criado por admin
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        }*/
+        }
 
         return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
@@ -50,3 +50,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 }
+
+
+ */

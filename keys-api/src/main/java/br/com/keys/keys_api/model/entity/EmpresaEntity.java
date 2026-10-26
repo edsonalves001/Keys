@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name="tb_empresa")
 @Getter
 @Setter
-public class Empresa implements Persistable<String> {
+public class EmpresaEntity implements Persistable<String> {
 
     @Id //inserir manualmente o cnpj no form lá, lembra?
     private String cd_cnpj_empresa;
@@ -25,12 +25,12 @@ public class Empresa implements Persistable<String> {
     // apenas atualizada(), isso porque o JPA define se insere ou atualiza por se o id for nulo. No nosso caso, ele n vai ser e ele vai
     // achar que precisa de um update, contudo vai dar erro por não existir
 
-    @OneToMany(mappedBy = "empresa")
-    private List<Usuario> funcionarios;
+    @OneToMany(mappedBy = "empresaEntity")
+    private List<UsuarioEntity> funcionarios;
 
-    public Empresa() {}
+    public EmpresaEntity() {}
 
-    public Empresa(String nm_empresa, String cd_cnpj_empresa) {
+    public EmpresaEntity(String nm_empresa, String cd_cnpj_empresa) {
         this.nm_empresa = nm_empresa;
         this.cd_cnpj_empresa = cd_cnpj_empresa;
         this.funcionarios = new ArrayList<>();

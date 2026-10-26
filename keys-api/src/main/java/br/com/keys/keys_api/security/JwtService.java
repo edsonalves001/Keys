@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.security;
+/*package br.com.keys.keys_api.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -64,3 +64,5 @@ public class JwtService {
         // Se for, token é válido
     }
 }
+
+ */

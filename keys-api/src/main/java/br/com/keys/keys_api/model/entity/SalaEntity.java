@@ -1,5 +1,6 @@
 package br.com.keys.keys_api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +10,7 @@ import lombok.Setter;
 
 import java.util.List;
 
-import br.com.keys.keys_api.enums.StatusSala;
+import br.com.keys.keys_api.enums.StatusSalaEnum;
 
 @Entity
 @Table(name = "tb_sala")
@@ -18,7 +19,7 @@ import br.com.keys.keys_api.enums.StatusSala;
 @NoArgsConstructor 
 @AllArgsConstructor 
 @Builder 
-public class Sala {
+public class SalaEntity {
     @Id
     @Column(name = "cd_sala")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +29,17 @@ public class Sala {
     @Column(name = "ds_sala",length = 255)
     private String descricao;
     @Column(name = "ic_disponibilidade_sala",nullable = false)
-    private StatusSala statusSala;
+    private StatusSalaEnum statusSala;
 
     //reservas dessa sala:
-    @OneToMany(mappedBy = "sala")
-    private List<Reserva> reservas;
+    @OneToMany(mappedBy = "salaEntity")
+    @JsonManagedReference("sala-reserva")
+    private List<ReservaEntity> reservaEntities;
 
     //Construtor que recebe somente os dados inseridos pelo administrador ao criar a sala
-    public Sala(String nm_sala, String ds_sala) {
+    public SalaEntity(String nm_sala, String ds_sala) {
         this.nome = nm_sala;
         this.descricao = ds_sala;
-        this.statusSala = StatusSala.DISPONIVEL;
+        this.statusSala = StatusSalaEnum.DISPONIVEL;
     }
 }

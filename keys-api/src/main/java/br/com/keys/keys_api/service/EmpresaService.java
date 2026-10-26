@@ -1,9 +1,9 @@
 package br.com.keys.keys_api.service;
 
 import br.com.keys.keys_api.exception.EmpresaCadastradaException;
-import br.com.keys.keys_api.model.dto.CreateEnterpriseRequest;
-import br.com.keys.keys_api.model.dto.CreateEnterpriseResponse;
-import br.com.keys.keys_api.model.entity.Empresa;
+import br.com.keys.keys_api.model.dto.CreateEnterpriseRequestDTO;
+import br.com.keys.keys_api.model.dto.CreateEnterpriseResponseDTO;
+import br.com.keys.keys_api.model.entity.EmpresaEntity;
 import br.com.keys.keys_api.repository.EmpresaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,18 +14,18 @@ public class EmpresaService {
 
     private final EmpresaRepository empresaRepository;
 
-    public CreateEnterpriseResponse criarEmpresa(CreateEnterpriseRequest createEnterpriseRequest) {
+    public CreateEnterpriseResponseDTO criarEmpresa(CreateEnterpriseRequestDTO createEnterpriseRequestDTO) {
             //Validar se cnpj já existe
-            empresaRepository.findById(createEnterpriseRequest.cd_cnpj_empresa()).orElseThrow(() ->
+            empresaRepository.findById(createEnterpriseRequestDTO.cd_cnpj_empresa()).orElseThrow(() ->
                     new EmpresaCadastradaException("Empresa já cadastrada! Tente outro Cnpj!"));
 
             //Criando:
-            Empresa empresa = new Empresa();
-            empresa.setCd_cnpj_empresa(createEnterpriseRequest.cd_cnpj_empresa());
-            empresa.setNm_empresa(createEnterpriseRequest.nm_empresa());
-            empresaRepository.save(empresa);
+            EmpresaEntity empresaEntity = new EmpresaEntity();
+            empresaEntity.setCd_cnpj_empresa(createEnterpriseRequestDTO.cd_cnpj_empresa());
+            empresaEntity.setNm_empresa(createEnterpriseRequestDTO.nm_empresa());
+            empresaRepository.save(empresaEntity);
 
-            return new CreateEnterpriseResponse(empresa.getCd_cnpj_empresa());
+            return new CreateEnterpriseResponseDTO(empresaEntity.getCd_cnpj_empresa());
     }
 
 }
