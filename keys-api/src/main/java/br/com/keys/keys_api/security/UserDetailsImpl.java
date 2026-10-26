@@ -18,24 +18,22 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return usuario.getEmail(); //no nosso caso, o email vai ser usado para identificar o user
+        return usuario.getNmEmailUsuario(); //no nosso caso, o email vai ser usado para identificar o user
     }
 
     @Override
     public String getPassword() {
-        return usuario.getSenha(); //precisa da senha tmb para verificar e tals
+        return usuario.getNmSenhaUsuario(); //precisa da senha tmb para verificar e tals
     }
 
     //Codigo que faz com que o admin seja necessário vai ficar comentado por enquanto
     @Override
     public Collection<?extends GrantedAuthority> getAuthorities() { //retorno de uma lista de um objeto que representa o nível de permissão
-        /*if(usuario.getCdAdmin() == null) {
+        if(usuario.getChefe().getCdUsuario() == null) {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else { //quem tem cd_admin foi criado por admin
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        }*/
-
-        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
     }
     //opcionais (funcionalidades extras):
     @Override

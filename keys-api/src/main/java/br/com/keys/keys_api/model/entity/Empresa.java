@@ -3,6 +3,7 @@ package br.com.keys.keys_api.model.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.data.domain.Persistable;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Empresa implements Persistable<String> {
 
     @Id //inserir manualmente o cnpj no form lá, lembra?
+    @CNPJ(format = CNPJ.Format.ALPHANUMERIC)
     private String cd_cnpj_empresa;
     @Column(nullable = false, length = 255)
     private String nm_empresa;

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.springframework.data.domain.Persistable;
 
 import java.util.List;
@@ -13,23 +12,24 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "tb_usuario")
-@Getter 
-@Setter 
+@Getter
+@Setter
+
 public class Usuario implements Persistable<String> {
     @Id
-    @Column(name = "cdusuario")
+    @Column(name = "cd_usuario")
     private String cdUsuario;
     @Transient
     private boolean isNew = true;
 
-    @Column(name = "nm_usuario", nullable = false, length = 100)
-    private String nome;
-    @Column(name = "nm_email_usuario", nullable = false, length = 100, unique = true)
-    private String email;
-    @Column(name = "nm_link_imagem_usuario", length = 255)
-    private String imagem;
-    @Column(name = "nm_senha_usuario", length = 255, nullable = false)
-    private String senha;
+    @Column(nullable = false, length = 100, name = "nm_usuario")
+    private String nmUsuario;
+    @Column(nullable = false, length = 100, unique = true, name = "nm_email_usuario")
+    private String nmEmailUsuario;
+    @Column(length = 255, name = "nm_link_imagem_usuario")
+    private String nmLinkImagemUsuario;
+    @Column(length = 255, nullable = false, name = "nm_senha_usuario")
+    private String nmSenhaUsuario;
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
     private Empresa empresa;
@@ -39,11 +39,6 @@ public class Usuario implements Persistable<String> {
     @JoinColumn(name = "cd_admin")
     @JsonBackReference //não serializa esse lado, evitando serializar infinitamente
     private Usuario chefe;
-
-    //Codigo que faz com que o admin seja necessário vai ficar comentado por enquanto
-
-    //@Column(name = "cd_admin", insertable = false, updatable = false)
-    //private String cdAdmin;  //pra eu conseguir visualizar no getter
 
     @JsonManagedReference //lado serializado
     @OneToMany(mappedBy = "chefe")
@@ -56,26 +51,6 @@ public class Usuario implements Persistable<String> {
     public Usuario(Optional<Usuario> byEmail) {}
 
     public Usuario() {}
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    public Usuario getChefe() {
-        return chefe;
-    }
-
-    public void setChefe(Usuario chefe) {
-        this.chefe = chefe;
-    }
-
-    public List<Usuario> getSubordinados() {
-        return subordinados;
-    }
-
-    public void setSubordinados(List<Usuario> subordinados) {
-        this.subordinados = subordinados;
-    }
 
     //pro Persistable:
     @Override

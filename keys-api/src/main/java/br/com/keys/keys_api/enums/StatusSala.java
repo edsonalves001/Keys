@@ -2,7 +2,7 @@ package br.com.keys.keys_api.enums;
 
 public enum StatusSala {
     DISPONIVEL,
-    RESERVARDA,
+    RESERVADA,
     INDISPONIVEL,
     EM_US0;
 }

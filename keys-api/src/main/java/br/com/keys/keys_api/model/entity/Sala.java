@@ -27,6 +27,7 @@ public class Sala {
     private String nome;
     @Column(name = "ds_sala",length = 255)
     private String descricao;
+    @Enumerated(EnumType.STRING) //Você esqueceu disso, Igor.
     @Column(name = "ic_disponibilidade_sala",nullable = false)
     private StatusSala statusSala;
 
