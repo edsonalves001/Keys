@@ -27,7 +27,7 @@ public class EmpresaEntity implements Persistable<String> {
     // apenas atualizada(), isso porque o JPA define se insere ou atualiza por se o id for nulo. No nosso caso, ele n vai ser e ele vai
     // achar que precisa de um update, contudo vai dar erro por não existir
 
-    @OneToMany(mappedBy = "empresaEntity")
+    @OneToMany(mappedBy = "empresa")
     private List<UsuarioEntity> funcionarios;
 
     public EmpresaEntity() {}

@@ -15,9 +15,9 @@ import java.util.Optional;
 @Getter
 @Setter
 
-public class Usuario implements Persistable<String> {
+public class UsuarioEntity implements Persistable<String> {
     @Id
-    @Column(name = "cd_usuario")
+    @Column(name = "cdusuario")
     private String cdUsuario;
     @Transient
     private boolean isNew = true;
@@ -32,25 +32,25 @@ public class Usuario implements Persistable<String> {
     private String nmSenhaUsuario;
     @ManyToOne
     @JoinColumn(name = "cd_empresa")
-    private Empresa empresa;
+    private EmpresaEntity empresa;
 
     //relacionamento recursivo:
     @ManyToOne
     @JoinColumn(name = "cd_admin")
     @JsonBackReference //não serializa esse lado, evitando serializar infinitamente
-    private Usuario chefe;
+    private UsuarioEntity chefe;
 
     @JsonManagedReference //lado serializado
     @OneToMany(mappedBy = "chefe")
-    private List<Usuario> subordinados;
+    private List<UsuarioEntity> subordinados;
 
     //Suas reservas:
     @OneToMany(mappedBy = "proprietario")
-    private List<Reserva> reservas;
+    private List<ReservaEntity> reservas;
 
-    public Usuario(Optional<Usuario> byEmail) {}
+    public UsuarioEntity(Optional<UsuarioEntity> byEmail) {}
 
-    public Usuario() {}
+    public UsuarioEntity() {}
 
     //pro Persistable:
     @Override

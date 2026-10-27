@@ -35,7 +35,7 @@ public class ReservaService {
         novaReservaEntity.setFimReserva(addReservationRequestDTO.fimReserva());
         novaReservaEntity.setProprietario(proprietario);
         novaReservaEntity.setSalaEntity(salaEntity);
-        novaReservaEntity.setStatusReservaEnum();
+        novaReservaEntity.setstatusReserva();
         reservaRepository.save(novaReservaEntity);
 
         return new AddReservationResponseDTO(novaReservaEntity.getInicioReserva(), novaReservaEntity.getFimReserva(), novaReservaEntity.getProprietario(), novaReservaEntity.getSalaEntity());

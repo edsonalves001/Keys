@@ -1,4 +1,4 @@
-package br.com.keys.keys_api.service;
+/*package br.com.keys.keys_api.service;
 
 import br.com.keys.keys_api.exception.EmailCadastradoException;
 import br.com.keys.keys_api.exception.UsuarioInexistenteException;
@@ -67,3 +67,6 @@ public class AuthService {
     }
 
 }
+
+
+ */
