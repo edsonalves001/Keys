@@ -1,13 +1,17 @@
-/*package br.com.keys.keys_api.service;
+package br.com.keys.keys_api.service;
 
 import br.com.keys.keys_api.exception.EmailCadastradoException;
-import br.com.keys.keys_api.model.dto.LoginRequestDTO;
-import br.com.keys.keys_api.model.dto.LoginResponseDTO;
-import br.com.keys.keys_api.model.dto.RegisterRequestDTO;
-import br.com.keys.keys_api.model.dto.RegisterResponseDTO;
+import br.com.keys.keys_api.exception.UsuarioInexistenteException;
+import br.com.keys.keys_api.model.dto.LoginRequest;
+import br.com.keys.keys_api.model.dto.LoginResponse;
+import br.com.keys.keys_api.model.dto.RegisterRequest;
+import br.com.keys.keys_api.model.dto.RegisterResponse;
+import br.com.keys.keys_api.model.entity.Empresa;
 import br.com.keys.keys_api.model.entity.Usuario;
+import br.com.keys.keys_api.repository.EmpresaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
 import br.com.keys.keys_api.security.JwtService;
+import br.com.keys.keys_api.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,37 +28,34 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder; // para fazer hash da senha né, Edson?? 🖕🖕🖕
     private final UsuarioRepository usuarioRepository; //buscar no banco, criar etc
 
-    public RegisterResponseDTO criarUser(RegisterRequestDTO registerRequestDTO, String token) {
-        //verificar se email é valido:isso
-        if (usuarioRepository.findByEmail(registerRequestDTO.nm_email_usuario()).isPresent()) {
-            throw new EmailCadastradoException("Email já cadastrado! Tente outro!");
-        }
+    public RegisterResponse criarUser(RegisterRequest registerRequest, String token) { //cria apenas user normal, não adm
+        //verificar se email é valido:
+        usuarioRepository.findBynmEmailUsuario(registerRequest.nm_email_usuario()).orElseThrow(() -> new EmailCadastradoException("Email já cadastrado! Tente outro!"));
 
-        //Codigo que faz com que o admin seja necessário vai ficar comentado por enquanto
-
-        /* //Pegando cd_admin:
+        //Pegando cd_admin:
         String email_admin = this.jwtService.extractUsername(token); //admin precisa de token pra criar user
-        Usuario admin = usuarioRepository.findByEmailAndChefeIsNull(email_admin).orElseThrow(()-> new UsuarioInexistenteException("Administrador inexistente!"));
+        Usuario admin = usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_admin).orElseThrow(()-> new UsuarioInexistenteException("Administrador inexistente!"));
+
         //Criando hash (essa classe veio do método do SecurityConfig):
-        String hash = passwordEncoder.encode(registerRequestDTO.nm_senha_usuario());
+        String hash = passwordEncoder.encode(registerRequest.nm_senha_usuario());
 
         Usuario usuario_novo = new Usuario();
-        usuario_novo.setCdUsuario(registerRequestDTO.cd_usuario());
-        usuario_novo.setNome(registerRequestDTO.nm_usuario());
-        usuario_novo.setEmail(registerRequestDTO.nm_email_usuario());
-        //usuario_novo.setCdAdmin(admin.getCdAdmin());
-        usuario_novo.setImagem("/uploads/usuarios/foto-padrao.png");
-        usuario_novo.setSenha(hash);
-        //usuario_novo.setEmpresa(admin.getEmpresa());
+        usuario_novo.setCdUsuario(registerRequest.cd_usuario());
+        usuario_novo.setNmUsuario(registerRequest.nm_usuario());
+        usuario_novo.setNmEmailUsuario(registerRequest.nm_email_usuario());
+        usuario_novo.setChefe(admin);
+        usuario_novo.setNmLinkImagemUsuario("/uploads/usuarios/foto-padrao.png");
+        usuario_novo.setNmSenhaUsuario(hash);
+        usuario_novo.setEmpresa(admin.getEmpresa());
         usuarioRepository.save(usuario_novo);
 
-        return new RegisterResponseDTO(usuario_novo.getCdUsuario(), usuario_novo.getEmail());
+        return new RegisterResponse(usuario_novo.getCdUsuario(), usuario_novo.getNmEmailUsuario());
     }
 
-    public LoginResponseDTO logarUser(LoginRequestDTO loginRequestDTO) {
+    public LoginResponse logarUser(LoginRequest loginRequest) {
         // 1. AuthenticationManager busca por email E compara senha (via PasswordEncoder)
         Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.nm_email_usuario(), loginRequestDTO.nm_senha_usuario())
+                new UsernamePasswordAuthenticationToken(loginRequest.nm_email_usuario(), loginRequest.nm_senha_usuario())
         );
 
         // 2. Gera o token
@@ -62,9 +63,7 @@ public class AuthService {
         String token = jwtService.generateToken(userDetails);
 
         // 3. Devolve
-        return new LoginResponseDTO(token);
+        return new LoginResponse(token);
     }
 
 }
-
- */

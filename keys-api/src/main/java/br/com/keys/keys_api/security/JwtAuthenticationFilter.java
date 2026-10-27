@@ -23,6 +23,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter { //apenas uma
     private final UserDetailsService userDetailsService; //para criar user e comparar com o token
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest req) throws ServletException { //permite rotas de não passarem pelo filtro pré autorização da classe SecurityConfig
+        String path = req.getRequestURI();
+        return path.startsWith("/auth/") || path.startsWith("/api/empresa");
+    }
+
+
+    @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,

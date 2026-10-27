@@ -1,24 +1,24 @@
 package br.com.keys.keys_api.controller;
 
-import br.com.keys.keys_api.model.dto.CreateEnterpriseRequestDTO;
-import br.com.keys.keys_api.model.dto.CreateEnterpriseResponseDTO;
+import br.com.keys.keys_api.model.dto.CreateEnterpriseRequest;
+import br.com.keys.keys_api.model.dto.CreateEnterpriseResponse;
 import br.com.keys.keys_api.service.EmpresaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/")
 public class EmpresaController {
 
     private final EmpresaService empresaService;
 
-    public ResponseEntity<CreateEnterpriseResponseDTO> createEnterprise(@Valid @RequestBody CreateEnterpriseRequestDTO createEnterpriseRequestDTO) {
-        CreateEnterpriseResponseDTO createEnterpriseResponseDTO = this.empresaService.criarEmpresa(createEnterpriseRequestDTO);
-        return ResponseEntity.status(201).body(createEnterpriseResponseDTO);
+    @PostMapping("/empresa")
+    public ResponseEntity<CreateEnterpriseResponse> createEnterprise(@Valid @RequestBody CreateEnterpriseRequest createEnterpriseRequest) {
+        CreateEnterpriseResponse createEnterpriseResponse = this.empresaService.criarEmpresa(createEnterpriseRequest);
+        return ResponseEntity.status(201).body(createEnterpriseResponse);
     }
 }
