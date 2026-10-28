@@ -8,12 +8,14 @@ import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.repository.UsuarioRepository;
 //import br.com.keys.keys_api.security.JwtService;
 //import br.com.keys.keys_api.security.UserDetailsImpl;
+import br.com.keys.keys_api.security.JwtService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.authentication.AuthenticationManager;
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,16 +24,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    //private final JwtService jwtService;
+    private final JwtService jwtService;
     private final UsuarioRepository usuarioRepository;
-    //private PasswordEncoder passwordEncoder; //verificar se a senha hash é igual a outra senha. Compara duas hash
+    private PasswordEncoder passwordEncoder; //verificar se a senha hash é igual a outra senha. Compara duas hash
 
 
-    /*public List<FindAllUSersResponse> buscarTodosUsuarios(FindAllUsersRequest findAllUsersRequest, String token) {
+    public List<FindAllUSersResponse> buscarTodosUsuarios(FindAllUsersRequest findAllUsersRequest, String token) {
 
         //Verifica se é adm o dono do token:
-        //String email_user = jwtService.extractUsername(token);
-        //UsuarioEntity usuario = this.usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_user).orElseThrow(()-> new UsuarioInexistenteException("Admin inexistente!"));
+        String email_user = jwtService.extractUsername(token);
+        UsuarioEntity usuario = this.usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_user).orElseThrow(()-> new UsuarioInexistenteException("Admin inexistente!"));
 
         //Busca users feitos por ele:
         List<UsuarioEntity> usuarios = this.usuarioRepository.findByChefe(usuario.getChefe());
@@ -40,7 +42,7 @@ public class UsuarioService {
         } else {
             return usuarios.stream().map(this::mapearUsuarios).toList();
         }
-    }*/
+    }
 
     public FindUserByIdResponse buscarUsuarioPorId(String id) {
         if(id.trim().isEmpty()) {
@@ -57,7 +59,7 @@ public class UsuarioService {
 
 
 
-   /* public void deletarUsuario(String id, String token) {
+   public void deletarUsuario(String id, String token) {
         if(id.trim().isEmpty()) {
             throw  new UsuarioInexistenteException("Id inválido, ou seja, usuário inexistente!");
         } else {
@@ -68,7 +70,8 @@ public class UsuarioService {
             //Excluindo
             this.usuarioRepository.deleteById(id);
         }
-    }*/
+    }
+
 
     /*
     public UpdateSenhaByEmailResponse updateSenhaByEmail(UpdateSenhaByEmailRequest updateSenhaByEmailRequest) {
@@ -76,7 +79,8 @@ public class UsuarioService {
 
         }
     }
-   */
+    */
+
 
     public UpdateUserResponse atualizarInformacoesUsuario(String id, UpdateUserRequest updateUserRequest) {
         UsuarioEntity usuario = this.usuarioRepository.findById(id).orElseThrow(()-> new UsuarioInexistenteException("Usuário não encontrado!"));
@@ -94,7 +98,7 @@ public class UsuarioService {
         return new UpdateUserResponse(usuario.getNmUsuario(), usuario.getNmEmailUsuario(), usuario.getNmLinkImagemUsuario());
     }
 
-   /* public void atualizarSenhaUsuario(UpdateUserPasswordRequest updateUserPasswordRequest, String id) {
+    public void atualizarSenhaUsuario(UpdateUserPasswordRequest updateUserPasswordRequest, String id) {
         if(id.trim().isEmpty()) {
             throw  new UsuarioInexistenteException("Id inválido, ou seja, usuário inexistente!");
         }
@@ -108,5 +112,7 @@ public class UsuarioService {
         }
     }
 
-    */
+
+
+
 }

@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 public class ReservaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cd_reserva")
     private Integer cdreserva;
-    @Column(nullable = false)
+    @Column(name = "dh_inicio_reserva", nullable = false)
     private LocalDateTime inicioReserva;
-    @Column(nullable = false)
+    @Column(name = "dh_fim_reserva", nullable = false)
     private LocalDateTime fimReserva;
     @ManyToOne
     @JoinColumn(name = "cd_usuario")

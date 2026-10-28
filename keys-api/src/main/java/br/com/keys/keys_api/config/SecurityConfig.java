@@ -1,4 +1,4 @@
-/*package br.com.keys.keys_api.config;
+package br.com.keys.keys_api.config;
 
 import br.com.keys.keys_api.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +27,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) //desativa verificação csrf
+                .csrf(csrf -> csrf.disable()) //desativa verificação csrf
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //desativa criação sessão no navegador, pois usamnos token
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/api/empresa/**").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
+                        .requestMatchers("/auth/**", "/api/empresa/**", "/error").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
                         .anyRequest().authenticated() //o resto precisa de autenticação
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //permite nosso filtro rodar primeiro, pois o segundo n funciona no nosso caso
@@ -53,4 +53,4 @@ public class SecurityConfig {
     }
 }
 
- */
+

@@ -1,6 +1,6 @@
-/*package br.com.keys.keys_api.security;
+package br.com.keys.keys_api.security;
 
-import br.com.keys.keys_api.model.entity.Usuario;
+import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -49,6 +49,3 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 }
-
-
- */

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class UsuarioEntity implements Persistable<String> {
     @Id
-    @Column(name = "cdusuario")
+    @Column(name = "cd_usuario")
     private String cdUsuario;
     @Transient
     private boolean isNew = true;
@@ -31,7 +31,7 @@ public class UsuarioEntity implements Persistable<String> {
     @Column(length = 255, nullable = false, name = "nm_senha_usuario")
     private String nmSenhaUsuario;
     @ManyToOne
-    @JoinColumn(name = "cd_empresa")
+    @JoinColumn(name = "cd_empresa", nullable = false)
     private EmpresaEntity empresa;
 
     //relacionamento recursivo:
