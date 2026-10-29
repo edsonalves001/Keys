@@ -6,6 +6,7 @@ INSERT INTO tb_empresa (cd_cnpj_empresa, nm_empresa) VALUES
 ('45.678.901/0001-23', 'Espaços Coworking SA');
 
 -- 2. Admin da primeira empresa (Rogerinho, sem chefe)
+-- Senha em texto puro: Senha@123
 INSERT INTO tb_usuario (
     cd_usuario,
     nm_usuario,
@@ -18,13 +19,14 @@ INSERT INTO tb_usuario (
     '123ab23',
     'Rogerinho',
     'rogerinho@gmail.com',
-    '$2a$10$EzH.WiIIE.j1yOrbHkd2qOViDWluvShiNgtxn8TCDwx7RXLmd451m',
+    '$2a$12$yisLb.CP1ONOHx6Dn0XGFe4/I6GG/HQOXfvLMxINgu76Ze7Izj9EO', -- Senha@123
     '/uploads/usuarios/foto-padrao.png',
     NULL,
     '11.222.333/0001-81'
 );
 
 -- 3. Admin da segunda empresa (Pedrinho, sem chefe)
+-- Senha em texto puro: Senha@123
 INSERT INTO tb_usuario (
     cd_usuario,
     nm_usuario,
@@ -37,7 +39,7 @@ INSERT INTO tb_usuario (
     '123ab24',
     'Pedrinho',
     'pedrinho@hotmail.com',
-    '$2a$10$ayqOFiG8qOmV.RI3TqRTxu1207SdONbjjyHM7ljPIo1FEtFNOWUvS',
+    '$2a$12$yisLb.CP1ONOHx6Dn0XGFe4/I6GG/HQOXfvLMxINgu76Ze7Izj9EO', -- Senha@123
     '/uploads/usuarios/foto-padrao.png',
     NULL,
     '45.678.901/0001-23'

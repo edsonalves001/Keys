@@ -15,6 +15,6 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, String> 
    public Optional<UsuarioEntity> findBynmEmailUsuario(String email);
    public Optional<UsuarioEntity> findByNmEmailUsuarioAndChefeIsNull(String email);
    public Optional<UsuarioEntity> findByNmEmailUsuarioAndNmSenhaUsuario(String email, String senha);
-   public List<UsuarioEntity> findByChefe(UsuarioEntity chefe); //buscar usuários do chefe
+   public List<UsuarioEntity> findByEmpresa(EmpresaEntity empresaEntity); //buscar usuários do chefe
    public Optional<UsuarioEntity> findByEmpresaAndChefeIsNull(EmpresaEntity empresa);
 }

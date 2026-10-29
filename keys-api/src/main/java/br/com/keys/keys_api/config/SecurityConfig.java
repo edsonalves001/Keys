@@ -1,5 +1,7 @@
 package br.com.keys.keys_api.config;
 
+import br.com.keys.keys_api.exception.SemAutenticacaoException;
+import br.com.keys.keys_api.exception.SemPermissaoException;
 import br.com.keys.keys_api.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter; //classe de autenticação
-
+    private final SemAutenticacaoException authEntryPoint; //para exceção personalizada as duas
+    private final SemPermissaoException accessDeniedHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -33,7 +36,9 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/api/empresa/**", "/error").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
                         .anyRequest().authenticated() //o resto precisa de autenticação
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //permite nosso filtro rodar primeiro, pois o segundo n funciona no nosso caso
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(this.authEntryPoint)
+                        .accessDeniedHandler(this.accessDeniedHandler)); //permite nosso filtro rodar primeiro, pois o segundo n funciona no nosso caso
 
         return http.build(); //cria o objeto maldito da classe do filtro 🖕🖕🖕
     }

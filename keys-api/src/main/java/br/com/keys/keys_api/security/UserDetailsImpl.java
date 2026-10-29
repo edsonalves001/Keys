@@ -30,7 +30,7 @@ public class UserDetailsImpl implements UserDetails {
     //Codigo que faz com que o admin seja necessário vai ficar comentado por enquanto
     @Override
     public Collection<?extends GrantedAuthority> getAuthorities() { //retorno de uma lista de um objeto que representa o nível de permissão
-        if(usuario.getChefe().getCdUsuario() == null) {
+        if(usuario.getChefe() !=null) {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else { //quem tem cd_admin foi criado por admin
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));

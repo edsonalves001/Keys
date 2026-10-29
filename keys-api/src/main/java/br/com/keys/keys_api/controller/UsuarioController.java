@@ -21,8 +21,8 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @GetMapping("/usuarios")
-    public ResponseEntity<List<FindAllUSersResponse>> findAllUsers(@Valid @RequestBody FindAllUsersRequest findAllUsersRequest, @RequestHeader("Authorization") String token) {
-        List<FindAllUSersResponse> listaUsuarios = this.usuarioService.buscarTodosUsuarios(findAllUsersRequest, token);
+    public ResponseEntity<List<FindAllUSersResponse>> findAllUsers(@RequestHeader("Authorization") String token) {
+        List<FindAllUSersResponse> listaUsuarios = this.usuarioService.buscarTodosUsuarios(token);
         return ResponseEntity.status(200).body(listaUsuarios);
     }
 
@@ -51,7 +51,7 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    /*
+    /* Vc disse que ia fazer a recuperação de senha via email, Edson!
     @PatchMapping("/usuarios/alterarSenha") String updateSenhaByEmail(@RequestBody UpdateSenhaByEmailRequest updateSenhaByEmailRequest) {
         UpdateSenhaByEmailResponse updateSenhaByEmailResponse = this.usuarioService.updateSenhaByEmail(updateSenhaByEmailRequest);
         return "";

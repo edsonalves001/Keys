@@ -11,10 +11,12 @@ import br.com.keys.keys_api.repository.EmpresaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
 import br.com.keys.keys_api.security.JwtService;
 import br.com.keys.keys_api.security.UserDetailsImpl;
+import br.com.keys.keys_api.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder; // para fazer hash da senha né, Edson?? 🖕🖕🖕
     private final UsuarioRepository usuarioRepository; //buscar no banco, criar etc
     private final EmpresaRepository empresaRepository; //buscar empresa do adm
+    private final UserDetailsServiceImpl userDetailsService;
 
     public RegisterResponseDTO criarUser(RegisterRequestDTO registerRequest, String token) { //cria apenas user normal, não adm
 
@@ -60,19 +63,19 @@ public class AuthService {
         return new RegisterResponseDTO(usuario_novo.getCdUsuario(), usuario_novo.getNmEmailUsuario(), "Não faz sentido ter token kkk");
     }
 
-    public LoginResponseDTO logarUser(LoginRequestDTO loginRequest) {
-        // 1. AuthenticationManager busca por email E compara senha (via PasswordEncoder)
-        Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.nm_email_usuario(), loginRequest.nm_senha_usuario())
-        );
-
-        // 2. Gera o token
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        assert userDetails != null;
-        String token = jwtService.generateToken(userDetails);
-
-        // 3. Devolve
-        return new LoginResponseDTO(token);
+    public LoginResponseDTO logarUser(LoginRequestDTO req) {
+        try {
+            //retorna objeto autenticado se senha e email baterem com a do banco. Ele consulta sozinho
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(req.nm_email_usuario(), req.nm_senha_usuario())
+            );
+            String nome = auth.getName();
+            UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(nome); //gerando entidade userdetails pra criar token
+            String token = jwtService.generateToken(userDetails);
+            return new LoginResponseDTO(token);
+        } catch (AuthenticationException e) { //ele pode gerar essa exceção se der b.o
+            throw new CredenciaisInvalidasException("Email ou senha inválidos");
+        }
     }
 
     public RegisterResponseDTO criarAdmin(RegisterRequestDTO registerRequestDTO) {

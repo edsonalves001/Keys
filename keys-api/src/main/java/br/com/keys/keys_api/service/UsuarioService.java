@@ -1,10 +1,13 @@
 package br.com.keys.keys_api.service;
 
+import br.com.keys.keys_api.exception.EmpresaInexistenteException;
 import br.com.keys.keys_api.exception.SenhaIncorretaException;
 import br.com.keys.keys_api.exception.UsuarioInexistenteException;
 import br.com.keys.keys_api.model.dto.*;
+import br.com.keys.keys_api.model.entity.EmpresaEntity;
 import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.model.entity.UsuarioEntity;
+import br.com.keys.keys_api.repository.EmpresaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
 //import br.com.keys.keys_api.security.JwtService;
 //import br.com.keys.keys_api.security.UserDetailsImpl;
@@ -27,16 +30,17 @@ public class UsuarioService {
     private final JwtService jwtService;
     private final UsuarioRepository usuarioRepository;
     private PasswordEncoder passwordEncoder; //verificar se a senha hash é igual a outra senha. Compara duas hash
+    private EmpresaRepository empresaRepository;
 
+    public List<FindAllUSersResponse> buscarTodosUsuarios(String token) {
 
-    public List<FindAllUSersResponse> buscarTodosUsuarios(FindAllUsersRequest findAllUsersRequest, String token) {
+        //Verifica se é adm o dono do token (preciso separar o bearer do token pra evitar erros:
+        String novoToken = this.extrairToken(token);
+        String email_user = jwtService.extractUsername(novoToken);
+        UsuarioEntity adm = this.usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_user).orElseThrow(()-> new UsuarioInexistenteException("Admin inexistente!"));
 
-        //Verifica se é adm o dono do token:
-        String email_user = jwtService.extractUsername(token);
-        UsuarioEntity usuario = this.usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_user).orElseThrow(()-> new UsuarioInexistenteException("Admin inexistente!"));
-
-        //Busca users feitos por ele:
-        List<UsuarioEntity> usuarios = this.usuarioRepository.findByChefe(usuario.getChefe());
+        //Busca users dessa empresa:
+        List<UsuarioEntity> usuarios = this.usuarioRepository.findByEmpresa(adm.getEmpresa());
         if(usuarios.isEmpty()) {
             throw new UsuarioInexistenteException("Nenhum user criado por esse adm!");
         } else {
@@ -113,6 +117,8 @@ public class UsuarioService {
     }
 
 
-
+    public String extrairToken(String token) {
+        return token.substring(7);
+    }
 
 }
