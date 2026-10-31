@@ -38,7 +38,7 @@ public class AuthService {
                 .ifPresent(u -> { throw new EmailCadastradoException("Email já cadastrado! Tente outro!"); });
 
         //Pegando cd_admin:
-        String email_admin = this.jwtService.extractUsername(token); //admin precisa de token pra criar user
+        String email_admin = this.extrairToken(token); //admin precisa de token pra criar user
         UsuarioEntity admin = usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_admin).orElseThrow(()-> new UsuarioInexistenteException("Administrador inexistente!"));
         if(!admin.getEmpresa().getCd_cnpj_empresa().equals(registerRequest.cd_cnpj_empresa())) {
             throw new AdminOutraEmpresaException("Esse admin é de outra empresa!");
@@ -117,5 +117,10 @@ public class AuthService {
         String token = this.jwtService.generateToken(ur);
 
         return new RegisterResponseDTO(usuario.getCdUsuario(), usuario.getNmEmailUsuario(), token);
+    }
+
+    public String extrairToken(String token) {
+        String novo_token = token.substring(7); //Removendo Bearer e espaços antes do token
+        return this.jwtService.extractUsername(novo_token);
     }
 }

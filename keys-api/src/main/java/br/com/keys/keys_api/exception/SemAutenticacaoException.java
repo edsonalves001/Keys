@@ -16,6 +16,6 @@ public class SemAutenticacaoException implements AuthenticationEntryPoint { //ex
     public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException authException) throws IOException, ServletException {
         resp.setStatus(401);
         resp.setContentType("application/json");
-        resp.getWriter().write("{\"erro\": \"Não autorizado: Faça login para acessar este recurso.\"}");
+        resp.getWriter().write("{\"erro\": \"Não autorizado: Faça login para acessar este recurso ou envie o token que você possui, não somos adivinha!\"}");
     }
 }

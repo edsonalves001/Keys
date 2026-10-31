@@ -33,21 +33,21 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/usuarios/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable("id") String id, String token) //só adm deleta
+    public ResponseEntity<Void> deleteUserById(@PathVariable("id") String id, @RequestHeader("Authorization") String token) //só adm deleta
     {
         this.usuarioService.deletarUsuario(id, token);
         return ResponseEntity.noContent().build(); //retorna status 204 = no content, mas ação feita com sucesso
     }
 
     @PatchMapping("/usuarios/{id}")
-    public ResponseEntity<UpdateUserResponse> updateUserById(@PathVariable("id") String id, @RequestBody UpdateUserRequest updateUserRequest) {
-        UpdateUserResponse updateUserResponse = this.usuarioService.atualizarInformacoesUsuario(id, updateUserRequest);
+    public ResponseEntity<UpdateUserResponse> updateUserById(@PathVariable("id") String id, @RequestBody UpdateUserRequest updateUserRequest, @RequestHeader("Authorization") String token) {
+        UpdateUserResponse updateUserResponse = this.usuarioService.atualizarInformacoesUsuario(id, updateUserRequest, token);
         return ResponseEntity.status(200).body(updateUserResponse);
     }
 
-    @PatchMapping("/usuarios/password/{id}")
-    public ResponseEntity<Void> updateUserPassword(@PathVariable("id") String id, @Valid @RequestBody UpdateUserPasswordRequest updateUserPasswordRequest) {
-        this.usuarioService.atualizarSenhaUsuario(updateUserPasswordRequest, id);
+    @PatchMapping("/usuarios/senha/{id}")
+    public ResponseEntity<Void> updateUserPassword(@PathVariable("id") String id, @Valid @RequestBody UpdateUserPasswordRequest updateUserPasswordRequest, @RequestHeader("Authorization") String token) {
+        this.usuarioService.atualizarSenhaUsuario(updateUserPasswordRequest, id, token);
         return ResponseEntity.noContent().build();
     }
 

@@ -17,7 +17,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping("/login") //Edson roubando meu endpoint... Desgraçado kk
     public ResponseEntity<LoginResponseDTO> loginUser(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
        LoginResponseDTO loginResponseDTO =  this.authService.logarUser(loginRequestDTO);
        return  ResponseEntity.status(201).body(loginResponseDTO);
