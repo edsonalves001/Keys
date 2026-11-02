@@ -7,7 +7,7 @@ const Menu = function menu() {
     return (
         <>
             <header className="full-menu">
-                <p>KEYS</p>
+                <p>keYs</p>
                 <nav>
                     <ul>
                         <li><a href="#">Início</a></li>
@@ -19,7 +19,7 @@ const Menu = function menu() {
                         <img src={logout} alt="Ícone de sair do botão. Apenas enfeite do botão de sair"/>
                     </button>
                 </nav>
-            </header>
+            </header><br></br>
         </>
     );
 }

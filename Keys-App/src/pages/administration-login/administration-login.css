@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+.BoxLogin {
+    display: flex;
+    flex-direction: row;        
+    align-items: center;        
+    justify-content: center;    
+    flex-wrap: wrap;            
+    gap: 40px;                  
+    max-width: 900px;           
+    margin: 8vw auto 0 auto;    
+    padding: 50px 40px;             
+    border-radius: 12px;
+    background-color: #0C3553;
+    border: none;
+}
+
+.BoxLogin a{
+    text-decoration: none;
+}
+
+#fotoMenuLogin {
+    width: 300px;
+    height: 500px;
+    border-radius: 10px;
+    margin-left: -10px;
+    margin-right: 100px;
+}
+
+.BoxLogin h1,
+.BoxLogin input,
+.BoxLogin button {
+    box-sizing: border-box;
+}
+
+.BoxLogin h1 {
+    width: 100%;
+    text-align: left;
+    padding-top: 0;
+    color: white;
+    font-size: 35px;
+    font-family: "Space Grotesk", sans-serif;
+    margin-bottom: 10px;
+}
+
+.BoxLogin input {
+    display: block;
+    margin-top: 15px;
+    margin-left: 0;   
+    margin-right: 0;
+    border-radius: 10px;
+    width: 350px;     
+    height: 45px;
+    padding-left: 20px;
+    font-size: 18px;
+    border: none;
+}
+
+.BoxLogin #botaoLogin {
+    margin-left: 70px;
+    background-color: #D7972B;
+    color: white;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    border: none;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin-top: 25px;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+#botaoversenha{
+    background-color: #D7972B;
+    color: white;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    border: none;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin-top: 25px;
+    margin-bottom: 0;
+    cursor: pointer;
+    width: 190px;
+    height: 40px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.redirecionamentos{
+    font-family: 'Source Sans 3',sans-serif;
+    color:#D7972B;
+    font-size: 20px;
+    margin-top: 5px;
+}
+/* Responsividade para telas até 1000px */
+@media screen and (max-width: 1000px) {
+    #fotoMenuLogin{
+        display: none;
+    }
+    .BoxLogin {
+        margin-top: 100px;
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+        margin-left: 50px;
+        margin-right: 50px;
+        padding: 30px 20px;
+    }
+
+    .BoxLogin h1 {
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .BoxLogin input {
+        width: 280px;
+    }
+
+    #fotoMenuLogin {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .BoxLogin {
+        margin-top: 20vw;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 25px 15px;
+    }
+
+    .BoxLogin h1 {
+        font-size: 26px;
+    }
+
+    .BoxLogin input {
+        width: 100%;
+        max-width: 240px;
+        height: 38px;
+        font-size: 15px;
+    }
+
+    .BoxLogin #botaoLogin {
+        width: 100%;
+        max-width: 240px;
+        height: 45px;
+        margin-left: 10px;        
+    }
+
+    #fotoMenuLogin {
+        width: 150px;
+        height: 150px;
+    }
+}
