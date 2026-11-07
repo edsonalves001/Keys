@@ -1,13 +1,20 @@
 import React from "react";
 import logout from "../assets/logout.png"
 import './full-menu.css'
+import { useNavigate } from "react-router";
 
 const Menu = function menu() {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/');
+    }
 
     return (
         <>
             <header className="full-menu">
-                <p>keYs</p>
+                <p onClick={handleClick}>keYs</p>
                 <nav>
                     <ul>
                         <li><a href="#">Início</a></li>

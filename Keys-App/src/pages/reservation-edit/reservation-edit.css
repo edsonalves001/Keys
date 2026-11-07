@@ -6,7 +6,11 @@
   align-items: center;
   flex-direction: column;
   gap: 2vw;
-  padding-block: 3vw;
+  padding-block: 8vw;
+}
+
+.reservartion_edit_main h1 {
+    font-weight: bold;
 }
 
 .reservartion_edit_main .reservation-info-header {

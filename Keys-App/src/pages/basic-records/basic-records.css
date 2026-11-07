@@ -1,0 +1,199 @@
+.basic-records-menu {
+  background: linear-gradient(to right, #0c3553 0%, #051d2d 69%);
+  padding: 2vw;
+}
+
+.basic-records-menu p {
+  font-family: "Major Mono Display", monospace;
+  font-size: 3rem;
+  letter-spacing: 0.5vw;
+  color: white;
+  cursor: pointer;
+}
+
+.basic-records-main {
+  margin-top: 1vw;
+  display: flex;
+  justify-content: center;
+  gap: 5vw;
+  padding: 2vw;
+}
+
+.basic-records-main .form-empresa,
+.basic-records-main .form-admin,
+.basic-records-main .form-salas {
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding-block: 2vw;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+
+.basic-records-main .form-admin {
+  width: 55vw;
+}
+
+.basic-records-main .form-empresa .menu-form,
+.basic-records-main .form-admin .menu-form,
+.basic-records-main .form-salas .menu-form {
+  width: 100%;
+}
+
+.basic-records-main .form-empresa h1,
+.basic-records-main .form-admin h1,
+.basic-records-main .form-salas h1 {
+  margin-inline: 2vw;
+}
+
+.basic-records-main .form-empresa .menu-form ul,
+.basic-records-main .form-admin .menu-form ul,
+.basic-records-main .form-salas .menu-form ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  border-block: 1px solid #9e9e9e;
+}
+.basic-records-main .form-empresa .menu-form ul li,
+.basic-records-main .form-admin .menu-form ul li,
+.basic-records-main .form-salas .menu-form ul li {
+  padding: 1vw;
+  font-weight: bold;
+  border-right: 1px solid #9e9e9e;
+  cursor: pointer;
+}
+
+.basic-records-main .form-empresa .menu-form ul li img,
+.basic-records-main .form-admin .menu-form ul li img,
+.basic-records-main .form-salas .menu-form ul li img {
+  width: 1.5vw;
+}
+
+.basic-records-main .form-empresa .menu-form ul button,
+.basic-records-main .form-admin .menu-form ul button,
+.basic-records-main .form-salas .menu-form ul button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: none;
+  color: #051d2d;
+  font-weight: 500;
+}
+
+.basic-records-main .form-empresa .corpo-form,
+.basic-records-main .footer-form,
+.basic-records-main .form-salas .footer-form {
+  padding-inline: 2vw;
+}
+
+.basic-records-main .form-admin .corpo-form,
+.basic-records-main .form-salas .corpo-form {
+  padding-inline: 2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+
+.basic-records-main .form-admin .corpo-form .listagem-inputs-corpo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1.5vw;
+}
+
+.basic-records-main
+  .form-admin
+  .corpo-form
+  .listagem-inputs-corpo
+  .input-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75vw;
+}
+
+.basic-records-main
+  .form-admin
+  .corpo-form
+  .listagem-inputs-corpo
+  .input-admin
+  label {
+  font-weight: 700;
+}
+
+.basic-records-main .form-empresa .corpo-form .input-empresa,
+.basic-records-main .corpo-form .input-sala {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  margin-block: 1vw;
+}
+
+.basic-records-main .form-empresa .corpo-form .input-empresa label,
+.basic-records-main .form-salas .corpo-form .input-sala label {
+  font-weight: 500;
+}
+
+.basic-records-main .footer-form {
+  display: flex;
+  justify-content: end;
+  gap: 1vw;
+}
+
+.basic-records-main .footer-form button {
+  width: 8vw;
+  height: 3vw;
+  font-weight: bold;
+  border-radius: 20px;
+  border: none;
+  color: white;
+}
+
+.basic-records-main .footer-form .cancelar {
+  background-color: #b80202;
+}
+
+.basic-records-main .footer-form .seguir {
+  background-color: #051d2d;
+}
+
+.basic-records-main .listagem-salas {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+}
+
+.basic-records-main .listagem-salas .listagem-cards-salas {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  scrollbar-width: none; /* Remove barra lateral (Firefox)*/
+  overflow-y: scroll;
+  height: 60vh;
+}
+
+/* Remover barra lateral (Chrome, Safari, Edge e Opera) */
+.basic-records-main .listagem-salas .listagem-cards-salas::-webkit-scrollbar {
+  display: none;
+}
+
+.basic-records-main .listagem-salas .listagem-cards-salas .card-sala {
+  padding: 2vw;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+.basic-records-main .listagem-salas button {
+  width: 8vw;
+  height: 3vw;
+  border-radius: 10px;
+  border: none;
+  background-color: #051d2d;
+  color: white;
+}

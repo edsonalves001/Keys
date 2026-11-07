@@ -12,37 +12,17 @@ const User_dashboard = function user_dashboard() {
             <main className="user-dashboard-main">
                 <section className="users-list-section">
                     <h1>Usuários</h1>
-                    <div className="add-find-users">
-                        <button>Adicionar usuário</button>
-                        <input type="text" placeholder="Pesquisar..." />
-                    </div>
+                    
+                    <input type="text" placeholder="Pesquisar..." />
+                    <button>Adicionar usuário</button>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>NOME</th>
-                                <th>EMAIL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Ronaldo</td>
-                                <td>Ronaldo@gmail.com</td>
-                            </tr>
-                            <tr>
-                                <td>Ronaldo</td>
-                                <td>Ronaldo@gmail.com</td>
-                            </tr>
-                            <tr>
-                                <td>Ronaldo</td>
-                                <td>Ronaldo@gmail.com</td>
-                            </tr>
-                            <tr>
-                                <td>Ronaldo</td>
-                                <td>Ronaldo@gmail.com</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <ul className="listagem-usuarios">
+                        <li>Ronaldo Pereira</li>
+                        <li>Bully Maguire</li>
+                        <li>Messi Vascaíno</li>
+                        <li>Neymar Careca</li>
+                        <li>Blue Pen</li>
+                    </ul>
                 </section>
 
                 <section className="user-card-section">

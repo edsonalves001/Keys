@@ -1,179 +1,172 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
-.menuH3 {
-    color: #D7972B;
-    padding-left: 20px;
-    padding-top: 15px;
-    font-size: 25px;
-}
+/*Arrumando Menu bugado*/
 
 .menuLanding {
-    background: linear-gradient(to right, #0c3553, #051d2d);
-    display: flex;
-    align-items: center;
-    padding-inline: 2vw;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+  display: flex;
+  align-items: center;
+  background-color: #092e47;
+  padding-block: 1vw;
+  padding-inline: 2vw;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  gap: 4vw;
 }
 
 .menuLanding img {
-    margin-left: 50px;
-    margin-top: 5px;
-    width: 50px;
-    height: 50px;
+  width: 7vw;
 }
 
-.menuLanding a {
-    text-decoration: none;
+.menuLanding nav ul {
+  display: flex;
+  gap: 2vw;
+  list-style: none;
+  margin-left: 5vw;
 }
 
-#textoComoFunciona{
-    margin-left: 41px;
-    margin-right: 0;
+.menuLanding nav ul li a {
+  text-decoration: none;
+  color: #d7972b;
+  font-weight: bold;
 }
-.menuLanding #iconeKeys {
-    margin-right: 150px;
-    width: 190px;
-    height: 130px;
-    margin-left: 10px;
-    margin-bottom: 15px;
-    
+
+.menuLanding nav ul li a:hover {
+  text-decoration: underline;
 }
+
 
 .landingConteudo {
-    background: linear-gradient(to right, #0c3553, #051d2d);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 5%;
-    padding-top: 1px;
-    gap: 30px;
-    min-height: 80vh;
-    box-sizing: border-box;
+  background: linear-gradient(115deg, #062438 0%, #092f49 55%, #0b3854 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 5%;
+  padding-top: 1px;
+  gap: 30px;
+  min-height: 80vh;
+  box-sizing: border-box;
 }
 
 .textoLanding {
-    flex: 1;
-    min-width: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 #sloganKeys {
-    color: #D7972B;
-    font-size: 28px;
-    font-family: "Space Grotesk", sans-serif;
-    margin-top: 10px;
+  color: #d7972b;
+  font-size: 28px;
+  font-family: "Space Grotesk", sans-serif;
+  margin-top: 10px;
 }
 
 #paragrafoLanding {
-    color: white;
-    margin-top: 25px;
-    font-size: 22px;
-    line-height: 30px;
-    margin-left: 41px;
-    margin-right: 0;
-    font-family: "Source Sans 3", sans-serif;
+  color: white;
+  margin-top: 25px;
+  font-size: 22px;
+  line-height: 30px;
+  margin-left: 41px;
+  margin-right: 0;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 .keysText {
-    font-size: 35px;
-    margin-left: 40px;
-    font-family: "Major Mono Display", monospace;
-    color: #D7972B;
+  font-size: 35px;
+  margin-left: 40px;
+  font-family: "Major Mono Display", monospace;
+  color: #d7972b;
 }
 
 .botoesLanding {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-left: 41px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: 41px;
 }
 
 #botaoAdquira {
-    border: none;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 200px;
-    height: 40px;
-    border-radius: 10px;
-    font-family: "Source Sans 3", sans-serif;
-    font-size: 20px;
-    background-color: #D7972B;
-    color: #0c3553;
-    cursor: pointer;
-    margin-left: 5px;
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 20px;
+  background-color: #d7972b;
+  color: #0c3553;
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 #botaoEntre {
-    border: none;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 200px;
-    height: 40px;
-    border-radius: 10px;
-    font-family: "Source Sans 3", sans-serif;
-    font-size: 20px;
-    background-color: #060A1D;
-    color: #D7972B;
-    cursor: pointer;
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 20px;
+  background-color: #060a1d;
+  color: #d7972b;
+  cursor: pointer;
 }
 
 .keysButton {
-    font-size: 25px;
-    margin-left: 3px;
-    font-family: "Major Mono Display", monospace;
-    color: #0c3553;
+  font-size: 25px;
+  margin-left: 3px;
+  font-family: "Major Mono Display", monospace;
+  color: #0c3553;
 }
 
 .keysButtonEntre {
-    font-size: 25px;
-    margin-left: 3px;
-    font-family: "Major Mono Display", monospace;
-    color: #D7972B;
+  font-size: 25px;
+  margin-left: 3px;
+  font-family: "Major Mono Display", monospace;
+  color: #d7972b;
 }
 
-.textoSobre{
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-bottom: 50px;
-    font-size: 25px;
+.textoSobre {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 50px;
+  font-size: 25px;
 }
-.elementosMenu{
-    font-size: 45px;
-    font-family: "Space Grotesk", sans-serif;
-    margin-top: 15px;
-    margin-bottom: 20px;
-    text-align: center;
+.elementosMenu {
+  font-size: 45px;
+  font-family: "Space Grotesk", sans-serif;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .imagemLanding {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 0;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
 }
 
 #imagemdoProduto {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    object-fit: contain;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
 }
 
 .vantagens-container {
   display: flex;
   justify-content: center;
-  gap: 30px; 
-  flex-wrap: wrap; 
+  gap: 30px;
+  flex-wrap: wrap;
   text-align: center;
   font-size: 20px;
   font-family: "Source Sans 3", sans-serif;
   padding: 20px;
 }
-
 
 .vantagens-card {
   max-width: 250px;
@@ -202,7 +195,7 @@
 }
 
 .footer {
-  margin-top: 80px;  
+  margin-top: 80px;
   background: linear-gradient(180deg, #0b253c 0%, #061524 100%);
   color: #ffffff;
   padding: 40px 60px 20px;
@@ -215,7 +208,7 @@
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 
 .footer-col {
@@ -232,7 +225,7 @@
 
 .footer-col p {
   font-size: 0.9rem;
-  color: #d1d5db; 
+  color: #d1d5db;
   line-height: 1.6;
   font-family: "Source Sans 3", sans-serif;
   margin: 4px 0;
@@ -246,8 +239,8 @@
 }
 
 .footer-bottom {
-    font-family: "Source Sans 3", sans-serif;
-    text-align: center;
+  font-family: "Source Sans 3", sans-serif;
+  text-align: center;
 }
 
 .footer-bottom p {
@@ -258,15 +251,14 @@
 }
 
 @media (max-width: 1000px) {
-  
-    .imagemLanding{
-        display: none;
-    }
+  .imagemLanding {
+    display: none;
+  }
 
   .menuLanding {
     padding-inline: 1vw;
   }
-  
+
   .menuLanding #iconeKeys {
     margin-right: 30px;
     width: 140px;
@@ -281,7 +273,7 @@
   .landingConteudo {
     flex-direction: column;
     text-align: center;
-    padding-top: 120px; 
+    padding-top: 120px;
   }
 
   .textoLanding {
@@ -290,7 +282,7 @@
     align-items: center;
   }
 
-  #paragrafoLanding, 
+  #paragrafoLanding,
   .botoesLanding {
     margin-left: 0;
     margin-bottom: 0;
@@ -308,16 +300,8 @@
     display: none;
   }
 
-  .menuLanding {
-    justify-content: space-between;
-    padding-inline: 20px;
-  }
-
-  .menuLanding #iconeKeys {
-    margin-left: 0;
-    margin-right: 0;
-    width: 110px;
-    height: 80px;
+  .menuLanding { /* só menu mobile aqui*/
+    display: none;
   }
 
   #sloganKeys {
@@ -340,7 +324,7 @@
     width: 100%;
   }
 
-  #botaoEntre, 
+  #botaoEntre,
   #botaoAdquira {
     width: 100%;
     margin-left: 0;
@@ -357,10 +341,10 @@
     text-align: justify;
   }
 
-    .footer {
+  .footer {
     padding: 30px 20px 15px;
   }
-  
+
   .footer-content {
     flex-direction: column;
     gap: 30px;

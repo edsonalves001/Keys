@@ -1,7 +1,7 @@
 import React from "react";
 import './create-schedule.css'
 import Menu from "../../components/full-menu.jsx"
-import downloadExcel from "../../assets/download-excel-model.png"
+import downloadExcel from "../../assets/baixar-excel.png"
 import randomProfile from "../../assets/random-profile.png"
 
 
@@ -15,12 +15,6 @@ const Create_schedule = function Create_schedule() {
                     <form action="#" className="add-schedule-form">
                         <h1>Adicionar Reserva</h1>
 
-                        <label htmlFor="room-name" className="sr-only">Nome da sala</label>
-                        <input type="text" id="room-name" name="roomName" placeholder="Nome da sala" title="Nome da sala" />
-
-                        <label htmlFor="reservation-owner-input" className="sr-only">Quem ficará com a sala?</label>
-                        <input type="text" id="reservation-owner-input" name="owner" placeholder="Quem ficará com a sala?"
-                            title="Quem ficará com a sala?" list="possible-owners" />
                         <datalist id="possible-owners">
                             <option value="Ronaldo"></option>
                             <option value="João"></option>
@@ -37,6 +31,15 @@ const Create_schedule = function Create_schedule() {
 
                         <label htmlFor="reservation-end-time" className="sr-only">Hora e minuto do fim da reserva</label>
                         <input type="time" id="reservation-end-time" name="endTime" title="Hora e minuto do fim da reserva" />
+
+                        <label htmlFor="reservation-list" className="sr-only">Salas disponíveis</label>
+                        <select name="lista-reserva" id="lista-reserva" className="reservation-list" title="Salas disponível">
+                            <option value="Sala 1">Sala 1</option>
+                            <option value="Sala 2">Sala 2</option>
+                            <option value="Sala 3">Sala 3</option>
+                            <option value="Sala 4">Sala 4</option>
+
+                        </select>
 
                         <input type="submit" value="Adicionar" />
                     </form>
@@ -57,14 +60,15 @@ const Create_schedule = function Create_schedule() {
                 </section>
 
                 <section className="reservation-list-section">
+                    <h1>Cronograma</h1>
                     <div className="reservation-list">
                         <div className="reservation-item">
                             <div className="owner-local">
-                                <img src={randomProfile} alt="Foto do usuário"/>
-                                    <div className="name-local">
-                                        <p className="owner-name">Carlinhos</p>
-                                        <p>Laboratório ??? </p>
-                                    </div>
+                                <img src={randomProfile} alt="Foto do usuário" />
+                                <div className="name-local">
+                                    <p className="owner-name">Carlinhos</p>
+                                    <p>Laboratório ??? </p>
+                                </div>
                             </div>
                             <div className="date-time">
                                 <p>06/06/2026</p>
@@ -74,11 +78,11 @@ const Create_schedule = function Create_schedule() {
 
                         <div className="reservation-item">
                             <div className="owner-local">
-                                <img src={randomProfile} alt="Foto do usuário"/>
-                                    <div className="name-local">
-                                        <p className="owner-name">Carlinhos</p>
-                                        <p>Laboratório ??? </p>
-                                    </div>
+                                <img src={randomProfile} alt="Foto do usuário" />
+                                <div className="name-local">
+                                    <p className="owner-name">Carlinhos</p>
+                                    <p>Laboratório ??? </p>
+                                </div>
                             </div>
                             <div className="date-time">
                                 <p>06/06/2026</p>
@@ -88,11 +92,11 @@ const Create_schedule = function Create_schedule() {
 
                         <div className="reservation-item">
                             <div className="owner-local">
-                                <img src={randomProfile} alt="Foto do usuário"/>
-                                    <div className="name-local">
-                                        <p className="owner-name">Carlinhos</p>
-                                        <p>Laboratório ??? </p>
-                                    </div>
+                                <img src={randomProfile} alt="Foto do usuário" />
+                                <div className="name-local">
+                                    <p className="owner-name">Carlinhos</p>
+                                    <p>Laboratório ??? </p>
+                                </div>
                             </div>
                             <div className="date-time">
                                 <p>06/06/2026</p>

@@ -24,6 +24,7 @@
   font-size: 3rem;
   letter-spacing: 0.5vw;
   color: white;
+  cursor: pointer;
 }
 
 .full-menu nav ul {
