@@ -1,5 +1,6 @@
 package br.com.keys.keys_api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,6 @@ import java.util.List;
 public class EmpresaEntity implements Persistable<String> {
 
     @Id //inserir manualmente o cnpj no form lá, lembra?
-    @CNPJ(format = CNPJ.Format.ALPHANUMERIC)
     private String cd_cnpj_empresa;
     @Column(nullable = false, length = 255)
     private String nm_empresa;
@@ -28,6 +28,7 @@ public class EmpresaEntity implements Persistable<String> {
     // achar que precisa de um update, contudo vai dar erro por não existir
 
     @OneToMany(mappedBy = "empresa")
+    @JsonManagedReference("empresa-funcionarios")
     private List<UsuarioEntity> funcionarios;
 
     public EmpresaEntity() {}

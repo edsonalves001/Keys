@@ -34,7 +34,6 @@ CREATE TABLE tb_reserva (
     cd_reserva        SERIAL PRIMARY KEY,
     dh_inicio_reserva TIMESTAMP(6) NOT NULL,
     dh_fim_reserva    TIMESTAMP(6) NOT NULL,
-    ds_reserva        VARCHAR(255),
     nm_status_sala    VARCHAR(255) NOT NULL,
     status_reserva    VARCHAR(255) NOT NULL,
     cd_usuario        VARCHAR(255),
@@ -47,6 +46,6 @@ CREATE TABLE tb_reserva (
         nm_status_sala IN ('DISPONIVEL','RESERVARDA','INDISPONIVEL','EM_US0')
     ),
     CONSTRAINT ck_reserva_status CHECK (
-        status_reserva IN ('EM_USO','FINALIZADA')
+        status_reserva IN ('FINALIZADA','ESPERANDO_EFETIVACAO','EFETIVADA')
     )
 );

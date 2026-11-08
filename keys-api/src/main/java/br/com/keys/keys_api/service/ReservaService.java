@@ -1,5 +1,8 @@
 package br.com.keys.keys_api.service;
 
+import br.com.keys.keys_api.enums.StatusReservaEnum;
+import br.com.keys.keys_api.exception.ErrosEfetivarReservaException;
+import br.com.keys.keys_api.model.dto.AddReservationForListRequestDTO;
 import br.com.keys.keys_api.model.dto.AddReservationRequestDTO;
 import br.com.keys.keys_api.model.dto.AddReservationResponseDTO;
 import br.com.keys.keys_api.model.entity.ReservaEntity;
@@ -9,14 +12,13 @@ import br.com.keys.keys_api.repository.ReservaRepository;
 import br.com.keys.keys_api.repository.SalaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.*;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,21 +26,55 @@ public class ReservaService {
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;
     private final SalaRepository salaRepository;
+
+    private final MqttService mqttService;
     public AddReservationResponseDTO criarReserva(AddReservationRequestDTO addReservationRequestDTO) {
         ReservaEntity novaReservaEntity = new ReservaEntity();
 
         //Verifica se o usuario existe, caso não exista, ele informa que o usuario não existe, caso exista, ele é inserido no banco abaixo
+        assert addReservationRequestDTO.proprietario().getId() != null;
         UsuarioEntity proprietario = usuarioRepository.findById(addReservationRequestDTO.proprietario().getId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         //Verifica se a sala existe, caso não exista, ele informa que a sala não foi encontrada, caso existe, ela é inserida no banco abaixo
         SalaEntity salaEntity = salaRepository.findById(addReservationRequestDTO.salaEntity().getCd()).orElseThrow(() -> new RuntimeException("Sala não encontrada"));
-        novaReservaEntity.setInicioReserva(addReservationRequestDTO.inicioReserva());
-        novaReservaEntity.setFimReserva(addReservationRequestDTO.fimReserva());
+
+        LocalDate dataReserva = LocalDate.of(addReservationRequestDTO.dataReserva().getYear(), addReservationRequestDTO.dataReserva().getMonth(), addReservationRequestDTO.dataReserva().getDayOfMonth());
+        LocalTime horaInicioReserva = LocalTime.of(addReservationRequestDTO.horaInicioReserva().getHour(), addReservationRequestDTO.horaInicioReserva().getMinute());
+        LocalTime horaFimReserva = LocalTime.of(addReservationRequestDTO.horaFimReserva().getHour(), addReservationRequestDTO.horaFimReserva().getMinute());
+
+        if(!horaInicioReserva.isAfter(horaFimReserva) || !horaFimReserva.isBefore(horaInicioReserva)) {
+          LocalDateTime inicio = dataReserva.atTime(horaInicioReserva);
+          LocalDateTime fim = dataReserva.atTime(horaFimReserva);
+          novaReservaEntity.setInicioReserva(inicio);
+          novaReservaEntity.setFimReserva(fim);
+        }
         novaReservaEntity.setProprietario(proprietario);
         novaReservaEntity.setSalaEntity(salaEntity);
-        novaReservaEntity.setstatusReserva();
+        novaReservaEntity.setstatusReserva(StatusReservaEnum.ESPERANDO_EFETIVACAO);
         reservaRepository.save(novaReservaEntity);
 
         return new AddReservationResponseDTO(novaReservaEntity.getInicioReserva(), novaReservaEntity.getFimReserva(), novaReservaEntity.getProprietario(), novaReservaEntity.getSalaEntity());
+    }
+
+    List<AddReservationForListRequestDTO> reservasDaLista = new ArrayList<>();
+
+    public void adicionarReservaaLista(AddReservationForListRequestDTO reserva){
+        reservasDaLista.add(reserva);
+    }
+    public List<AddReservationForListRequestDTO> verListaReservas(){
+        return reservasDaLista;
+    }
+    public void adicionarListadeReservas() {
+        if(!reservasDaLista.isEmpty()) {
+
+            for (AddReservationForListRequestDTO addReservationRequestDTO : reservasDaLista) {
+                AddReservationRequestDTO reserva = new AddReservationRequestDTO(
+                        addReservationRequestDTO.dataReserva(),addReservationRequestDTO.horaInicioReserva(),
+                        addReservationRequestDTO.horaFimReserva(), usuarioRepository.findBycdUsuario(addReservationRequestDTO.proprietario().cdUsuario()),
+                        salaRepository.findByCd(addReservationRequestDTO.salaEntity().cd()));
+                criarReserva(reserva);
+            }
+            reservasDaLista.clear();
+        }
     }
 
     public String apagarReservar(Integer id){
@@ -162,5 +198,62 @@ public class ReservaService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Nenhuma reserva é finalizada nesse dia");
         }
         return finalizadasEm;
+    }
+
+    public void efetivarReserva(Authentication authentication, String Cnpj) {
+       String NmEmailUserLogado = authentication.getName();
+       System.out.println(NmEmailUserLogado);
+       List<Integer> contadorerros = new ArrayList<>();
+       contadorerros.add(0);
+       contadorerros.add(0);
+       Optional<UsuarioEntity> user = usuarioRepository.findBynmEmailUsuario(NmEmailUserLogado);
+       UsuarioEntity usuario = user.get();
+        if(usuario.getEmpresa().getCd_cnpj_empresa().equals(Cnpj)){
+               LocalDateTime agora = LocalDateTime.now(); //Serve para pegar o tempo atual no fuso da classe
+               ZoneId Fuso = ZoneId.of("America/Sao_Paulo"); //Define qual fuso horário vamos utilizar
+               ZonedDateTime agoraNoFuso = agora.atZone(Fuso); // Unindo os dois anteriores temos o horário atual no nosso fuso horário
+                usuario.getReservas().forEach(reserva -> {
+                   ZonedDateTime inicioNoFuso = reserva.getInicioReserva().atZone(Fuso); //Converte o inicio da reserva para ficar de acordo com o nosso fuso horário
+                   ZonedDateTime fimNoFuso = reserva.getFimReserva().atZone(Fuso); //Converte o fim da reserva para ficar de acordo com o nosso fuso horário
+                    if(inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
+                    //Se o inicio da reserva for no mesmo horário de agora ou se agora for depois do inicio, porém antes do fim da reserva
+                        if(reserva.getStatusReserva().equals(StatusReservaEnum.ESPERANDO_EFETIVACAO)){
+                            //Se o status da reserva estiver como esperando efetivação, ele envia o comando ao MQTT
+                            mqttService.iniciarReserva(reserva.getCdreserva());
+                            System.out.println("Comando enviado: " + reserva.getSalaEntity().getNome());
+                        }else if(reserva.getStatusReserva().equals(StatusReservaEnum.EFETIVADA)){
+                            mqttService.finalizarReserva(reserva.getCdreserva());
+                        }else{
+                            contadorerros.set(0, contadorerros.get(0)+1);
+                        }
+                    }else{
+                        contadorerros.set(1, contadorerros.get(1)+1);
+                   }
+               });
+                if(contadorerros.get(0)>0){
+                    mqttService.InformarErro();
+                    throw new ErrosEfetivarReservaException("Nenhuma reserva feita hoje");
+                }
+                if(contadorerros.get(1)>0){
+                    mqttService.InformarErro();
+                    throw new ErrosEfetivarReservaException("Nenhuma reserva nesse horário, consulte o seu cronograma ou a sua administração.");
+                }
+           }else{
+            throw new ErrosEfetivarReservaException("Este usuário não faz parte dessa empresa");
+           }
+    }
+
+    public void retornoEfetivacao(String resposta){
+        if(resposta.equals("INICIADO: 3")){
+            ReservaEntity reservation = reservaRepository.findBycdreserva(3);
+            reservation.setstatusReserva(StatusReservaEnum.EFETIVADA);
+            reservaRepository.save(reservation);
+            System.out.println("Comando enviado: " + reservation.getStatusReserva());
+        }else if(resposta.equals("ENCERRAR: 3")){
+            ReservaEntity reservation = reservaRepository.findBycdreserva(3);
+            reservation.setstatusReserva(StatusReservaEnum.FINALIZADA);
+            reservaRepository.save(reservation);
+            System.out.println("Comando enviado: " + reservation.getStatusReserva());
+        }
     }
 }

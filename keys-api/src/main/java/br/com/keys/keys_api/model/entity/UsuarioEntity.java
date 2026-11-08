@@ -32,15 +32,16 @@ public class UsuarioEntity implements Persistable<String> {
     private String nmSenhaUsuario;
     @ManyToOne
     @JoinColumn(name = "cd_empresa", nullable = false)
+    @JsonBackReference("empresa-funcionarios")
     private EmpresaEntity empresa;
 
     //relacionamento recursivo:
     @ManyToOne
     @JoinColumn(name = "cd_admin")
-    @JsonBackReference //não serializa esse lado, evitando serializar infinitamente
+    @JsonBackReference ("admin-usuario")//não serializa esse lado, evitando serializar infinitamente
     private UsuarioEntity chefe;
 
-    @JsonManagedReference //lado serializado
+    @JsonManagedReference ("admin-usuario") //lado serializado
     @OneToMany(mappedBy = "chefe")
     private List<UsuarioEntity> subordinados;
 

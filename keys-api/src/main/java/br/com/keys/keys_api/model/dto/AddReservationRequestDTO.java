@@ -4,13 +4,19 @@ import br.com.keys.keys_api.model.entity.SalaEntity;
 import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record AddReservationRequestDTO(
         @NotNull(message = "Digite a data de inicio da reserva")
-        LocalDateTime inicioReserva,
+        LocalDate dataReserva,
+
+        @NotNull(message = "Adicione a hora de inicio dessa reserva")
+        LocalTime horaInicioReserva,
+
         @NotNull(message = "Adicione quando essa reserva acabará")
-        LocalDateTime fimReserva,
+        LocalTime horaFimReserva,
 
         @NotNull(message = "Adicione quem é o proprietario dessa reserva")
         UsuarioEntity proprietario,

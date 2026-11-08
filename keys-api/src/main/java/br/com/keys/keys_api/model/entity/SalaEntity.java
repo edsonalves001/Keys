@@ -31,7 +31,6 @@ public class SalaEntity {
     @Enumerated(EnumType.STRING) //Você esqueceu disso, Igor.
     @Column(name = "ic_disponibilidade_sala",nullable = false)
     private StatusSalaEnum statusSala;
-
     //reservas dessa sala:
     @OneToMany(mappedBy = "salaEntity")
     @JsonManagedReference("sala-reserva")

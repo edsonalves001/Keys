@@ -35,7 +35,9 @@ public class ReservaEntity {
 
     public ReservaEntity() {}
 
-    public void setstatusReserva() {
-        this.statusReserva = StatusReservaEnum.EM_USO;
+    public void setstatusReserva(StatusReservaEnum status ) {
+        this.statusReserva = status;
     }
+
+
 }

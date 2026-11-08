@@ -5,6 +5,10 @@ import br.com.keys.keys_api.model.entity.UsuarioEntity;
 
 import java.time.LocalDateTime;
 
-public record AddReservationResponseDTO(LocalDateTime inicioReserva, LocalDateTime fimReserva,
-                                        UsuarioEntity proprietario, SalaEntity salaEntity) {
+public record AddReservationResponseDTO(
+        LocalDateTime
+        inicioReserva,
+        LocalDateTime fimReserva,
+        UsuarioEntity proprietario,
+        SalaEntity salaEntity) {
 }
