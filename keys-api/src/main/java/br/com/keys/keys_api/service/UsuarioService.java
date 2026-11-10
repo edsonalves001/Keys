@@ -113,7 +113,7 @@ public class UsuarioService {
         UsuarioEntity user = this.usuarioRepository.findById(id).orElseThrow(() -> new UsuarioInexistenteException("Usuário inexistente a ser alterado!"));
 
         String email_user = this.extrairToken(token);
-        UsuarioEntity userToken = this.usuarioRepository.findBynmEmailUsuario(email_user).orElseThrow( ()-> new UsuarioInexistenteException("Usuário ou admin do token não encontrados!"));
+        UsuarioEntity userToken = this.usuarioRepository.findOptionalBynmEmailUsuario(email_user).orElseThrow( ()-> new UsuarioInexistenteException("Usuário ou admin do token não encontrados!"));
 
         if(userToken.getCdUsuario().equals(user.getCdUsuario()) || (userToken.getChefe() == null && userToken.getEmpresa() == user.getEmpresa())) {
             //Verificando os dados recebidos e inserindo se existirem:
@@ -138,7 +138,7 @@ public class UsuarioService {
         //Verificando se o user do token é o mesmo do id (admin n pode alterar senha do user)
         UsuarioEntity usuarioID = this.usuarioRepository.findById(id).orElseThrow(()-> new UsuarioInexistenteException("Usuário inexistente! Id inválido!"));
         String email_user = this.extrairToken(token);
-        UsuarioEntity usuarioToken = this.usuarioRepository.findBynmEmailUsuario(email_user).orElseThrow(()-> new UsuarioInexistenteException("Email do token não corresponde a um user existente!"));
+        UsuarioEntity usuarioToken = this.usuarioRepository.findOptionalBynmEmailUsuario(email_user).orElseThrow(()-> new UsuarioInexistenteException("Email do token não corresponde a um user existente!"));
 
         if(!usuarioID.getCdUsuario().equals(usuarioToken.getCdUsuario())) {
             throw new PermissaoNegadaException("Este usuário não tem permissão de alterar as informações, pois ele não é o usuário afetado!");

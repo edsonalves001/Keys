@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //cria o objeto de user usado no Spring Security
-        UsuarioEntity usuario = usuarioRepository.findBynmEmailUsuario(username).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
+        UsuarioEntity usuario = usuarioRepository.findOptionalBynmEmailUsuario(username).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
 
         return new UserDetailsImpl(usuario);
     }

@@ -13,6 +13,7 @@ import br.com.keys.keys_api.security.JwtService;
 import br.com.keys.keys_api.security.UserDetailsImpl;
 import br.com.keys.keys_api.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class AuthService {
     public RegisterResponseDTO criarUser(RegisterRequestDTO registerRequest, String token) { //cria apenas user normal, não adm
 
         //Email único por user:
-        usuarioRepository.findBynmEmailUsuario(registerRequest.nm_email_usuario())
+        usuarioRepository.findOptionalBynmEmailUsuario(registerRequest.nm_email_usuario())
                 .ifPresent(u -> { throw new EmailCadastradoException("Email já cadastrado! Tente outro!"); });
 
         //Pegando cd_admin:
@@ -74,7 +76,7 @@ public class AuthService {
             String token = jwtService.generateToken(userDetails);
             return new LoginResponseDTO(token);
         } catch (AuthenticationException e) { //ele pode gerar essa exceção se der b.o
-            throw new CredenciaisInvalidasException("Email ou senha inválidos");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Email ou senha inválidos");
         }
     }
 
@@ -83,19 +85,19 @@ public class AuthService {
         //Empresa precisa existir para criar adm
         EmpresaEntity empresa = empresaRepository
                 .findById(registerRequestDTO.cd_cnpj_empresa())
-                .orElseThrow(() -> new EmpresaInexistenteException("Empresa inexistente! Não é possível criar adm!"));
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Empresa inexistente! Não é possível criar adm!"));
 
         //Só um admin por empresa
         usuarioRepository.findByEmpresaAndChefeIsNull(empresa)
-                .ifPresent(u -> { throw new AdminExistenteException("Já há um admin nessa empresa! Só permitido um por empresa!"); });
+                .ifPresent(u -> { throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Já há um admin nessa empresa! Só permitido um por empresa!"); });
 
         //Email único por user
-        usuarioRepository.findBynmEmailUsuario(registerRequestDTO.nm_email_usuario())
-                .ifPresent(u -> { throw new EmailCadastradoException("Email já cadastrado! Tente outro!"); });
+        usuarioRepository.findOptionalBynmEmailUsuario(registerRequestDTO.nm_email_usuario())
+                .ifPresent(u -> { throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email já cadastrado! Tente outro!"); });
 
         //Código único por user
         usuarioRepository.findById(registerRequestDTO.cd_usuario())
-                .ifPresent(u -> { throw new CodigoUsadoException("Este código já está em uso! Tente outro!"); });
+                .ifPresent(u -> { throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Este código já está em uso! Tente outro!"); });
 
         //Gerando hash senha:
         String hash = passwordEncoder.encode(registerRequestDTO.nm_senha_usuario());

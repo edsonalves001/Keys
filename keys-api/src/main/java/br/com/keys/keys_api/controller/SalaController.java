@@ -78,6 +78,7 @@ public class SalaController {
     return salaEntity;
   }
 
+
   @DeleteMapping("/sala")
   public String removerSala(@RequestParam Integer cd) {
     SalaEntity salaEntity = salaRepository.findByCd(cd);

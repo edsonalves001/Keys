@@ -2,15 +2,14 @@ package br.com.keys.keys_api.service;
 
 import br.com.keys.keys_api.enums.StatusReservaEnum;
 import br.com.keys.keys_api.exception.ErrosEfetivarReservaException;
-import br.com.keys.keys_api.model.dto.AddReservationForListRequestDTO;
-import br.com.keys.keys_api.model.dto.AddReservationRequestDTO;
-import br.com.keys.keys_api.model.dto.AddReservationResponseDTO;
+import br.com.keys.keys_api.model.dto.*;
 import br.com.keys.keys_api.model.entity.ReservaEntity;
 import br.com.keys.keys_api.model.entity.SalaEntity;
 import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.repository.ReservaRepository;
 import br.com.keys.keys_api.repository.SalaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
+import br.com.keys.keys_api.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
@@ -77,6 +76,13 @@ public class ReservaService {
         }
     }
 
+    public List<ReservaEntity> verMinhasReservasLista(String cd){
+        List<ReservaEntity> minhasReservas = new ArrayList<>();
+        UsuarioEntity user = usuarioRepository.findBycdUsuario(cd);
+        minhasReservas = user.getReservas();
+
+        return minhasReservas;
+    }
     public String apagarReservar(Integer id){
         if(!reservaRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Essa reserva não existe");
@@ -86,7 +92,34 @@ public class ReservaService {
         }
         return "Reserva apagada com sucesso";
     }
+    public List<MyEnterpriseReservationsResponseDTO> AdminUsuariosLista(Authentication authentication){
+        String emailAut = authentication.getName();
+        UsuarioEntity userAdmin = usuarioRepository.findBynmEmailUsuario(emailAut);
+        List<UsuarioEntity> usuarios = usuarioRepository.findAll();
 
+        List<MyEnterpriseReservationsResponseDTO> usuariosFirma = new ArrayList<>();
+        for(UsuarioEntity usuario : usuarios){
+            if(usuario.getChefe() != null){
+                if(usuario.getChefe().equals(userAdmin)){
+                   if(!usuario.getReservas().isEmpty()){
+                       List<ReservaEntity> reservas = usuario.getReservas();
+                       for(ReservaEntity reserva : reservas){
+                           MyEnterpriseReservationsResponseDTO reservationsEnterprise = new MyEnterpriseReservationsResponseDTO(
+                                   reserva.getCdreserva(),
+                                   usuario.getNmUsuario(),
+                                   reserva.getSalaEntity().getNome(),
+                                   reserva.getInicioReserva().toLocalTime(),
+                                   reserva.getFimReserva().toLocalTime(),
+                                   reserva.getInicioReserva()
+                           );
+                           usuariosFirma.add(reservationsEnterprise);
+                       }
+                   }
+                }
+            }
+        }
+        return  usuariosFirma;
+    }
     public String editarReservar(Integer id, LocalDateTime Start, LocalDateTime End, UsuarioEntity user, SalaEntity room){
         String responseUpdate = "";
         if(!this.reservaRepository.existsById(id)){
@@ -206,7 +239,7 @@ public class ReservaService {
        List<Integer> contadorerros = new ArrayList<>();
        contadorerros.add(0);
        contadorerros.add(0);
-       Optional<UsuarioEntity> user = usuarioRepository.findBynmEmailUsuario(NmEmailUserLogado);
+       Optional<UsuarioEntity> user = usuarioRepository.findOptionalBynmEmailUsuario(NmEmailUserLogado);
        UsuarioEntity usuario = user.get();
         if(usuario.getEmpresa().getCd_cnpj_empresa().equals(Cnpj)){
                LocalDateTime agora = LocalDateTime.now(); //Serve para pegar o tempo atual no fuso da classe

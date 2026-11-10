@@ -1,6 +1,7 @@
 package br.com.keys.keys_api.controller;
 
 import br.com.keys.keys_api.model.dto.AddReservationForListRequestDTO;
+import br.com.keys.keys_api.model.dto.MyEnterpriseReservationsResponseDTO;
 import org.springframework.security.core.Authentication;
 import br.com.keys.keys_api.model.dto.AddReservationRequestDTO;
 import br.com.keys.keys_api.model.dto.AddReservationResponseDTO;
@@ -64,6 +65,12 @@ public class ReservasController {
     }
     //aqui acaba os endpoints das listas
 
+    @GetMapping("/reservasDaEmpresa")
+    public List<MyEnterpriseReservationsResponseDTO> ReservasdaEmpresa() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado
+        return this.reservaService.AdminUsuariosLista(auth);
+    }
+
     @GetMapping("/TodasasReservas")
     public List<ReservaEntity> verReservas(){
         return this.reservaRepository.findAll();
@@ -72,6 +79,10 @@ public class ReservasController {
     @GetMapping("/VerReserva/{id}")
     public ReservaEntity verReserva(@PathVariable Integer id){
         return this.reservaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Reserva inexistente"));
+    }
+    @GetMapping("/VerReservas")
+    public List<ReservaEntity> verMinhasReservas(@RequestParam String cd){
+        return reservaService.verMinhasReservasLista(cd);
     }
 
     @DeleteMapping("ApagarReserva/{id}")
