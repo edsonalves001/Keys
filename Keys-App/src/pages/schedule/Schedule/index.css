@@ -125,9 +125,9 @@ main{
     box-shadow: 0 4px 24px rgba(30,43,31,0.08), 0 1px 4px rgba(30,43,31,0.06);
     stroke: #D8D8D8;
 }
-.sala-item h1, h2{
+.sala-item h1, .sala-item h2{
     font-size: larger;
-    font-weight: lighter;
+    font-weight: lighter; 
     margin-inline: 5px;
 }
 

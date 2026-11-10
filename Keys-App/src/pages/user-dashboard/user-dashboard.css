@@ -52,6 +52,10 @@ input {
   font-weight: bold;
 }
 
+.user-dashboard-main .users-list-section ul li {
+  cursor: pointer;
+}
+
 /*Segunda sessão: */
 
 .user-dashboard-main .user-card-section {
@@ -129,7 +133,7 @@ input {
   .user-info
   .user-info-profile
   > img {
-  width: 5.5vw;
+  width: 6.5vw;
 }
 
 .user-dashboard-main
@@ -278,4 +282,69 @@ span {
   td
   .delete-reservation-button {
   background-color: rgba(195, 10, 0, 0.77);
+}
+
+/* Modais: */
+
+.user-dashboard-main .background-modal {
+  display: none;
+}
+
+
+.background-modal.ativo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+.background-modal.ativo .modal {
+  display: flex;
+  flex-direction: column;
+  gap: 2vw;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding-inline: 1vw;
+  padding-block: 2vw;
+  border-radius: 20px;
+  z-index: 100;
+  background-color: white;
+  width: 20vw;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.background-modal.ativo .modal img {
+  width: 5vw;
+}
+
+.background-modal.ativo .modal p {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.background-modal.ativo .modal button {
+  width: 7vw;
+  height: 2.5vw;
+  padding: .5vw;
+  color: white;
+  border-radius: 20px;
+  border: none;
+}
+
+.background-modal.ativo .modal .botoes-acoes {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.background-modal.ativo .modal .botoes-acoes .deletar {
+  background-color: #b3261e;
 }

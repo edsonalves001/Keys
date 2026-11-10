@@ -83,6 +83,16 @@
     gap: 2vw;
 }
 
+.create-user-main .lista-usuarios > button {
+    background-color: #051D2D;
+    font-weight: bold;
+    width: 10vw;
+    height: 2.5vw;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+
 .create-user-main .lista-usuarios .listagem-usuarios .card-usuario {
     display: flex;
     align-items: center;

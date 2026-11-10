@@ -16,6 +16,10 @@ const Landing = function landing() {
         navigate('/login')
     }
 
+    const handleBasicRecordsClick = () => {
+        navigate('/addDadosIniciais')
+    }
+
     const alterarModo = () => { //manipula aqui, Pedro
 
     }
@@ -61,7 +65,7 @@ const Landing = function landing() {
                     </p>
                     <div className="botoesLanding">
                         <button id="botaoEntre" onClick={handleLoginClick}><b>Entre no </b><span><b className="keysButtonEntre">keYs</b></span></button>
-                        <button id="botaoAdquira"><b>Adquira o </b><span><b className="keysButton">keYs</b></span></button>
+                        <button id="botaoAdquira" onClick={handleBasicRecordsClick}><b>Adquira o </b><span><b className="keysButton">keYs</b></span></button>
                     </div>
                 </div>
                 <div className="imagemLanding">

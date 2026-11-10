@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import './administration-login.css';
 import PhotoLogin from '../../assets/fotoLogin.png';
 import auth from "../../service/auth";
@@ -8,6 +8,11 @@ const Administration_Login = function Administration_Login() {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const navigate = useNavigate()
+
+    const handleLandingClick = () => {
+        navigate("/")
+    }
 
     useEffect(() => {
         document.title = "Acesse o Keys";
@@ -66,7 +71,7 @@ const Administration_Login = function Administration_Login() {
     return (
         <>
             <header className="full-menu">
-                <p>keYs</p>
+                <p onClick={handleLandingClick}>keYs</p>
             </header>
 
             <br />
