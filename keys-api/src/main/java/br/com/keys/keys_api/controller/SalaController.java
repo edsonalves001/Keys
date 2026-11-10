@@ -2,6 +2,9 @@ package br.com.keys.keys_api.controller;
 
 import java.util.List;
 
+import br.com.keys.keys_api.exception.EmpresaInexistenteException;
+import br.com.keys.keys_api.model.entity.EmpresaEntity;
+import br.com.keys.keys_api.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,11 +25,15 @@ import br.com.keys.keys_api.repository.SalaRepository;
 public class SalaController {
   @Autowired 
   SalaRepository salaRepository;
+  @Autowired
+  EmpresaRepository empresaRepository;
 
   //Adiciona uma nova sala
   @PostMapping("/salas")
-  public String adicionarSala(@RequestParam String nome, @RequestParam String desc) {
+  public String adicionarSala(@RequestParam String nome, @RequestParam String desc, @RequestParam String cnpj) {
     SalaEntity novaSalaEntity = new SalaEntity(nome, desc);
+    EmpresaEntity empresa = empresaRepository.findById(cnpj).orElseThrow(()-> new EmpresaInexistenteException("Empresa inexistente!"));
+    novaSalaEntity.setEmpresa(empresa);
     salaRepository.save(novaSalaEntity);
 
     return novaSalaEntity.getNome()+" adicionado com sucesso!";

@@ -20,6 +20,6 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, String> 
 
    public Optional<UsuarioEntity> findByNmEmailUsuarioAndChefeIsNull(String email);
    public Optional<UsuarioEntity> findByNmEmailUsuarioAndNmSenhaUsuario(String email, String senha);
-   public List<UsuarioEntity> findByEmpresa(EmpresaEntity empresaEntity); //buscar usuários do chefe
+   public List<UsuarioEntity> findByEmpresaAndChefeIsNotNull(EmpresaEntity empresaEntity); //buscar usuários do chefe e não o chefe junto
    public Optional<UsuarioEntity> findByEmpresaAndChefeIsNull(EmpresaEntity empresa);
 }

@@ -31,6 +31,10 @@ public class EmpresaEntity implements Persistable<String> {
     @JsonManagedReference("empresa-funcionarios")
     private List<UsuarioEntity> funcionarios;
 
+    //Relacionamento empresa:
+    @OneToMany(mappedBy = "empresa")
+    private List<SalaEntity> salas;
+
     public EmpresaEntity() {}
 
     public EmpresaEntity(String nm_empresa, String cd_cnpj_empresa) {

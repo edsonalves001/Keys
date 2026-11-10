@@ -2,6 +2,7 @@ package br.com.keys.keys_api.controller;
 
 import br.com.keys.keys_api.model.dto.AddReservationForListRequestDTO;
 import br.com.keys.keys_api.model.dto.MyEnterpriseReservationsResponseDTO;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.core.Authentication;
 import br.com.keys.keys_api.model.dto.AddReservationRequestDTO;
 import br.com.keys.keys_api.model.dto.AddReservationResponseDTO;
@@ -35,7 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservasController {
     private final ReservaService reservaService;
-    private final MqttService mqttService;
+    private final ObjectProvider<MqttService> mqttServiceProvider; //apenas entrega o objeto se existir. Se não = null
 
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;

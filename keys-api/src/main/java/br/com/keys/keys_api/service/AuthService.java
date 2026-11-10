@@ -42,12 +42,20 @@ public class AuthService {
         //Pegando cd_admin:
         String email_admin = this.extrairToken(token); //admin precisa de token pra criar user
         UsuarioEntity admin = usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_admin).orElseThrow(()-> new UsuarioInexistenteException("Administrador inexistente!"));
+
+        /*
         if(!admin.getEmpresa().getCd_cnpj_empresa().equals(registerRequest.cd_cnpj_empresa())) {
             throw new AdminOutraEmpresaException("Esse admin é de outra empresa!");
-        }
+        } */
 
         //Verificando se código está disponível:
         this.usuarioRepository.findById(registerRequest.cd_usuario()).ifPresent(u -> {throw new CodigoUsadoException("Este código já está sendo usado! Tente outro!");});
+
+        //Verificando se senhas batem:
+
+        if (!registerRequest.nm_confirmar_senha().equals(registerRequest.nm_senha_usuario())) {
+            throw new SenhaIncorretaException("Senhas não batem! Insira senhas iguais!");
+        }
 
         //Criando hash (essa classe veio do método do SecurityConfig):
         String hash = passwordEncoder.encode(registerRequest.nm_senha_usuario());
@@ -98,6 +106,12 @@ public class AuthService {
         //Código único por user
         usuarioRepository.findById(registerRequestDTO.cd_usuario())
                 .ifPresent(u -> { throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Este código já está em uso! Tente outro!"); });
+
+        //Verificando se senhas batem:
+
+        if (!registerRequestDTO.nm_confirmar_senha().equals(registerRequestDTO.nm_senha_usuario())) {
+            throw new SenhaIncorretaException("Senhas não batem! Insira senhas iguais!");
+        }
 
         //Gerando hash senha:
         String hash = passwordEncoder.encode(registerRequestDTO.nm_senha_usuario());

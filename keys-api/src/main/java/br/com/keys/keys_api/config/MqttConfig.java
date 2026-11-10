@@ -6,13 +6,16 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 //Classe responsavel pela configuração do MQTT
 //
+
 @Component
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "mqtt.enabled", havingValue = "true", matchIfMissing = false) //precisa explicitamente tá ativado no application properties
 public class MqttConfig {
     @Value("${mqtt.username}")
     private String username;

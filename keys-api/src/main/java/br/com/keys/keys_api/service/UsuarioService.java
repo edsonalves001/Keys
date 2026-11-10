@@ -40,7 +40,7 @@ public class UsuarioService {
         UsuarioEntity adm = this.usuarioRepository.findByNmEmailUsuarioAndChefeIsNull(email_user).orElseThrow(()-> new UsuarioInexistenteException("Admin inexistente!"));
 
         //Busca users dessa empresa:
-        List<UsuarioEntity> usuarios = this.usuarioRepository.findByEmpresa(adm.getEmpresa());
+        List<UsuarioEntity> usuarios = this.usuarioRepository.findByEmpresaAndChefeIsNotNull(adm.getEmpresa());
         if(usuarios.isEmpty()) {
             throw new UsuarioInexistenteException("Nenhum user criado por esse adm!");
         } else {
