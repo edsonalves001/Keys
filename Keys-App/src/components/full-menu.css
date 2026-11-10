@@ -2,9 +2,11 @@
 /* Estilização Menu*/
 
 .full-menu {
+
   background: linear-gradient(to right, #0c3553, #051d2d);
   display: flex;
   align-items: center;
+      z-index: 1000;
   justify-content: space-between;
   padding-inline: 2vw;
   padding-block: 2vw;

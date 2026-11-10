@@ -8,6 +8,7 @@ import Password_Recovery from './pages/password-recovery/password-recovery';
 import Administration_Login from './pages/administration-login/administration-login';
 import CreateUser from './pages/add-user/create-user';
 import BasicRecords from './pages/basic-records/basic-records';
+import Schedule from './pages/schedule/Schedule/schedule';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<Landing/>}/>
         <Route path="/addUser" element={<CreateUser/>} />
         <Route path="/addDadosIniciais" element={<BasicRecords />}/>
+        <Route path="/cronograma" element={<Schedule/>}/>
       </Routes>
     </BrowserRouter>
   );

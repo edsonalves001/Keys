@@ -10,6 +10,17 @@ const Menu = function menu() {
     const handleClick = () => {
         navigate('/');
     }
+    function clickCronograma(){
+        window.location.href ="/cronograma"
+    }
+    function clickUsuários(){
+        window.location.href="dashboardUsuario"
+    }
+    function sair() {
+    localStorage.clear();  
+    localStorage.removeItem("token")
+    window.location.reload();     
+}
 
     return (
         <>
@@ -17,13 +28,13 @@ const Menu = function menu() {
                 <p onClick={handleClick}>keYs</p>
                 <nav>
                     <ul>
-                        <li><a href="#">Início</a></li>
-                        <li><a href="#">Usuários</a></li>
-                        <li><a href="#">Fale Conosco</a></li>
+                        <li><a href="#" onClick={clickCronograma}>Início</a></li>
+                        <li><a href="#" onClick={clickUsuários}>Usuários</a></li>
+                        <li><a href="https://wa.me/5513999999999" target="blank">Fale Conosco</a></li>
                     </ul>
-                    <button>
+                    <button  onClick={sair} >
                         Sair
-                        <img src={logout} alt="Ícone de sair do botão. Apenas enfeite do botão de sair"/>
+                        <img src={logout}alt="Ícone de sair do botão. Apenas enfeite do botão de sair"/>
                     </button>
                 </nav>
             </header><br></br>
