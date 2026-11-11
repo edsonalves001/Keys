@@ -1,17 +1,15 @@
 package br.com.keys.keys_api.controller;
 
-import br.com.keys.keys_api.model.dto.AddReservationForListRequestDTO;
-import br.com.keys.keys_api.model.dto.ReservationListResponseDTO;
+import br.com.keys.keys_api.model.dto.*;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.core.Authentication;
-import br.com.keys.keys_api.model.dto.AddReservationRequestDTO;
-import br.com.keys.keys_api.model.dto.AddReservationResponseDTO;
 import br.com.keys.keys_api.model.entity.ReservaEntity;
 import br.com.keys.keys_api.model.entity.SalaEntity;
 import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.repository.ReservaRepository;
 import br.com.keys.keys_api.repository.SalaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
-//import br.com.keys.keys_api.service.MqttService;
+import br.com.keys.keys_api.service.MqttService;
 import br.com.keys.keys_api.service.ReservaService;
 import br.com.keys.keys_api.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -35,7 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservasController {
     private final ReservaService reservaService;
-    //private final MqttService mqttService;
+    private final ObjectProvider<MqttService> mqttServiceProvider; //apenas entrega o objeto se existir. Se não = null
 
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;
@@ -65,6 +63,12 @@ public class ReservasController {
     }
     //aqui acaba os endpoints das listas
 
+    @GetMapping("/reservasDaEmpresa")
+    public List<MyEnterpriseReservationsResponseDTO> ReservasdaEmpresa() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado
+        return this.reservaService.AdminUsuariosLista(auth);
+    }
+
     @GetMapping("/TodasasReservas")
     public List<ReservaEntity> verReservas(){
         return this.reservaRepository.findAll();
@@ -89,6 +93,10 @@ public class ReservasController {
     public ReservaEntity verReserva(@PathVariable Integer id){
         return this.reservaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Reserva inexistente"));
     }
+    @GetMapping("/VerReservas")
+    public List<ReservaEntity> verMinhasReservas(@RequestParam String cd){
+        return reservaService.verMinhasReservasLista(cd);
+    }
 
     @DeleteMapping("ApagarReserva/{id}")
     public String apagarReserva(@PathVariable Integer id){
@@ -112,7 +120,7 @@ public class ReservasController {
     @PostMapping("/EfetivarReserva/{cnpjEmpresa}")
     public void EfetivarviaQrCode(@PathVariable String cnpjEmpresa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado
-        //reservaService.efetivarReserva(auth,cnpjEmpresa);
+        reservaService.efetivarReserva(auth,cnpjEmpresa);
     }
 
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,13 +34,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) //desativa verificação csrf
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //desativa criação sessão no navegador, pois usamnos token
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/api/empresa/**", "/error").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
+                        .requestMatchers("/auth/**", "/api/empresa/**", "/api/salas", "/error", "/uploads/usuarios/**").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
                         .anyRequest().authenticated() //o resto precisa de autenticação
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(this.authEntryPoint)
                         .accessDeniedHandler(this.accessDeniedHandler)); //permite nosso filtro rodar primeiro, pois o segundo n funciona no nosso caso
-
+        http.cors(Customizer.withDefaults());
         return http.build(); //cria o objeto maldito da classe do filtro 🖕🖕🖕
     }
 

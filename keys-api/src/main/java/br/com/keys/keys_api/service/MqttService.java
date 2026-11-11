@@ -4,9 +4,11 @@ import br.com.keys.keys_api.config.MqttConfig;
 
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 @Service
+@ConditionalOnProperty(name = "mqtt.enabled", havingValue = "true", matchIfMissing = false) //precisa ser explícito no properties que tá ativado
 public class MqttService {
 
     private final MqttConfig mqttConfig;

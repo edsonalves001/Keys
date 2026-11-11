@@ -31,6 +31,11 @@ public class SalaEntity {
     @Enumerated(EnumType.STRING) //Você esqueceu disso, Igor.
     @Column(name = "ic_disponibilidade_sala",nullable = false)
     private StatusSalaEnum statusSala;
+    //Esqueceu de atualizar aqui.... Colocando a parte do cnpj da empresa
+    @ManyToOne()
+    @JoinColumn(name = "cd_empresa")
+    private EmpresaEntity empresa;
+
     //reservas dessa sala:
     @OneToMany(mappedBy = "salaEntity")
     @JsonManagedReference("sala-reserva")
