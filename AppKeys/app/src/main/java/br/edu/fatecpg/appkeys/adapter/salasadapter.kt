@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.fatecpg.appkeys.R
-import br.edu.fatecpg.appkeys.model.salaModel
+import br.edu.fatecpg.appkeys.model.entity.reservaEntity
+import br.edu.fatecpg.appkeys.model.entity.salaEntity
 
-class salasadapter (private val salas: List<salaModel>):
+class salasadapter (private var salas: List<salaEntity>, private val onSalaClick: (salaEntity) -> Unit = {}):
     RecyclerView.Adapter<salasadapter.ViewHolder>(){
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val nomeSala = itemView.findViewById<TextView>(R.id.txv_titulo_sala)
+        val nomeSala = itemView.findViewById<TextView>(R.id.txv_nome_sala)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,5 +26,14 @@ class salasadapter (private val salas: List<salaModel>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.nomeSala.text = salas[position].nome
+
+        holder.itemView.setOnClickListener {
+            onSalaClick(salas[position])
+        }
+    }
+
+    fun updateAdapter(salasNovas: List<salaEntity>) {
+        salas = salasNovas
+        notifyDataSetChanged()
     }
 }

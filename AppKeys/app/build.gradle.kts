@@ -29,6 +29,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
     buildFeatures {
         compose = true
@@ -37,7 +38,15 @@ android {
 }
 
 dependencies {
+    // Retrofit - Cliente HTTP faz a magia pra chamar a API, fazer requisições e tudo mais
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Converte objetos para JSON e vice versa
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.androidx.security.crypto)
+    // Permite a execução de tarefas assincronas utilizando multiplas threads
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)

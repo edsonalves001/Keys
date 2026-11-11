@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.edu.fatecpg.appkeys.R
-import br.edu.fatecpg.appkeys.dao.salaDao
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AdicionarSalaActivity : AppCompatActivity() {
@@ -30,7 +29,6 @@ class AdicionarSalaActivity : AppCompatActivity() {
 
         botao.setOnClickListener {
             val nome = nomesala.text.toString()
-            Toast.makeText(this, salaDao.salvarSala(nome), Toast.LENGTH_SHORT).show()
             nomesala.text.clear()
         }
 

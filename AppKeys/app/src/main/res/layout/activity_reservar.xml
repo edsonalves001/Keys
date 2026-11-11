@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:foregroundTint="#FFFFFF"
-    tools:context=".view.efetivar_reserva">
+    tools:context=".views.ReservarActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -106,26 +106,14 @@
 
     <ImageView
         android:id="@+id/imgv_usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:layout_marginTop="132dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
-
-    <TextView
-        android:id="@+id/txv_horario_reserva"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Relogio Fake"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.129"
-        app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
-        app:layout_constraintTop_toBottomOf="@+id/txv_quemreservou" />
 
     <TextView
         android:id="@+id/txv_quemreservou"
@@ -136,7 +124,7 @@
         android:text="Reservado por: Ronaldo"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.163"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
@@ -212,5 +200,29 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <EditText
+        android:id="@+id/edtm_timepicker_hora_inicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:contentDescription="Selecionar horario inicial da reserva"
+        android:ems="10"
+        android:focusable="false"
+        android:clickable="true"
+        app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/txv_quemreservou" />
+
+    <EditText
+        android:id="@+id/edtm_timepicker_hora_fim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:contentDescription="Selecionar horario final da reserva"
+        android:ems="10"
+        android:focusable="false"
+        android:clickable="true"
+        app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/edtm_timepicker_hora_inicio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
