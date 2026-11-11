@@ -1,6 +1,7 @@
 package br.com.keys.keys_api.controller;
 
 import br.com.keys.keys_api.model.dto.AddReservationForListRequestDTO;
+import br.com.keys.keys_api.model.dto.ReservationListResponseDTO;
 import org.springframework.security.core.Authentication;
 import br.com.keys.keys_api.model.dto.AddReservationRequestDTO;
 import br.com.keys.keys_api.model.dto.AddReservationResponseDTO;
@@ -10,7 +11,7 @@ import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.repository.ReservaRepository;
 import br.com.keys.keys_api.repository.SalaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
-import br.com.keys.keys_api.service.MqttService;
+//import br.com.keys.keys_api.service.MqttService;
 import br.com.keys.keys_api.service.ReservaService;
 import br.com.keys.keys_api.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -34,7 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservasController {
     private final ReservaService reservaService;
-    private final MqttService mqttService;
+    //private final MqttService mqttService;
 
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;
@@ -69,6 +70,21 @@ public class ReservasController {
         return this.reservaRepository.findAll();
     }
 
+    //lista todas as reservas conforme as necessidades do mobile, idealmente isso seria junto do TodasasReservas, mas eu n sei como isso iria impactar o front
+    @GetMapping("/reservas")
+    public List<ReservationListResponseDTO> listarReservasMobile() {
+        List<ReservaEntity> reservas = reservaRepository.findAll();
+
+        return reservas.stream().map(reserva -> new ReservationListResponseDTO(
+                reserva.getSalaEntity() != null ? reserva.getSalaEntity().getNome() : "Sala Desconhecida",
+                reserva.getProprietario() != null ? reserva.getProprietario().getNmLinkImagemUsuario() : null,
+                reserva.getInicioReserva() != null ? reserva.getInicioReserva().toLocalDate() : null,
+                reserva.getInicioReserva() != null ? reserva.getInicioReserva().toLocalTime() : null,
+                reserva.getFimReserva() != null ? reserva.getFimReserva().toLocalTime() : null,
+                reserva.getProprietario() != null ? reserva.getProprietario().getNmUsuario(): "null"
+        )).toList();
+    }
+
     @GetMapping("/VerReserva/{id}")
     public ReservaEntity verReserva(@PathVariable Integer id){
         return this.reservaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Reserva inexistente"));
@@ -96,7 +112,7 @@ public class ReservasController {
     @PostMapping("/EfetivarReserva/{cnpjEmpresa}")
     public void EfetivarviaQrCode(@PathVariable String cnpjEmpresa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado
-        reservaService.efetivarReserva(auth,cnpjEmpresa);
+        //reservaService.efetivarReserva(auth,cnpjEmpresa);
     }
 
 }
