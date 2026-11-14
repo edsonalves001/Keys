@@ -1,5 +1,6 @@
 package br.com.keys.keys_api.model.dto;
 
+import br.com.keys.keys_api.enums.StatusReservaEnum;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;
@@ -14,6 +15,10 @@ public record MyEnterpriseReservationsRequestDTO(
         @NotNull(message = "Insira o horário de inicio da reserva")
         LocalTime inicioReserva,
         @NotNull(message = "Insira quando a reserva acabará")
-        LocalTime fimReserva
+        LocalTime fimReserva,
+
+        @NotNull(message = "Insira o status atual da reserva")
+        StatusReservaEnum status
+
 ) {
 }

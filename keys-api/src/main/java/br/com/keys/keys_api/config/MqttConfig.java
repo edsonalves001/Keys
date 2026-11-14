@@ -6,75 +6,102 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-//Classe responsavel pela configuração do MQTT
-//
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "mqtt.enabled", havingValue = "true", matchIfMissing = false) //precisa explicitamente tá ativado no application properties
 public class MqttConfig {
-    @Value("${mqtt.username}")
+
+    @Value("${mqtt.username:}")
     private String username;
 
-    @Value("${mqtt.password}")
+    @Value("${mqtt.password:}")
     private String password;
 
-    @Value("${mqtt.broker}")
+    @Value("${mqtt.broker:tcp://localhost:1883}")
     private String broker;
 
-    @Value("${mqtt.client-id}")
+    @Value("${mqtt.client-id:keys-backend}")
     private String clientId;
 
-    @Value("${mqtt.topico.resposta}")
+    @Value("${mqtt.topico.resposta:keys/resposta}")
     private String topicoResposta;
 
+    @Value("${mqtt.enabled:true}")
+    private boolean mqttEnabled;
     private MqttClient client;
+    private boolean inscrito = false;
     private final ApplicationEventPublisher eventPublisher;
 
+    // Primeira tentativa ao iniciar o Spring Boot
     @PostConstruct
-    public void conectar() {
+    public void iniciar() {
+        if (mqttEnabled) {
+            conectar();
+        } else {
+            System.out.println("MQTT desativado nas configurações.");
+        }
+    }
+
+    // Tenta conectar novamente a cada 15 segundos
+    @Scheduled(fixedDelay = 15000, initialDelay = 15000)
+    public synchronized void conectar() {
+        if (!mqttEnabled) {
+            return;
+        }
+
         try {
-            client = new MqttClient(broker, clientId);
+            // Cria o cliente apenas uma vez
+            if (client == null) {
+                client = new MqttClient(broker, clientId);
+                client.setCallback(new MqttCallback() {
+
+                    @Override
+                    public void connectionLost(Throwable cause) {
+                        inscrito = false;
+                        System.out.println("Conexão MQTT perdida!");
+                    }
+
+                    @Override
+                    public void messageArrived(String topic, MqttMessage message) {
+                        String resposta = new String(message.getPayload());
+                        eventPublisher.publishEvent(new MqttResposta(topic, resposta));
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken token) {
+                        System.out.println("Mensagem enviada!");
+                    }
+                });
+            }
+
+            // Se já estiver conectado, não tenta conectar novamente
+            if (client.isConnected()) {
+                if (!inscrito) {
+                    client.subscribe(topicoResposta, 1);
+                    inscrito = true;
+                }
+                return;
+            }
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);
-
-            client.setCallback(new MqttCallback() {
-
-                @Override
-                public void connectionLost(Throwable cause) {
-                    System.out.println("Conexão MQTT perdida!");
-                }
-
-                //Metodo que capta toda resposta enviada do broker
-                @Override
-                public void messageArrived(String topic, MqttMessage message) {
-                    String resposta = new String(message.getPayload());
-                    eventPublisher.publishEvent(new MqttResposta(topic, resposta));
-                }
-
-                //Metodo que envia a mensagem para o broken
-                @Override
-                public void deliveryComplete(IMqttDeliveryToken token) {
-                    System.out.println("Mensagem enviada!");
-                }
-            });
             options.setUserName(username);
             options.setPassword(password.toCharArray());
             client.connect(options);
             client.subscribe(topicoResposta, 1);
+            inscrito = true;
             System.out.println("Conectado ao broker MQTT!");
         } catch (MqttException e) {
-            throw new IllegalStateException(
-                    "Não foi possível conectar ao MQTT", e.getCause()
-            );
+            inscrito = false;
+            System.out.println("Broker MQTT indisponível. " + "O sistema continuará funcionando normalmente.");
+            System.out.println("Nova tentativa de conexão em 15 segundos.");
         }
     }
+
     public MqttClient getClient() {
         return client;
     }
@@ -82,13 +109,14 @@ public class MqttConfig {
     @PreDestroy
     public void desconectar() {
         try {
-
-            if (client != null && client.isConnected()) {
-                client.disconnect();
+            if (client != null) {
+                if (client.isConnected()) {
+                    client.disconnect();
+                }
                 client.close();
             }
         } catch (MqttException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao desconectar do MQTT.");
         }
     }
 }

@@ -1,5 +1,6 @@
 package br.com.keys.keys_api.model.dto;
 
+import br.com.keys.keys_api.enums.StatusReservaEnum;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ public record MyEnterpriseReservationsResponseDTO(
         String NomeSala,
         LocalTime inicioReserva,
         LocalTime fimReserva,
-        LocalDateTime infosReserva
+        LocalDateTime infosReserva,
+        StatusReservaEnum status
 ) {
 }

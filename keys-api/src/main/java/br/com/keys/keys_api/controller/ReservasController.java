@@ -90,22 +90,22 @@ public class ReservasController {
     }
 
     @GetMapping("/VerReserva/{id}")
-    public ReservaEntity verReserva(@PathVariable Integer id){
-        return this.reservaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Reserva inexistente"));
+    public ReservationDTO verReserva(@PathVariable Integer id){
+        return this.reservaService.verReserva(id);
     }
     @GetMapping("/VerReservas")
     public List<ReservaEntity> verMinhasReservas(@RequestParam String cd){
         return reservaService.verMinhasReservasLista(cd);
     }
 
-    @DeleteMapping("ApagarReserva/{id}")
-    public String apagarReserva(@PathVariable Integer id){
-        return reservaService.apagarReservar(id);
+    @DeleteMapping("/ApagarReserva")
+    public String apagarReserva(@RequestParam Integer id, @RequestParam String senha, Authentication auth){
+        return reservaService.apagarReservar(id,senha,auth);
     }
 
     @PatchMapping("AtualizarReserva/{id}")
-    public String EditarReserva(@PathVariable Integer id, @RequestParam(required = false) LocalDateTime dataInicioAtualizacao, @RequestParam(required = false) LocalDateTime dataFimAtualizacao, @RequestParam(required = false) UsuarioEntity usuarioEntityCd, @RequestParam(required = false) SalaEntity salaEntityCd) {
-        return reservaService.editarReservar(id,dataInicioAtualizacao,dataFimAtualizacao, usuarioEntityCd, salaEntityCd);
+    public String EditarReserva(@PathVariable Integer id, @RequestParam(required = false) LocalDateTime dataInicioAtualizacao, @RequestParam(required = false) LocalDateTime dataFimAtualizacao) {
+        return reservaService.editarReservar(id,dataInicioAtualizacao,dataFimAtualizacao);
     }
 
     @GetMapping("/ReservaIniciaEm/{dataInicio}")

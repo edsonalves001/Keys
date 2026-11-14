@@ -1,5 +1,6 @@
 package br.com.keys.keys_api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class SalaEntity {
     //Esqueceu de atualizar aqui.... Colocando a parte do cnpj da empresa
     @ManyToOne()
     @JoinColumn(name = "cd_empresa")
+    @JsonBackReference("empresa-sala")
     private EmpresaEntity empresa;
 
     //reservas dessa sala:

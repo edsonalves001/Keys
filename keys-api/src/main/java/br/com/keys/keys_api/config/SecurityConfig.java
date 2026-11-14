@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) //desativa verificação csrf
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //desativa criação sessão no navegador, pois usamnos token
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/api/empresa/**", "/api/salas", "/error", "/uploads/usuarios/**").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
+                        .requestMatchers("/auth/**", "/api/empresa/**", "/api/salas", "/error", "/uploads/usuarios/**" ,"/api/auth/esqueci-senha", "/api/auth/validar-token", "/api/auth/nova-senha").permitAll() //permite apenas rotas com esse começo sem precisar de autenticação
                         .anyRequest().authenticated() //o resto precisa de autenticação
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
