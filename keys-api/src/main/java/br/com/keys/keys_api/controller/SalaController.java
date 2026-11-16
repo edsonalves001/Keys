@@ -4,9 +4,12 @@ import java.util.List;
 
 import br.com.keys.keys_api.exception.EmpresaInexistenteException;
 import br.com.keys.keys_api.model.entity.EmpresaEntity;
+import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.repository.EmpresaRepository;
+import br.com.keys.keys_api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,13 +23,19 @@ import br.com.keys.keys_api.enums.StatusSalaEnum;
 import br.com.keys.keys_api.model.entity.SalaEntity;
 import br.com.keys.keys_api.repository.SalaRepository;
 
+
 @RestController
 @RequestMapping("/api")
 public class SalaController {
+
   @Autowired 
   SalaRepository salaRepository;
   @Autowired
   EmpresaRepository empresaRepository;
+
+  @Autowired
+  UsuarioRepository usuarioRepository;
+
 
   //Adiciona uma nova sala
   @PostMapping("/salas")
@@ -39,6 +48,14 @@ public class SalaController {
     return novaSalaEntity.getNome()+" adicionado com sucesso!";
   }
 
+  @GetMapping("/salasDaEmpresa")
+  public List<SalaEntity> getSalasDaEmpresa(Authentication authentication) {
+    String emailAut = authentication.getName();
+    UsuarioEntity user = usuarioRepository.findBynmEmailUsuario(emailAut);
+    EmpresaEntity cnpjUser = user.getEmpresa();
+
+    return cnpjUser.getSalas();
+  }
   //Retorna todas as salas
   @GetMapping("/salas")
   public List<SalaEntity> getAllSalas() {

@@ -93,9 +93,15 @@ public class ReservasController {
     public ReservationDTO verReserva(@PathVariable Integer id){
         return this.reservaService.verReserva(id);
     }
+
     @GetMapping("/VerReservas")
     public List<ReservaEntity> verMinhasReservas(@RequestParam String cd){
         return reservaService.verMinhasReservasLista(cd);
+    }
+
+    @GetMapping("VerReservaDesseUsuario/{cd}")
+    public List<ReservationDTO> verMinhasReservasDesseUsuario(@PathVariable String cd){
+        return reservaService.minhasReservas(cd);
     }
 
     @DeleteMapping("/ApagarReserva")
@@ -108,15 +114,15 @@ public class ReservasController {
         return reservaService.editarReservar(id,dataInicioAtualizacao,dataFimAtualizacao);
     }
 
-    @GetMapping("/ReservaIniciaEm/{dataInicio}")
-    public List<ReservaEntity> ReservasIniciaEm(@PathVariable LocalDateTime dataInicio){
-        return reservaService.ReservationStarted(dataInicio);
-    }
-
-    @GetMapping("/ReservaFinalizamEm/{dataFim}")
-    public List<ReservaEntity> ReservasFinalizamEm(@PathVariable LocalDateTime dataFim){
-        return reservaService.ReservationEnded(dataFim);
-    }
+//    @GetMapping("/ReservaIniciaEm/{dataInicio}")
+//    public List<ReservaEntity> ReservasIniciaEm(){
+//        return reservaService.ReservationStarted();
+//    }
+//
+//    @GetMapping("/ReservaFinalizamEm/{dataFim}")
+//    public List<ReservaEntity> ReservasFinalizamEm(@PathVariable LocalDateTime dataFim){
+//        return reservaService.ReservationEnded(dataFim);
+//    }
     @PostMapping("/EfetivarReserva/{cnpjEmpresa}")
     public void EfetivarviaQrCode(@PathVariable String cnpjEmpresa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado

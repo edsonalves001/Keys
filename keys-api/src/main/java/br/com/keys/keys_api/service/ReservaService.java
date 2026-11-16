@@ -157,6 +157,23 @@ public class ReservaService {
         reservationDTO = new ReservationDTO(rev.getCdreserva(),rev.getFimReserva(),rev.getInicioReserva(),rev.getStatusReserva(),rev.getProprietario().getNmUsuario(),rev.getSalaEntity().getNome());
         return reservationDTO;
     }
+
+    public List<ReservationDTO> minhasReservas(String cd){
+        UsuarioEntity MyUser = usuarioRepository.findBycdUsuario(cd);
+        List<ReservationDTO> minhaListadeReservas =  new ArrayList<>();
+
+        MyUser.getReservas().forEach(reserva -> {
+            ReservationDTO reservas = new ReservationDTO(
+                    reserva.getCdreserva(),
+                    reserva.getFimReserva(),
+                    reserva.getInicioReserva(),
+                    reserva.getStatusReserva(),
+                    reserva.getProprietario().getNmUsuario(),
+                    reserva.getSalaEntity().getNome());
+            minhaListadeReservas.add(reservas);
+        });
+        return minhaListadeReservas;
+    }
     public String apagarReservar(Integer id, String senha,Authentication authentication){
         if(!reservaRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Essa reserva não existe");
@@ -288,21 +305,24 @@ public class ReservaService {
 
         return responseUpdate;
     }
-    public List<ReservaEntity> ReservationStarted(LocalDateTime inicio){
-        List<ReservaEntity> iniciadasEm = this.reservaRepository.findByinicioReserva(inicio);
-        if(iniciadasEm.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Nenhuma reserva se inicia nesse dia");
-        }
-        return iniciadasEm;
-    }
-
-    public List<ReservaEntity> ReservationEnded(LocalDateTime fim){
-        List<ReservaEntity> finalizadasEm = this.reservaRepository.findByfimReserva(fim);
-        if(finalizadasEm.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Nenhuma reserva é finalizada nesse dia");
-        }
-        return finalizadasEm;
-    }
+//    public List<ReservaEntity> ReservationStarted(Authentication auth){
+//        String userEmail = auth.getName();
+//        UsuarioEntity user = usuarioRepository.findBycdUsuario(userEmail);
+//        List<ReservaEntity> reservaEntityList = user.getReservas();
+//        List<ReservaEntity> iniciadasEm = this.reservaRepository.findByinicioReserva(inicio);
+//        if(iniciadasEm.isEmpty()){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Nenhuma reserva se inicia nesse dia");
+//        }
+//        return iniciadasEm;
+//    }
+//
+//    public List<ReservaEntity> ReservationEnded(LocalDateTime fim){
+//        List<ReservaEntity> finalizadasEm = this.reservaRepository.findByfimReserva(fim);
+//        if(finalizadasEm.isEmpty()){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Nenhuma reserva é finalizada nesse dia");
+//        }
+//        return finalizadasEm;
+//    }
 
     public void efetivarReserva(Authentication authentication, String Cnpj) {
         String NmEmailUserLogado = authentication.getName();
