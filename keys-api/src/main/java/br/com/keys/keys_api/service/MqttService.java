@@ -8,11 +8,6 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 
 @Service
-@ConditionalOnProperty(
-        name = "mqtt.enabled",
-        havingValue = "true",
-        matchIfMissing = false
-)
 
 public class MqttService {
     private final MqttConfig mqttConfig;
@@ -24,26 +19,47 @@ public class MqttService {
         this.mqttConfig = mqttConfig;
     }
 
+    public boolean getStatusConexao() {
+        return mqttConfig.getClient() != null
+                && mqttConfig.getClient().isConnected();
+    }
     private void publicar(String mensagem) {
-        try {
-            MqttClient client = mqttConfig.getClient();
-            if (client == null || !client.isConnected()) {
-                throw new IllegalStateException("MQTT não está conectado");
-            }
+        MqttClient client = mqttConfig.getClient();
 
-            MqttMessage mqttMessage = new MqttMessage(mensagem.getBytes(StandardCharsets.UTF_8));
+        if (client == null || !client.isConnected()) {
+            System.out.println("MQTT indisponível. Comando não enviado: " + mensagem);
+            return;
+        }
+
+        try {
+            MqttMessage mqttMessage = new MqttMessage(
+                    mensagem.getBytes(StandardCharsets.UTF_8)
+            );
+
             mqttMessage.setQos(1);
+
             client.publish(topicoComando, mqttMessage);
-            System.out.println("Comando enviado: " + mensagem);
+
+            System.out.println("MQTT publicado com sucesso!");
+            System.out.println("Tópico: " + topicoComando);
+            System.out.println("Mensagem: " + mensagem);
 
         } catch (MqttException e) {
-            throw new RuntimeException(
-                    "Erro ao enviar comando MQTT", e
-            );
+            System.err.println("Erro ao publicar MQTT: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
+
     public void iniciarReserva(Integer cdReserva) {
+        System.out.println("========== INICIAR RESERVA ==========");
+        System.out.println("Método iniciarReserva() foi chamado!");
+        System.out.println("Código da reserva: " + cdReserva);
+
+        System.out.println("Chamando o método publicar()...");
+        publicar("INICIAR: " + cdReserva);
+
+        System.out.println("Método publicar() retornou!");
         publicar("INICIAR: " + cdReserva);
     }
 

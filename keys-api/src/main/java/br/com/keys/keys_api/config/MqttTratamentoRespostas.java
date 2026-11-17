@@ -26,6 +26,7 @@ public class MqttTratamentoRespostas {
             }
 
             if (resposta.equals("INICIADO: 3")) {
+                System.out.println("Chegou aqui");
                 reservaService.retornoEfetivacao(resposta);
             }else if(resposta.equals("ENCERRAR: 3")){
                 reservaService.retornoEfetivacao(resposta);

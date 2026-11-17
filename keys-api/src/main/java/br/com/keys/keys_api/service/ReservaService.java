@@ -326,7 +326,6 @@ public class ReservaService {
 
     public void efetivarReserva(Authentication authentication, String Cnpj) {
         String NmEmailUserLogado = authentication.getName();
-        System.out.println(NmEmailUserLogado);
         List<Integer> contadorerros = new ArrayList<>();
         contadorerros.add(0);
         contadorerros.add(0);
@@ -346,10 +345,10 @@ public class ReservaService {
                 ZonedDateTime fimNoFuso =  usuario.getReservas().get(0).getFimReserva().atZone(Fuso);
                 if(inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
                     if(usuario.getReservas().get(0).getStatusReserva().equals(StatusReservaEnum.ESPERANDO_EFETIVACAO)){
-                        if (mqttService != null) mqttService.iniciarReserva(usuario.getReservas().get(0).getCdreserva()); //só roda se o mqtt tiver ativado
+                        if (mqttService != null) mqttService.iniciarReserva(usuario.getReservas().get(0).getSalaEntity().getCd()); //só roda se o mqtt tiver ativado
                         System.out.println("Comando enviado: " + usuario.getReservas().get(0).getSalaEntity().getNome());
                     }else if(usuario.getReservas().get(0).getStatusReserva().equals(StatusReservaEnum.EFETIVADA)){
-                        if (mqttService != null) mqttService.finalizarReserva(usuario.getReservas().get(0).getCdreserva()); //mesma coisa
+                        if (mqttService != null) mqttService.finalizarReserva(usuario.getReservas().get(0).getSalaEntity().getCd()); //mesma coisa
                     }else{contadorerros.set(0, contadorerros.get(0)+1);}
                 }else{contadorerros.set(1, contadorerros.get(1)+1);}
             }else{
@@ -368,8 +367,16 @@ public class ReservaService {
                 ZonedDateTime fimNoFuso = MaisProxima.getFimReserva().atZone(Fuso);
                 if(inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
                     if(MaisProxima.getStatusReserva().equals(StatusReservaEnum.ESPERANDO_EFETIVACAO)){
-                        if (mqttService != null) mqttService.iniciarReserva(MaisProxima.getCdreserva()); //só roda se o mqtt tiver ativado
-                        System.out.println("Comando enviado: " + MaisProxima.getSalaEntity().getNome());
+                        if (mqttService != null) {
+                            mqttService.iniciarReserva(
+                                    usuario.getReservas().get(0).getCdreserva()
+                            );
+
+                            System.out.println("Comando MQTT solicitado para a sala: "
+                                    + usuario.getReservas().get(0).getSalaEntity().getNome());
+                        } else {
+                            System.out.println("MQTT indisponível: nenhum comando foi enviado.");
+                        }
                     }else if(MaisProxima.getStatusReserva().equals(StatusReservaEnum.EFETIVADA)){
 
                         if (mqttService != null) mqttService.finalizarReserva(MaisProxima.getCdreserva()); //mesma coisa
@@ -395,9 +402,19 @@ public class ReservaService {
         }else{
             throw new ErrosEfetivarReservaException("Este usuário não faz parte dessa empresa");
         }
+
+        System.out.println("========== DIAGNÓSTICO MQTT ==========");
+        System.out.println("MqttService disponível: " + (mqttService != null));
+
+        if (mqttService != null) {
+            System.out.println("Cliente MQTT conectado: "
+                    + mqttService.getStatusConexao());
+        }
+        System.out.println("======================================");
     }
 
     public void retornoEfetivacao(String resposta){
+        System.out.println(resposta);
         if(resposta.equals("INICIADO: 3")){
             ReservaEntity reservation = reservaRepository.findBycdreserva(3);
             reservation.setstatusReserva(StatusReservaEnum.EFETIVADA);

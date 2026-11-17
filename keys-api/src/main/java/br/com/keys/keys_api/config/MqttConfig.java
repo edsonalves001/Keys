@@ -66,6 +66,14 @@ public class MqttConfig {
 
                     @Override
                     public void messageArrived(String topic, MqttMessage message) {
+                        System.out.println();
+                        System.out.println("========== MENSAGEM MQTT RECEBIDA ==========");
+
+                        System.out.println("Tópico: " + topic);
+                        System.out.println("Mensagem: " + new String(message.getPayload()));
+                        System.out.println("QoS: " + message.getQos());
+
+                        System.out.println("============================================");
                         String resposta = new String(message.getPayload());
                         eventPublisher.publishEvent(new MqttResposta(topic, resposta));
                     }
