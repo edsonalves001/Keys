@@ -4,7 +4,7 @@ import br.edu.fatecpg.appkeys.enums.StatusReservaEnum
 import java.time.LocalDateTime
 
 data class reservaEntity (
-    val cdReserva: String = "",
+    val cdReserva: Int,
     val inicioReserva: String,
     val fimReserva: String,
     val proprietario: usuarioEntity,

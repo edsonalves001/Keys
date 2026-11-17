@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -14,11 +13,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import br.edu.fatecpg.appkeys.R
 import br.edu.fatecpg.appkeys.model.dto.AddReservationRequestDTO
+import br.edu.fatecpg.appkeys.model.dto.Proprietario
+import br.edu.fatecpg.appkeys.model.dto.Sala
 import br.edu.fatecpg.appkeys.model.entity.salaEntity
 import br.edu.fatecpg.appkeys.model.entity.usuarioEntity
+import br.edu.fatecpg.appkeys.network.TokenManager
 
 class ReservarActivity : AppCompatActivity() {
     val viewModel: ReservasViewModel by viewModels()
+    val tokenManager by lazy { TokenManager(application) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,7 @@ class ReservarActivity : AppCompatActivity() {
 
         sala?.let {
             val txvTituloSala = findViewById<TextView>(R.id.txv_nome_sala)
-            txvTituloSala.text = it.nome
+            txvTituloSala?.text = it.nome
         }
 
         btnConfirmar.setOnClickListener {
@@ -57,8 +61,8 @@ class ReservarActivity : AppCompatActivity() {
                 dataReserva = data,
                 horaInicioReserva = "$horaInicio:00",
                 horaFimReserva = "$horaFim:00",
-                //propietario = usuarioEntity(//como caralhos eu pego o usuario atual??)
-                salaEntity = sala ?: return@setOnClickListener
+                proprietario = Proprietario(tokenManager.getUserId()),
+                salaEntity = Sala(sala?.cd ?: return@setOnClickListener)
             )
 
             viewModel.fetchCriarReserva(request)

@@ -31,8 +31,10 @@ class ReservasViewModel(application: Application): AndroidViewModel(application)
                 when(e.code()) {
                     500 -> {
                         Log.d("RESERVAS", "fetchReservar: Internal server error")
+                        _getReservaResult.value = Result.failure(e)
                     } else -> {
                     Log.d("RESERVAS", "fetchReservar: Unhandled error")
+                    _getReservaResult.value = Result.failure(e)
                 }
                 }
             } catch (e: IOException) {

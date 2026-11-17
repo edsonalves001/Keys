@@ -4,7 +4,7 @@ import br.edu.fatecpg.appkeys.enums.StatusSalaEnum
 import java.io.Serializable
 
 data class salaEntity(
-    var cdSala: Int,
+    var cd: Int,
     var nome:String="",
     var descricao:String="",
     var statusSala: StatusSalaEnum

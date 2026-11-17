@@ -31,10 +31,10 @@ class CronogramaViewModel(application: Application): AndroidViewModel(applicatio
                 when(e.code()) {
                     500 -> {
                         Log.d("CRONOGRAMA", "fetchSalas: Internal server error")
-                        val tokenManager = TokenManager(getApplication())
-                        tokenManager.removeToken()
+                        _getSalasResult.value = Result.failure(e)
                     } else -> {
                         Log.d("CRONOGRAMA", "fetchSalas: Unhandled error")
+                        _getSalasResult.value = Result.failure(e)
                     }
                 }
 

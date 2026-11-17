@@ -26,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
         val tokenManager = TokenManager(this)
         val token = tokenManager.getToken()
         if (!token.isNullOrBlank()) {
+
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

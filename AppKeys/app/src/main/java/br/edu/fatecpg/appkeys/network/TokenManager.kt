@@ -22,11 +22,23 @@ class TokenManager(context: Context) {
         sharedPreferences.edit().putString("Authorization", token).apply()
     }
 
+    fun saveUserId(userId: String) {
+        sharedPreferences.edit().putString("UserId",userId).apply()
+    }
+
     fun getToken(): String? {
         return sharedPreferences.getString("Authorization",null)
     }
 
+    fun getUserId(): String? {
+        return sharedPreferences.getString("UserId",null)
+    }
+
     fun removeToken() {
         sharedPreferences.edit().remove("Authorization").apply()
+    }
+
+    fun removeUserId() {
+        sharedPreferences.edit().remove("UserId").apply()
     }
 }

@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         rvReservas.adapter = reservasAdapter
         rvReservas.layoutManager = LinearLayoutManager(this)
 
-        //btnCronograma.color(yellow)
+        //COLORIR O BOTÃO DA ACTIVITY ATUAL btnCronograma.color(yellow)
 
         btnReservar.setOnClickListener {
             val intent = Intent(this, SalasDisponiveisActivity::class.java)
