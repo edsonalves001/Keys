@@ -3,6 +3,7 @@ package br.com.keys.keys_api.controller;
 import br.com.keys.keys_api.model.dto.*;
 //import br.com.keys.keys_api.security.JwtService;
 //import br.com.keys.keys_api.service.AuthService;
+import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.service.UsuarioService;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.Valid;
@@ -58,5 +59,11 @@ public class UsuarioController {
     }
      */
 
+    //Eu precisava de algo pra conseguir os dados do usuário logado no mobile, minha solução foi isso aqui
+    @GetMapping("/usuario/perfil")
+    public ResponseEntity<FIndAuthenticatedUserResponse> findAuthenticatedUser(@RequestHeader("Authorization") String token) {
+        FIndAuthenticatedUserResponse findAuthenticatedUserResponse = usuarioService.buscarUsuarioLogado(token);
 
+        return ResponseEntity.status(200).body(findAuthenticatedUserResponse);
+    }
 }

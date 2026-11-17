@@ -155,6 +155,14 @@ public class UsuarioService {
         }
     }
 
+    public FIndAuthenticatedUserResponse buscarUsuarioLogado(String token) {
+        String userEmail = extrairToken(token);
+
+        UsuarioEntity user = usuarioRepository.findOptionalBynmEmailUsuario(userEmail).orElseThrow(()-> new UsuarioInexistenteException("Usuário não encontrado"));
+
+        return new FIndAuthenticatedUserResponse(user.getCdUsuario(),user.getNmUsuario(),user.getNmEmailUsuario(),user.getNmLinkImagemUsuario());
+    }
+
 
     public String extrairToken(String token) {
         String novo_token = token.substring(7); //Removendo Bearer e espaços antes do token
