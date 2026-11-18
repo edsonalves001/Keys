@@ -9,7 +9,7 @@ import br.com.keys.keys_api.model.entity.UsuarioEntity;
 import br.com.keys.keys_api.repository.ReservaRepository;
 import br.com.keys.keys_api.repository.SalaRepository;
 import br.com.keys.keys_api.repository.UsuarioRepository;
-import br.com.keys.keys_api.security.JwtService;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.core.Authentication;
@@ -343,7 +343,8 @@ public class ReservaService {
             }else if(usuario.getReservas().size() == 1){
                 ZonedDateTime inicioNoFuso = usuario.getReservas().get(0).getInicioReserva().atZone(Fuso);
                 ZonedDateTime fimNoFuso =  usuario.getReservas().get(0).getFimReserva().atZone(Fuso);
-                if(inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
+                Duration intervalo = Duration.between(inicioNoFuso,agoraNoFuso);
+                if(intervalo.toMinutes() == 30 || inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
                     if(usuario.getReservas().get(0).getStatusReserva().equals(StatusReservaEnum.ESPERANDO_EFETIVACAO)){
                         if (mqttService != null) mqttService.iniciarReserva(usuario.getReservas().get(0).getSalaEntity().getCd()); //só roda se o mqtt tiver ativado
                         System.out.println("Comando enviado: " + usuario.getReservas().get(0).getSalaEntity().getNome());
@@ -365,7 +366,8 @@ public class ReservaService {
 
                 ZonedDateTime inicioNoFuso = MaisProxima.getInicioReserva().atZone(Fuso);
                 ZonedDateTime fimNoFuso = MaisProxima.getFimReserva().atZone(Fuso);
-                if(inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
+                Duration intervalo = Duration.between(inicioNoFuso,agoraNoFuso);
+                if(intervalo.toMinutes() == 30 || inicioNoFuso.equals(agoraNoFuso) || agoraNoFuso.isAfter(inicioNoFuso) && agoraNoFuso.isBefore(fimNoFuso)){
                     if(MaisProxima.getStatusReserva().equals(StatusReservaEnum.ESPERANDO_EFETIVACAO)){
                         if (mqttService != null) {
                             mqttService.iniciarReserva(
@@ -376,6 +378,8 @@ public class ReservaService {
                                     + usuario.getReservas().get(0).getSalaEntity().getNome());
                         } else {
                             System.out.println("MQTT indisponível: nenhum comando foi enviado.");
+                            System.out.println("O valor do intervalo é: " + intervalo);
+
                         }
                     }else if(MaisProxima.getStatusReserva().equals(StatusReservaEnum.EFETIVADA)){
 
