@@ -1,5 +1,6 @@
 package br.edu.fatecpg.appkeys.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -69,29 +70,66 @@ class ReservarActivity : AppCompatActivity() {
         }
 
         viewModel.getReservaResult.observe(this) {
-            result -> result.onSuccess { response -> finish() }.onFailure { exception -> Log.d("RESERVAS", "Falha ao reservar sala: ${exception.message} ") }
+            result -> result.onSuccess {
+                Log.d("RESERVAS","Sala reservada com sucesso")
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                }
+                startActivity(intent)
+                finish()
+            }.onFailure {
+                exception -> Log.d("RESERVAS", "Falha ao reservar sala: ${exception.message} ")
+                Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //Magia além de compreensão
+        fun generateSlots(minutosInicial: Int, minutosFinal: Int): List<String> =
+            (minutosInicial..minutosFinal step 15).map { String.format("%02d:%02d", it / 60, it % 60) }
+
+        fun paraMinutos(hhmm: String): Int {
+            val (h, m) = hhmm.split(":").map { it.toInt() }
+            return h * 60 + m
+        }
+
+        fun showSeletor(titulo: String, opcoes: List<String>, onClick: (String) -> Unit) {
+            if (opcoes.isEmpty()) {
+                Toast.makeText(this, "Nenhum horário disponível", Toast.LENGTH_SHORT).show()
+                return
+            }
+            android.app.AlertDialog.Builder(this)
+                .setTitle(titulo)
+                .setItems(opcoes.toTypedArray()) { _, i -> onClick(opcoes[i]) }
+                .show()
         }
 
         pickerInicio.setOnClickListener {
-            val calendar = java.util.Calendar.getInstance()
-            val hour = calendar.get(java.util.Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(java.util.Calendar.MINUTE)
+            val opcoes = generateSlots(0, 23 * 60 + 30)
+            showSeletor("Horário de início", opcoes) { horarioReserva ->
+                pickerInicio.setText(horarioReserva)
 
-            android.app.TimePickerDialog(this, {_, horaSelecionada, minutoSelecionado ->
-                val formattedTime = String.format("%02d:%02d", horaSelecionada, minutoSelecionado)
-                pickerInicio.setText(formattedTime)
-            }, hour, minute, true).show()
+                val fimAtual = pickerFinal.text.toString()
+                if (fimAtual.isNotEmpty() && paraMinutos(fimAtual) < paraMinutos(horarioReserva) + 15) {
+                    pickerFinal.setText("")
+                }
+            }
         }
 
         pickerFinal.setOnClickListener {
-            val calendar = java.util.Calendar.getInstance()
-            val hour = calendar.get(java.util.Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(java.util.Calendar.MINUTE)
-
-            android.app.TimePickerDialog(this, {_, horaSelecionada, minutoSelecionado ->
-                val formattedTime = String.format("%02d:%02d", horaSelecionada, minutoSelecionado)
-                pickerFinal.setText(formattedTime)
-            }, hour, minute, true).show()
+            val inicio = pickerInicio.text.toString()
+            if (inicio.isEmpty()) {
+                Toast.makeText(this, "Selecione o horário de início", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val opcoes = generateSlots(paraMinutos(inicio) + 15, 23 * 60 + 45)
+            showSeletor("Horário de término", opcoes) { horarioReserva ->
+                pickerFinal.setText(horarioReserva)
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("RESERVAS", "ReservarActivity destruída", Throwable())
     }
 }

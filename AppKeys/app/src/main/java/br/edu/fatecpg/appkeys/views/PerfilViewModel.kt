@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import br.edu.fatecpg.appkeys.model.dto.ReservationDTO
 import br.edu.fatecpg.appkeys.network.TokenManager
 import br.edu.fatecpg.appkeys.repository.ReservaRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -29,8 +30,10 @@ class PerfilViewModel(application: Application): AndroidViewModel(application) {
                     500 -> {
                         Log.d("RESERVAS", "fetchAllReservas: Internal server error")
                         Log.d("DEBUG","fetchAllReservas, CD do Usuário: $userCd")
+                        _getAllReservasResult.value = Result.failure(e)
                     } else -> {
                     Log.d("RESERVAS", "fetchAllReservas: Unhandled error")
+                    _getAllReservasResult.value = Result.failure(e)
                 }
                 }
             } catch (e: IOException) {
@@ -47,16 +50,24 @@ class PerfilViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 val response = reservaRepository.cancelarReserva(id, senha)
+
+                val reservasAtual = _getAllReservasResult.value?.getOrNull()?.toMutableList()
+
+                if (reservasAtual != null) {
+                    reservasAtual.removeAll {it.cdReserva == id}
+                    _getAllReservasResult.value = Result.success(reservasAtual)
+                }
+
                 _cancelarReservaResult.value = Result.success(response)
             } catch (e: retrofit2.HttpException) {
                 when (e.code()) {
                     500 -> {
-                        Log.d("RESERVAS", "fetchLogin: Internal server error")
+                        Log.d("RESERVAS", "fetchCancelar: Internal server error")
                         _cancelarReservaResult.value = Result.failure(e)
                     }
 
                     else -> {
-                        Log.d("RESERVAS", "fetchLogin: Unhandled error")
+                        Log.d("RESERVAS", "fetchCancelar: Unhandled error")
                         _cancelarReservaResult.value = Result.failure(e)
                     }
                 }

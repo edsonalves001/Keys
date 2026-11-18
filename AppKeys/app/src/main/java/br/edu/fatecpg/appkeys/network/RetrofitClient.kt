@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -22,6 +23,7 @@ object RetrofitClient {
             .create()
 
         return Retrofit.Builder()
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(clientOkHttp)
             .baseUrl(BASE_URL)

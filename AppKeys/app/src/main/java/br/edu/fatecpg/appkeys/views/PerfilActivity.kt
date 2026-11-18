@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.edu.fatecpg.appkeys.R
 import br.edu.fatecpg.appkeys.adapter.PerfilAdapter
 import br.edu.fatecpg.appkeys.network.TokenManager
+import kotlinx.coroutines.delay
 
 class PerfilActivity : AppCompatActivity() {
 
@@ -49,19 +50,28 @@ class PerfilActivity : AppCompatActivity() {
         var perfilAdapter = PerfilAdapter(emptyList(), { reservaSelecionada ->
             //Adicionar algum dialog que deixe digitar a senha para cancelar a reserva
             viewModel.cancelarReserva(reservaSelecionada.cdReserva,"Senha@123")
+
         })
+
         rvReservas.adapter = perfilAdapter
         rvReservas.layoutManager = LinearLayoutManager(this)
 
         viewModel.fetchAllReservas(tokenManager.getUserId())
 
+        viewModel.cancelarReservaResul.observe(this) {
+            result -> result.onSuccess {
+                Log.d("PERFIL","reserva cancelada com sucesso")
+                viewModel.fetchAllReservas(tokenManager.getUserId()) // não funcionou mas tive esperança
+            }
+        }
+
         viewModel.getALlReservasResult.observe(this) {
                 result -> result.onSuccess { reservas ->
-                Log.d("CRONOGRAMA","reservas retornadas")
+                Log.d("PERFIL","reservas retornadas")
 
                 perfilAdapter.updateAdapter(reservas)
             }.onFailure {
-                    exception -> Log.e("CRONOGRAMA", "Falha ao retornar as reservas: ${exception.message}")
+                    exception -> Log.e("PERFIL", "Falha ao retornar as reservas: ${exception.message}")
             }
         }
 

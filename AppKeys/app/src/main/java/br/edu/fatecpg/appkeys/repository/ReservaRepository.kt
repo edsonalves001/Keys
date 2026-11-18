@@ -8,6 +8,7 @@ import br.edu.fatecpg.appkeys.model.dto.ReservationDTO
 import br.edu.fatecpg.appkeys.model.dto.ReservationListResponseDTO
 import br.edu.fatecpg.appkeys.model.entity.reservaEntity
 import br.edu.fatecpg.appkeys.network.RetrofitClient
+import retrofit2.Response
 
 class ReservaRepository(private val context: Context) {
     suspend fun getAllReservas(): List<ReservationListResponseDTO> {
@@ -32,6 +33,12 @@ class ReservaRepository(private val context: Context) {
     suspend fun cancelarReserva(id: Int, senha: String): String {
         val resposta = RetrofitClient.apiService(context).apagarReserva(id, senha)
         Log.d("DEBUG","cancelarReserva: Reservas Fetched: $resposta")
+
+        return resposta
+    }
+
+    suspend fun efetivarReserva(cnpjEmpresa: String): Response<Unit> {
+        val resposta = RetrofitClient.apiService(context).efetivarReserva(cnpjEmpresa)
 
         return resposta
     }

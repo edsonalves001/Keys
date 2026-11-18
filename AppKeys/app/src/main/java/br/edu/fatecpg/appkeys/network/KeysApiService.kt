@@ -9,6 +9,7 @@ import br.edu.fatecpg.appkeys.model.dto.ReservationDTO
 import br.edu.fatecpg.appkeys.model.dto.ReservationListResponseDTO
 import br.edu.fatecpg.appkeys.model.entity.reservaEntity
 import br.edu.fatecpg.appkeys.model.entity.salaEntity
+import retrofit2.Response
 
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -38,10 +39,9 @@ interface KeysApiService {
     @GET("api/usuario/perfil")
     suspend fun getUsuarioLogado(): FindAuthenticatedUserResponse
 
-    //TEM QUE REVER TUDO DESSA AQUI, PerfilAdapter, PerfilViewModel, PerfilActity, ReservaRepository
     @DELETE("api/ApagarReserva")
     suspend fun apagarReserva(@Query("id") id: Int, @Query("senha") senha: String): String
 
     @POST("api/EfetivarReserva/{cnpjEmpresa}")
-    suspend fun efetivarReserva(@Path(value = "cnpjEmpresa") cnpjEmpresa: String)
+    suspend fun efetivarReserva(@Path(value = "cnpjEmpresa") cnpjEmpresa: String): Response<Unit>
 }

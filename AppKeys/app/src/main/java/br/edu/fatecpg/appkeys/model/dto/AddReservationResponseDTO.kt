@@ -5,8 +5,8 @@ import br.edu.fatecpg.appkeys.model.entity.usuarioEntity
 import java.time.LocalDateTime
 
 data class AddReservationResponseDTO(
-    val inicioReserva: LocalDateTime,
-    val fimReserva: LocalDateTime,
+    val inicioReserva: String?,
+    val fimReserva: String?,
     val proprietario: usuarioEntity,
     val salaEntity: salaEntity
 )

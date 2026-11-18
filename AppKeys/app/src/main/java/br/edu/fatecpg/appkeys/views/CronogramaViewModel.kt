@@ -12,6 +12,7 @@ import br.edu.fatecpg.appkeys.network.TokenManager
 import br.edu.fatecpg.appkeys.repository.ReservaRepository
 import br.edu.fatecpg.appkeys.repository.SalasRepository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.io.IOException
 
 class CronogramaViewModel(application: Application): AndroidViewModel(application)  {
@@ -65,6 +66,29 @@ class CronogramaViewModel(application: Application): AndroidViewModel(applicatio
             } catch (e: IOException) {
                 e.printStackTrace()
                 _getAllReservasResult.value = Result.failure(e)
+            }
+        }
+    }
+
+    private val _getEfetivarReservaResult = MutableLiveData<Result<Response<Unit>>>()
+    val getEfetivarReservaResult: LiveData<Result<Response<Unit>>> get() = _getEfetivarReservaResult
+
+    fun efetivarReserva(cnpjEmpresa: String) {
+        viewModelScope.launch {
+            try {
+                val response = reservaRepository.efetivarReserva(cnpjEmpresa)
+                _getEfetivarReservaResult.value = Result.success(response)
+            } catch (e: retrofit2.HttpException) {
+                when(e.code()) {
+                    500 -> {
+                        Log.d("RESERVAS", "efetivarReserva: Internal server error")
+                    } else -> {
+                    Log.d("RESERVAS", "efetivarReserva: Unhandled error")
+                }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                _getEfetivarReservaResult.value = Result.failure(e)
             }
         }
     }

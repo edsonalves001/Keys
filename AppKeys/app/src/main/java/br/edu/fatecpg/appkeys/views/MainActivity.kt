@@ -6,6 +6,7 @@ import br.edu.fatecpg.appkeys.network.RetrofitClient
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -57,6 +58,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         btnPerfil.setOnClickListener {
             val intent = Intent(this, PerfilActivity::class.java)
             startActivity(intent)
+        }
+
+        val barLauncher = registerForActivityResult(ScanContract()) {result -> //this is line 69
+            val scannedData = result.contents
+            if (scannedData != null) {
+                viewModel.efetivarReserva(scannedData)
+            } else {
+                Toast.makeText(this, "Scan cancelado", Toast.LENGTH_SHORT).show()
+            }
         }
 
         botaoQR.setOnClickListener {
