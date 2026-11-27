@@ -1,0 +1,149 @@
+.p-login .login {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    max-width: 1180px;
+    width: min(100%, 1180px);
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--panel-b);
+}
+
+.p-login .login .ph {
+    background: linear-gradient(135deg, #d9d9d9, #fafafa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 460px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.p-login #fotoLogin {
+    display: block;
+    width: 100%;
+    max-width: 590px;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+}
+
+.p-login .login .fm {
+    background: var(--panel);
+    padding: clamp(24px, 4vw, 56px);
+    color: var(--ink);
+    min-width: 0;
+}
+
+.p-login .login h1 {
+    font-size: clamp(28px, 3vw, 38px);
+    margin: 0 0 10px;
+}
+
+.p-login .login .fm > p {
+    color: var(--mut);
+    font-size: clamp(16px, 1.6vw, 19px);
+    margin: 0;
+}
+
+html:not([data-theme=dark]) .p-login .login .f input {
+    background: #fff;
+}
+
+html:not([data-theme=dark]) .p-login .login .lk {
+    color: #0b3355;
+}
+
+html:not([data-theme=dark]) .p-login .login .btn {
+    background: #0b3355;
+    color: #fff;
+}
+
+.p-login .login .fm label {
+    color: var(--ink);
+}
+
+.p-login .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-top: 16px;
+    font-size: clamp(15px, 1.5vw, 19px);
+}
+
+/* Tablets e celulares */
+@media (max-width: 900px) {
+    .p-login .login {
+        display: block;
+        width: 100%;
+        max-width: 560px;
+    }
+
+    /* Remove completamente a imagem e seu espaço */
+    .p-login .login .ph {
+        display: none;
+    }
+
+    .p-login #fotoLogin {
+        display: none;
+    }
+
+    /* Formulário ocupa todo o card */
+    .p-login .login .fm {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 32px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .p-login .login {
+        width: 100%;
+        border-radius: 16px;
+    }
+
+    .p-login .login .fm {
+        padding: 24px 20px;
+    }
+
+    .p-login .login h1 {
+        font-size: 28px;
+    }
+
+    .p-login .login .fm > p {
+        font-size: 16px;
+    }
+
+    .p-login .row {
+        font-size: 15px;
+    }
+
+    .p-login .f input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 16px 52px 16px 16px;
+        font-size: 16px;
+    }
+
+    .p-login .btn {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 18px;
+        padding: 16px;
+    }
+}
+
+/* Celulares muito estreitos */
+@media (max-width: 360px) {
+    .p-login .login .fm {
+        padding: 20px 14px;
+    }
+
+    .p-login .login h1 {
+        font-size: 25px;
+    }
+}

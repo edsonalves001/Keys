@@ -1,0 +1,214 @@
+.p-editar-reserva .edc {
+    max-width: 680px;
+    margin: 0 auto
+}
+
+.p-editar-reserva .ev {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 6px
+}
+
+.cancelarAlteracao{
+    color: white;
+   background-color:var(--del);
+   border-radius: 12px;
+   padding: 10px 16px;
+   font-weight: 600;
+   font-size: 17px;
+   display: inline-block;
+   text-decoration: none;
+   text-align: center
+}
+
+.salvarAlteracao{
+    color: white;
+   background-color:rgb(0, 80, 0);
+   border-radius: 12px;
+   padding: 10px 16px;
+   font-weight: 600;
+   font-size: 17px;
+   display: inline-block;
+   text-decoration: none;
+   text-align: center
+}
+.p-editar-reserva .ev .n {
+    flex: 1;
+    min-width: 200px;
+    font-size: 20px;
+    font-weight: 600
+}
+
+.p-editar-reserva .ev .tag {
+    font-size: 18px
+}
+
+.p-editar-reserva .tp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 22px
+}
+
+.p-editar-reserva .tbx {
+    border: 1px solid var(--panel-b);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center
+}
+
+.p-editar-reserva .tbx label {
+    font-weight: 600;
+    color: var(--mut);
+    display: block;
+    margin-bottom: 8px
+}
+
+.p-editar-reserva .tbx select {
+    font: inherit;
+    font-size: 34px;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+    text-align-last: center;
+    background: transparent;
+    color: var(--ink);
+    border: 0;
+    border-bottom: 2px solid var(--sel);
+    padding: 6px 0;
+    cursor: pointer
+}
+
+.p-editar-reserva .dur {
+    text-align: center;
+    font-weight: 600;
+    font-size: 19px;
+    margin: 20px 0 0
+}
+
+.p-editar-reserva .chip {
+    background: var(--chip);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 16px
+}
+
+.p-editar-reserva .chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px
+}
+
+.p-editar-reserva .busy {
+    margin: 18px 0 0;
+    color: var(--mut);
+    font-size: 16px;
+    text-align: center
+}
+
+.p-editar-reserva .acts {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap
+}
+
+.p-editar-reserva .acts>* {
+    flex: 1;
+    min-width: 160px;
+    padding: 14px
+}
+
+.p-editar-reserva .tl {
+    margin-top: 14px;
+    padding-right: 14px
+}
+
+.p-editar-reserva .tl-r {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--mut)
+}
+
+.p-editar-reserva .tl-r.me {
+    color: var(--ink)
+}
+
+.p-editar-reserva .tl-t {
+    position: relative;
+    height: 34px;
+    border-radius: 8px;
+    background-color: var(--cell);
+    background-image: linear-gradient(90deg, var(--panel-b) 1px, transparent 1px);
+    background-size: calc(100% / 14) 100%;
+    overflow: hidden
+}
+
+.p-editar-reserva .tl-ax {
+    position: relative;
+    height: 18px;
+    font-size: 13px;
+    font-weight: 500
+}
+
+.p-editar-reserva .tl-ax span {
+    position: absolute;
+    transform: translateX(-50%)
+}
+
+.p-editar-reserva .bk {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 6px
+}
+
+.p-editar-reserva .bk.ex {
+    background: #4f6f9f
+}
+
+html[data-theme=dark] .p-editar-reserva .bk.ex {
+    background: #5f86bf
+}
+
+.p-editar-reserva .bk.nw {
+    background: #f2c14e;
+    box-shadow: 0 0 0 2px var(--ink)
+}
+
+@media(max-width:600px) {
+    .p-editar-reserva .ev .n {
+        font-size: 18px
+    }
+
+    .p-editar-reserva .tp {
+        gap: 10px
+    }
+
+    .p-editar-reserva .tbx {
+        padding: 14px 8px
+    }
+
+    .p-editar-reserva .tbx select {
+        font-size: 28px
+    }
+
+    .p-editar-reserva .tl-r {
+        grid-template-columns: 56px 1fr;
+        gap: 8px;
+        font-size: 14px
+    }
+
+    .p-editar-reserva .acts {
+        flex-direction: column-reverse
+    }
+}
