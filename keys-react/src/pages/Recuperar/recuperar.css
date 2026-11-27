@@ -1,0 +1,102 @@
+html[data-theme=dark] .p-recuperar .navy {
+    --card: #0f2038;
+    --field: #0a1526;
+    --ft: #fff
+}
+.mensagem-erro,
+.mensagem-sucesso {
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.mensagem-erro {
+  color: #b42318;
+  background: #fee4e2;
+}
+
+.mensagem-sucesso {
+  color: #067647;
+  background: #d1fadf;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.p-recuperar .card {
+    background: var(--card);
+    border: 1px solid var(--card-b);
+    border-radius: 24px;
+    padding: 48px;
+    width: 100%;
+    max-width: 560px;
+    color: var(--ct, #fff)
+}
+
+html[data-theme=dark] .p-recuperar .card {
+    --ct: #fff
+}
+
+.p-recuperar .card h1 {
+    text-align: center;
+    font-size: 36px;
+    margin: 0 0 12px
+}
+
+.p-recuperar .card p.s {
+    text-align: center;
+    color: var(--cs);
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 0 0 28px
+}
+
+.p-recuperar .ico {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #f2c14e;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px
+}
+
+@media(max-width:900px) {
+    .p-recuperar .card {
+        padding: 28px
+    }
+}
+
+@media(max-width:600px) {
+    .p-recuperar .card {
+        padding: 24px 20px;
+        border-radius: 20px
+    }
+
+    .p-recuperar .card h1 {
+        font-size: 28px
+    }
+
+    .p-recuperar .card p.s {
+        font-size: 17px
+    }
+
+    .p-recuperar .ico {
+        width: 60px;
+        height: 60px
+    }
+
+    .p-recuperar .f input {
+        padding: 16px 52px 16px 16px;
+        font-size: 18px
+    }
+
+    .p-recuperar .btn {
+        font-size: 19px;
+        padding: 16px
+    }
+}

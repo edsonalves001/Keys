@@ -1,0 +1,126 @@
+html[data-theme=dark] .p-nova-senha .navy {
+    --card: #0f2038;
+    --field: #0a1526;
+    --ft: #fff
+}
+
+.p-nova-senha .card {
+    background: var(--card);
+    border: 1px solid var(--card-b);
+    border-radius: 24px;
+    padding: 48px;
+    width: 100%;
+    max-width: 560px;
+    color: var(--ct, #fff)
+}
+
+html[data-theme=dark] .p-nova-senha .card {
+    --ct: #fff
+}
+
+.p-nova-senha .card h1 {
+    text-align: center;
+    font-size: 36px;
+    margin: 0 0 12px
+}
+
+.p-nova-senha .card p.s {
+    text-align: center;
+    color: var(--cs);
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 0 0 28px
+}
+
+.p-nova-senha .req {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    display: grid;
+    gap: 12px;
+    font-size: 19px;
+    color: var(--cs)
+}
+
+.p-nova-senha .req li {
+    display: flex;
+    gap: 12px;
+    align-items: center
+}
+
+.p-nova-senha .req i {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #9fb2d1
+}
+
+.p-nova-senha .req li.ok i {
+    background: #f2c14e;
+    border-color: #f2c14e
+}
+
+@media(max-width:900px) {
+    .p-nova-senha .card {
+        padding: 28px
+    }
+}
+
+@media(max-width:600px) {
+    .p-nova-senha .card {
+        padding: 24px 20px;
+        border-radius: 20px
+    }
+
+    .p-nova-senha .card h1 {
+        font-size: 28px
+    }
+
+    .p-nova-senha .card p.s {
+        font-size: 17px
+    }
+
+    .p-nova-senha .req {
+        font-size: 17px
+    }
+
+    .p-nova-senha .f input {
+        padding: 16px 52px 16px 16px;
+        font-size: 18px
+    }
+
+    .p-nova-senha .btn {
+        font-size: 19px;
+        padding: 16px
+    }
+}
+
+.mensagem-erro,
+.mensagem-sucesso,
+.mensagem-info {
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.mensagem-erro {
+  color: #b42318;
+  background: #fee4e2;
+}
+
+.mensagem-sucesso {
+  color: #067647;
+  background: #d1fadf;
+}
+
+.mensagem-info {
+  color: #175cd3;
+  background: #eff8ff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
