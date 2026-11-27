@@ -1,0 +1,132 @@
+package br.com.keys.keys_api.controller;
+
+import br.com.keys.keys_api.model.dto.*;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.security.core.Authentication;
+import br.com.keys.keys_api.model.entity.ReservaEntity;
+import br.com.keys.keys_api.model.entity.SalaEntity;
+import br.com.keys.keys_api.model.entity.UsuarioEntity;
+import br.com.keys.keys_api.repository.ReservaRepository;
+import br.com.keys.keys_api.repository.SalaRepository;
+import br.com.keys.keys_api.repository.UsuarioRepository;
+import br.com.keys.keys_api.service.MqttService;
+import br.com.keys.keys_api.service.ReservaService;
+import br.com.keys.keys_api.service.UsuarioService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
+@RequiredArgsConstructor
+public class ReservasController {
+    private final ReservaService reservaService;
+    private final ObjectProvider<MqttService> mqttServiceProvider; //apenas entrega o objeto se existir. Se não = null
+
+    private final ReservaRepository reservaRepository;
+    private final UsuarioRepository usuarioRepository;
+
+
+
+    @PostMapping("/criarReserva")
+    public ResponseEntity<AddReservationResponseDTO> criarReserva( @Valid @RequestBody AddReservationRequestDTO addReservationRequestDTO) {
+        AddReservationResponseDTO addReservationResponseDTO = this.reservaService.criarReserva(addReservationRequestDTO);
+        return ResponseEntity.status(201).body(addReservationResponseDTO);
+    }
+
+    //Daqui começa os endpoint para adicionar na lista pré cadastro final
+    @GetMapping("/TodasasReservasLista")
+    public List<AddReservationForListRequestDTO> listarReservas(){
+        return this.reservaService.verListaReservas();
+    }
+
+    @PostMapping("/adicionarReservaaLista")
+    public void adicionarReservaaLista(@Valid @RequestBody AddReservationForListRequestDTO addReservationRequestDTO) {
+        this.reservaService.adicionarReservaaLista(addReservationRequestDTO);
+    }
+
+    @PostMapping("/AdicionarListadeReservas")
+    public void adicionarListadeReservas() {
+        this.reservaService.adicionarListadeReservas();
+    }
+    //aqui acaba os endpoints das listas
+
+    @GetMapping("/reservasDaEmpresa")
+    public List<MyEnterpriseReservationsResponseDTO> ReservasdaEmpresa() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado
+        return this.reservaService.AdminUsuariosLista(auth);
+    }
+
+    @GetMapping("/TodasasReservas")
+    public List<ReservaEntity> verReservas(){
+        return this.reservaRepository.findAll();
+    }
+
+    //lista todas as reservas conforme as necessidades do mobile, idealmente isso seria junto do TodasasReservas, mas eu n sei como isso iria impactar o front
+    @GetMapping("/reservas")
+    public List<ReservationListResponseDTO> listarReservasMobile() {
+        List<ReservaEntity> reservas = reservaRepository.findAll();
+
+        return reservas.stream().map(reserva -> new ReservationListResponseDTO(
+                reserva.getSalaEntity() != null ? reserva.getSalaEntity().getNome() : "Sala Desconhecida",
+                reserva.getProprietario() != null ? reserva.getProprietario().getNmLinkImagemUsuario() : null,
+                reserva.getInicioReserva() != null ? reserva.getInicioReserva().toLocalDate() : null,
+                reserva.getInicioReserva() != null ? reserva.getInicioReserva().toLocalTime() : null,
+                reserva.getFimReserva() != null ? reserva.getFimReserva().toLocalTime() : null,
+                reserva.getProprietario() != null ? reserva.getProprietario().getNmUsuario(): "null"
+        )).toList();
+    }
+
+    @GetMapping("/VerReserva/{id}")
+    public ReservationDTO verReserva(@PathVariable Integer id){
+        return this.reservaService.verReserva(id);
+    }
+
+    @GetMapping("/VerReservas")
+    public List<ReservaEntity> verMinhasReservas(@RequestParam String cd){
+        return reservaService.verMinhasReservasLista(cd);
+    }
+
+    @GetMapping("VerReservaDesseUsuario/{cd}")
+    public List<ReservationDTO> verMinhasReservasDesseUsuario(@PathVariable String cd){
+        return reservaService.minhasReservas(cd);
+    }
+
+    @DeleteMapping("/ApagarReserva")
+    public String apagarReserva(@RequestParam Integer id, @RequestParam String senha, Authentication auth){
+        return reservaService.apagarReservar(id,senha,auth);
+    }
+
+    @PatchMapping("AtualizarReserva/{id}")
+    public String EditarReserva(@PathVariable Integer id, @RequestParam(required = false) LocalDateTime dataInicioAtualizacao, @RequestParam(required = false) LocalDateTime dataFimAtualizacao) {
+        return reservaService.editarReservar(id,dataInicioAtualizacao,dataFimAtualizacao);
+    }
+
+//    @GetMapping("/ReservaIniciaEm/{dataInicio}")
+//    public List<ReservaEntity> ReservasIniciaEm(){
+//        return reservaService.ReservationStarted();
+//    }
+//
+//    @GetMapping("/ReservaFinalizamEm/{dataFim}")
+//    public List<ReservaEntity> ReservasFinalizamEm(@PathVariable LocalDateTime dataFim){
+//        return reservaService.ReservationEnded(dataFim);
+//    }
+    @PostMapping("/EfetivarReserva/{cnpjEmpresa}")
+    public void EfetivarviaQrCode(@PathVariable String cnpjEmpresa) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //Pra pegar o usuário logado
+        reservaService.efetivarReserva(auth,cnpjEmpresa);
+    }
+
+}
