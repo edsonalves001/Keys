@@ -80,51 +80,28 @@
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/btn_confirmar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="560dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#0E334C"
-        android:drawableLeft="@drawable/ic_confirma"
-        android:text="CONFIRMAR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
-
-    <Button
-        android:id="@+id/btn_cancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="560dp"
-        android:backgroundTint="#7E0103"
-        android:drawableLeft="@drawable/ic_cancel"
-        android:text="CANCELAR"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
-
     <ImageView
         android:id="@+id/imgv_usuario"
         android:layout_width="83dp"
         android:layout_height="83dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        tools:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <TextView
         android:id="@+id/txv_quemreservou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="48dp"
         android:text="Reservado por: Ronaldo"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.379"
         app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
@@ -202,27 +179,64 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <EditText
-        android:id="@+id/edtm_timepicker_hora_inicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:contentDescription="Selecionar horario inicial da reserva"
-        android:ems="10"
-        android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
-        app:layout_constraintTop_toBottomOf="@+id/txv_quemreservou" />
-
-    <EditText
         android:id="@+id/edtm_timepicker_hora_fim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_width="244dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="96dp"
+        android:clickable="true"
         android:contentDescription="Selecionar horario final da reserva"
         android:ems="10"
         android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintStart_toEndOf="@+id/imgv_usuario"
+        android:hint="Quando acaba a reserva?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtm_timepicker_hora_inicio" />
+
+    <EditText
+        android:id="@+id/edtm_timepicker_hora_inicio"
+        android:layout_width="244dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="96dp"
+        android:clickable="true"
+        android:contentDescription="Selecionar horario inicial da reserva"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="Quando começa a reserva?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_usuario" />
+
+    <Button
+        android:id="@+id/btn_confirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="28dp"
+        android:backgroundTint="#0E334C"
+        android:drawableLeft="@drawable/ic_confirma"
+        android:text="CONFIRMAR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_cancelar"
+        app:layout_constraintTop_toBottomOf="@+id/edtm_timepicker_hora_fim" />
+
+    <Button
+        android:id="@+id/btn_cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="120dp"
+        android:backgroundTint="#7E0103"
+        android:drawableLeft="@drawable/ic_cancel"
+        android:text="CANCELAR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtm_timepicker_hora_fim" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

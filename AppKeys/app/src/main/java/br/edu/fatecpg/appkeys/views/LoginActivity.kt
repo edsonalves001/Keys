@@ -1,12 +1,13 @@
 package br.edu.fatecpg.appkeys.views
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -21,7 +22,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         val tokenManager = TokenManager(this)
         val token = tokenManager.getToken()
@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         val btn_logar = findViewById<Button>(R.id.btn_logar)
         val edt_email = findViewById<EditText>(R.id.edt_email)
         val edt_senha = findViewById<EditText>(R.id.edt_senha)
+
 
         btn_logar.setOnClickListener {
             val email = edt_email.text.toString()
@@ -71,8 +72,6 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Erro ao fazer login", Toast.LENGTH_SHORT).show()
                 }
-
-
             }
         }
     }

@@ -9,8 +9,8 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="340dp"
+        android:layout_height="302dp"
         android:layout_marginStart="31dp"
         android:layout_marginEnd="31dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,46 +44,23 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/txv_reservas_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:text="Reservas"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
-    <TextView
-        android:id="@+id/txv_reservas_dia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:text="Segunda 01/01"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txv_reservas_titulo" />
-
     <View
         android:id="@+id/hr_line"
         android:layout_width="350dp"
         android:layout_height="2dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="11dp"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txv_reservas_dia" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Reservas"
-        android:layout_width="350dp"
-        android:layout_height="0dp"
+        android:layout_width="376dp"
+        android:layout_height="322dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,22 +139,58 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <Button
-        android:id="@+id/btn_reservar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="28dp"
-        android:background="#00FFFFFF"
-        android:drawableRight="@drawable/ic_add"
-        android:drawablePadding="0dp"
-        android:drawableTint="@color/gradientInicio"
-        android:text="Reservar"
-        android:textColor="@color/gradientInicio"
-        android:textSize="20sp"
-        app:iconGravity="end"
-        app:iconPadding="2dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="352dp"
+        android:layout_height="61dp"
+        android:background="#FCF5FD"
+        app:layout_constraintBottom_toBottomOf="@+id/hr_line"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_reservar"
+            android:layout_width="167dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
+            android:background="#00FFFFFF"
+            android:drawableRight="@drawable/ic_add"
+            android:drawablePadding="0dp"
+            android:drawableTint="@color/gradientInicio"
+            android:text="Reservar"
+            android:textColor="@color/gradientInicio"
+            android:textSize="20sp"
+            app:iconGravity="end"
+            app:iconPadding="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/txv_reservas_dia"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txv_reservas_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="1dp"
+            android:text="Reservas"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/txv_reservas_dia"
+            app:layout_constraintEnd_toStartOf="@+id/btn_reservar"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txv_reservas_dia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Segunda 01/01"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txv_reservas_titulo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

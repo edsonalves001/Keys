@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.security.crypto)
     // Permite a execução de tarefas assincronas utilizando multiplas threads
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("io.coil-kt:coil:2.7.0")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation(platform(libs.androidx.compose.bom))

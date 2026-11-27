@@ -6,19 +6,37 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import br.edu.fatecpg.appkeys.model.dto.FindAuthenticatedUserResponse
 import br.edu.fatecpg.appkeys.model.dto.ReservationDTO
 import br.edu.fatecpg.appkeys.network.TokenManager
 import br.edu.fatecpg.appkeys.repository.ReservaRepository
-import kotlinx.coroutines.delay
+import br.edu.fatecpg.appkeys.repository.UsuarioRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class PerfilViewModel(application: Application): AndroidViewModel(application) {
+class PerfilViewModel(application: Application) : AndroidViewModel(application) {
     private val tokenManager = TokenManager(application)
     private val reservaRepository = ReservaRepository(application)
+    private val usuarioRepository = UsuarioRepository(application)
+    private val _usuarioLogadoResult = MutableLiveData<Result<FindAuthenticatedUserResponse>>()
+    val usuarioLogadoResult: LiveData<Result<FindAuthenticatedUserResponse>> get() = _usuarioLogadoResult
 
     private val _getAllReservasResult = MutableLiveData<Result<List<ReservationDTO>>>()
     val getALlReservasResult: LiveData<Result<List<ReservationDTO>>> get() = _getAllReservasResult
+
+    private val _cancelarReservaResult = MutableLiveData<Result<String>>()
+    val cancelarReservaResul: LiveData<Result<String>> get() = _cancelarReservaResult
+
+    fun fetchUsuarioLogado() {
+        viewModelScope.launch {
+            _usuarioLogadoResult.value = try {
+                Result.success(usuarioRepository.getUsuarioLogado())
+            } catch (e: Exception) {
+                Log.e("PERFIL", "fetchUsuarioLogado: ${e.message}")
+                Result.failure(e)
+            }
+        }
+    }
 
     fun fetchAllReservas(userCd: String?) {
         viewModelScope.launch {
@@ -26,16 +44,14 @@ class PerfilViewModel(application: Application): AndroidViewModel(application) {
                 val response = reservaRepository.getMinhasReservas(userCd)
                 _getAllReservasResult.value = Result.success(response)
             } catch (e: retrofit2.HttpException) {
-                when(e.code()) {
+                when (e.code()) {
                     500 -> {
                         Log.d("RESERVAS", "fetchAllReservas: Internal server error")
-                        Log.d("DEBUG","fetchAllReservas, CD do Usuário: $userCd")
-                        _getAllReservasResult.value = Result.failure(e)
-                    } else -> {
-                    Log.d("RESERVAS", "fetchAllReservas: Unhandled error")
-                    _getAllReservasResult.value = Result.failure(e)
+                        Log.d("DEBUG", "fetchAllReservas, CD do Usuário: $userCd")
+                    }
+                    else -> Log.d("RESERVAS", "fetchAllReservas: Unhandled error")
                 }
-                }
+                _getAllReservasResult.value = Result.failure(e)
             } catch (e: IOException) {
                 e.printStackTrace()
                 _getAllReservasResult.value = Result.failure(e)
@@ -43,34 +59,24 @@ class PerfilViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    private val _cancelarReservaResult = MutableLiveData<Result<String>>()
-    val cancelarReservaResul: LiveData<Result<String>> get() = _cancelarReservaResult
-
     fun cancelarReserva(id: Int, senha: String) {
         viewModelScope.launch {
             try {
                 val response = reservaRepository.cancelarReserva(id, senha)
 
                 val reservasAtual = _getAllReservasResult.value?.getOrNull()?.toMutableList()
-
                 if (reservasAtual != null) {
-                    reservasAtual.removeAll {it.cdReserva == id}
+                    reservasAtual.removeAll { it.cdReserva == id }
                     _getAllReservasResult.value = Result.success(reservasAtual)
                 }
 
                 _cancelarReservaResult.value = Result.success(response)
             } catch (e: retrofit2.HttpException) {
                 when (e.code()) {
-                    500 -> {
-                        Log.d("RESERVAS", "fetchCancelar: Internal server error")
-                        _cancelarReservaResult.value = Result.failure(e)
-                    }
-
-                    else -> {
-                        Log.d("RESERVAS", "fetchCancelar: Unhandled error")
-                        _cancelarReservaResult.value = Result.failure(e)
-                    }
+                    500 -> Log.d("RESERVAS", "fetchCancelar: Internal server error")
+                    else -> Log.d("RESERVAS", "fetchCancelar: Unhandled error")
                 }
+                _cancelarReservaResult.value = Result.failure(e)
             } catch (e: IOException) {
                 e.printStackTrace()
                 _cancelarReservaResult.value = Result.failure(e)

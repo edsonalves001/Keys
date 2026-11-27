@@ -17,17 +17,17 @@ import br.edu.fatecpg.appkeys.model.dto.AddReservationRequestDTO
 import br.edu.fatecpg.appkeys.model.dto.Proprietario
 import br.edu.fatecpg.appkeys.model.dto.Sala
 import br.edu.fatecpg.appkeys.model.entity.salaEntity
-import br.edu.fatecpg.appkeys.model.entity.usuarioEntity
+import android.widget.ImageView
+import br.edu.fatecpg.appkeys.utils.carregarAvatar
 import br.edu.fatecpg.appkeys.network.TokenManager
 
 class ReservarActivity : AppCompatActivity() {
     val viewModel: ReservasViewModel by viewModels()
     val tokenManager by lazy { TokenManager(application) }
-
+    private val usuarioViewModel: UsuarioViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_reservar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -38,11 +38,31 @@ class ReservarActivity : AppCompatActivity() {
         val pickerInicio = findViewById<EditText>(R.id.edtm_timepicker_hora_inicio)
         val pickerFinal = findViewById<EditText>(R.id.edtm_timepicker_hora_fim)
         val btnConfirmar = findViewById<Button>(R.id.btn_confirmar)
+        val btnCancelar = findViewById<Button>(R.id.btn_cancelar)
+
+        val imgUsuario = findViewById<ImageView>(R.id.imgv_usuario)
+        val txvNomeUsuario = findViewById<TextView>(R.id.txv_quemreservou)
+        usuarioViewModel.fetchUsuarioLogado()
+
+        usuarioViewModel.usuarioLogadoResult.observe(this) { result ->
+            result.onSuccess { usuario ->
+                txvNomeUsuario.text = "Reservado por: ${usuario.nm_usuario}"
+                imgUsuario.carregarAvatar(usuario.nm_usuario, usuario.nm_link_imagem_usuario)
+            }.onFailure { e ->
+                Log.e("RESERVAS", "Falha ao buscar usuário: ${e.message}")
+            }
+        }
+
+        btnCancelar.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this,"Operação cancelada",Toast.LENGTH_SHORT).show()
+        }
 
         val sala = intent.getSerializableExtra("salaSelecionada") as? salaEntity
 
         sala?.let {
-            val txvTituloSala = findViewById<TextView>(R.id.txv_nome_sala)
+            val txvTituloSala = findViewById<TextView>(R.id.txv_titulo_sala)
             txvTituloSala?.text = it.nome
         }
 
@@ -55,7 +75,6 @@ class ReservarActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            //ISSO PRECISA PEGAR A DATA DA PORRA DO CALENDARIO DE ALGUMA FORMA
             val data = java.time.LocalDate.now().toString()
 
             val request = AddReservationRequestDTO(
@@ -75,6 +94,7 @@ class ReservarActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 }
+            Toast.makeText(this,"Sala reservada com sucesso",Toast.LENGTH_SHORT).show()
                 startActivity(intent)
                 finish()
             }.onFailure {

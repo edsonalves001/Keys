@@ -52,8 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="240dp"
-                android:text="Reservar"
+                android:layout_marginEnd="272dp"
+                android:text="Perfil"
                 android:textColor="#FDFDFD"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -77,54 +77,27 @@
                 android:id="@+id/txv_titulo_sala"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="112dp"
                 android:text="Ronaldo"
                 android:textColor="#FFFFFF"
                 android:textSize="28sp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.096"
+                app:layout_constraintStart_toEndOf="@+id/imv_usuario"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txv_titulo_sala2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
+                android:layout_width="260dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="16dp"
                 android:text="nome@gmail.com"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="normal"
-                app:layout_constraintStart_toEndOf="@+id/txv_status_sala"
-                app:layout_constraintTop_toBottomOf="@+id/txv_titulo_sala" />
-
-            <TextView
-                android:id="@+id/txv_status_sala"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:text="EMAIL"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imv_usuario"
                 app:layout_constraintTop_toBottomOf="@+id/txv_titulo_sala" />
-
-            <TextView
-                android:id="@+id/txv_status_sala2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Mudar senha"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imv_usuario"
-                app:layout_constraintTop_toBottomOf="@+id/txv_status_sala" />
 
             <ImageView
                 android:id="@+id/imv_usuario"
@@ -133,8 +106,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="96dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -229,11 +201,16 @@
 
     <Button
         android:id="@+id/btn_deslogar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
-        android:text="Deslogar"
+        android:layout_width="81dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="60dp"
+        android:backgroundTint="#AD0202"
+        android:text="Sair"
+        android:textAlignment="center"
+        android:textColorLink="#F80505"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

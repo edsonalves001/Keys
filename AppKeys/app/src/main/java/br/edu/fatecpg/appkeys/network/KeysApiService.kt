@@ -7,7 +7,6 @@ import br.edu.fatecpg.appkeys.model.dto.LoginRequestDTO
 import br.edu.fatecpg.appkeys.model.dto.LoginResponseDTO
 import br.edu.fatecpg.appkeys.model.dto.ReservationDTO
 import br.edu.fatecpg.appkeys.model.dto.ReservationListResponseDTO
-import br.edu.fatecpg.appkeys.model.entity.reservaEntity
 import br.edu.fatecpg.appkeys.model.entity.salaEntity
 import retrofit2.Response
 
@@ -44,4 +43,5 @@ interface KeysApiService {
 
     @POST("api/EfetivarReserva/{cnpjEmpresa}")
     suspend fun efetivarReserva(@Path(value = "cnpjEmpresa") cnpjEmpresa: String): Response<Unit>
+
 }

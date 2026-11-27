@@ -3,6 +3,7 @@ package br.edu.fatecpg.appkeys.views
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,6 @@ class SalasDisponiveisActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_salas_disponiveis)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,7 +29,25 @@ class SalasDisponiveisActivity : AppCompatActivity() {
             insets
         }
 
-        val fabSair = findViewById<FloatingActionButton>(R.id.fab_sair)
+        val btnQrCode = findViewById<Button>(R.id.btn_qr_scan)
+        val btnCronograma = findViewById<Button>(R.id.btn_cronograma)
+        val btnPerfil = findViewById<Button>(R.id.btn_perfil)
+
+        btnQrCode.setOnClickListener {
+            val intent = Intent(this, efetivarReservaActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnCronograma.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnPerfil.setOnClickListener {
+            val intent = Intent(this, PerfilActivity::class.java)
+            startActivity(intent)
+        }
+
 
         val rvSalas = findViewById<RecyclerView>(R.id.rv_salasDisponiveis)
         var salasAdapter = salasadapter(emptyList()) { salaSelecionada ->
@@ -38,6 +56,7 @@ class SalasDisponiveisActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
         rvSalas.adapter = salasAdapter
         rvSalas.layoutManager = LinearLayoutManager(this)
 
@@ -51,10 +70,6 @@ class SalasDisponiveisActivity : AppCompatActivity() {
                 exception ->
                 Log.d("SALAS", "Falha ao retornar salas: ${exception.message} ")
             }
-        }
-
-        fabSair.setOnClickListener {
-            finish()
         }
     }
 }

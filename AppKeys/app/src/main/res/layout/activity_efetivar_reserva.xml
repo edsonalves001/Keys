@@ -103,35 +103,19 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_qr_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="48dp"
-                android:backgroundTint="#00FFFFFF"
-                android:drawableTop="@drawable/ic_qr_scan"
-                android:drawableTint="#FFFFFF"
-                android:scaleX="2"
-                android:scaleY="2"
-                android:text="QR Scan"
-                android:textSize="10sp"
-                app:iconGravity="start"
-                app:iconPadding="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/btn_perfil"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
                 android:id="@+id/btn_perfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:backgroundTint="#00FFFFFF"
                 android:drawableTop="@drawable/ic_user"
                 android:drawableTint="#FFFFFF"
                 android:scaleX="2"
                 android:scaleY="2"
                 android:text="Perfil"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
                 android:textSize="10sp"
                 app:iconGravity="start"
                 app:iconPadding="0dp"
@@ -139,10 +123,30 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/btn_qr_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="48dp"
+                android:backgroundTint="#00FFFFFF"
+                android:drawableTop="@drawable/ic_qr_scan"
+                android:drawableTint="#FFFFFF"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:text="QR Scan"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                app:iconGravity="start"
+                app:iconPadding="0dp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_perfil"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
                 android:id="@+id/btn_cronograma"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="48dp"
                 android:backgroundTint="#00FFFFFF"
                 android:drawableTop="@drawable/ic_clock"
@@ -150,15 +154,16 @@
                 android:scaleX="2"
                 android:scaleY="2"
                 android:text="Cronograma"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
                 android:textSize="10sp"
                 app:iconGravity="start"
                 app:iconPadding="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_qr_scan"
-                app:layout_constraintHorizontal_bias="0.727"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.constraintlayout.widget.ConstraintLayout>

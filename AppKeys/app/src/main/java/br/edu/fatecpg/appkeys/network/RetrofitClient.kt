@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.100.102:8080/"
+    private const val BASE_URL = "http://localhost:8080/"
 
     fun apiService(context: Context): KeysApiService {
         val tokenManager = TokenManager(context)

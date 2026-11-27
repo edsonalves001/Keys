@@ -21,8 +21,8 @@
         android:id="@+id/txv_sala_reserva"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="84dp"
         android:text="Sala 0 Bloco 0"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/imv_perfil"
@@ -30,19 +30,19 @@
 
     <ImageView
         android:id="@+id/imv_perfil"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/txv_nome_reservado_por2"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="120dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
         android:text="Reservado por"
         android:textSize="20sp"
