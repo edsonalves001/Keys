@@ -3,6 +3,7 @@ package br.com.keys.keys_api.controller;
 import br.com.keys.keys_api.model.dto.SolicitarRecuperacaoDTO;
 import br.com.keys.keys_api.model.dto.RedefinirSenhaDTO;
 import br.com.keys.keys_api.service.RecuperacaoService;
+import br.com.keys.keys_api.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 public class EsqueciSenhaController {
 
     private final RecuperacaoService recuperacaoSenhaService;
-
+    private final UsuarioService usuarioService;
     @PostMapping("/esqueci-senha")
     public ResponseEntity<?> solicitarRecuperacao(@RequestBody SolicitarRecuperacaoDTO dto) {
         recuperacaoSenhaService.solicitarRecuperacao(dto.email());

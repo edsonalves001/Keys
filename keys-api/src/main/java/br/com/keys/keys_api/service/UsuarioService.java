@@ -48,6 +48,7 @@ public class UsuarioService {
         }
     }
 
+
     public FindUserByIdResponse buscarUsuarioPorId(String id) {
         if(id.trim().isEmpty()) {
          throw  new UsuarioInexistenteException("Id inválido, ou seja, usuário inexistente!");

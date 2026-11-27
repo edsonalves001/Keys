@@ -17,6 +17,7 @@ public class EmailService {
     public void enviarEmailRecuperacao(String email, String token) {
         String link = frontendUrl + "/nova-senha?token=" + token;
         SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setFrom("edsonpg.alves@gmail.com");
         mensagem.setTo(email);
         mensagem.setSubject("Recuperação de senha - KEYS");
 
