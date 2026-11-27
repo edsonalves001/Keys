@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.efetivarReservaActivity">
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="411dp"
+        android:layout_height="88dp"
+        android:background="@drawable/background_gradient"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="86dp">
+
+
+            <TextView
+                android:id="@+id/txv_keys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/major_mono_display"
+                android:text="k e Y s"
+                android:textColor="#FDFDFD"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/txv_title_reserva"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txv_title_reserva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="172dp"
+                android:text="Efetivar Reserva"
+                android:textColor="#FDFDFD"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imgb_voltar"
+                android:layout_width="62dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:contentDescription="Voltar"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:src="@drawable/ic_return"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/bc_Scanner"
+        android:layout_width="414dp"
+        android:layout_height="732dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+
+        <TextView
+            android:id="@+id/txv_prompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:text="Aponte para o QR Code para efetivar a reserva"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/gradientInicio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_qr_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="48dp"
+                android:backgroundTint="#00FFFFFF"
+                android:drawableTop="@drawable/ic_qr_scan"
+                android:drawableTint="#FFFFFF"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:text="QR Scan"
+                android:textSize="10sp"
+                app:iconGravity="start"
+                app:iconPadding="0dp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_perfil"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#00FFFFFF"
+                android:drawableTop="@drawable/ic_user"
+                android:drawableTint="#FFFFFF"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:text="Perfil"
+                android:textSize="10sp"
+                app:iconGravity="start"
+                app:iconPadding="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_cronograma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="48dp"
+                android:backgroundTint="#00FFFFFF"
+                android:drawableTop="@drawable/ic_clock"
+                android:drawableTint="#FFFFFF"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:text="Cronograma"
+                android:textSize="10sp"
+                app:iconGravity="start"
+                app:iconPadding="0dp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_qr_scan"
+                app:layout_constraintHorizontal_bias="0.727"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</androidx.constraintlayout.widget.ConstraintLayout>
